@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>আপনার নাম | পোর্টফলিও</title>
+<meta name="description" content="আমার কাজ, সেবা ও যোগাযোগের তথ্য।">
+<meta name="theme-color" content="#0b6e4f">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600&family=Noto+Serif+Bengali:wght@600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site-header" id="top">
+  <a class="brand" href="#top" data-t="name">আপনার নাম</a>
+  <button class="menu-btn" id="menuBtn" aria-label="মেনু খুলুন" aria-expanded="false">☰</button>
+  <nav id="nav" aria-label="প্রধান মেনু">
+    <a href="#about">পরিচিতি</a>
+    <a href="#services">সেবা</a>
+    <a href="#work">কাজ</a>
+    <a href="#blog">লেখা</a>
+    <a href="#contact">যোগাযোগ</a>
+    <a class="btn btn-sm" data-wa href="#contact">হোয়াটসঅ্যাপ</a>
+  </nav>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="hero-text">
+      <p class="hello">আসসালামু আলাইকুম</p>
+      <h1><span data-t="name">আপনার নাম</span></h1>
+      <h2 data-t="title">আপনার পেশা বা পরিচয়</h2>
+      <p class="lead" data-t="intro">এখানে দুই-তিন লাইনে নিজের পরিচয় ও কাজের ধরন লিখুন।</p>
+      <div class="actions">
+        <a class="btn" href="#contact">কাজের জন্য বলুন</a>
+        <a class="btn btn-ghost" href="#work">কাজ দেখুন</a>
+      </div>
+    </div>
+    <div class="hero-side">
+      <img id="photo" src="assets/photo.jpg" alt="প্রোফাইল ছবি" width="420" height="420" onerror="this.style.display='none'">
+      <ul class="stats" id="stats"></ul>
+    </div>
+  </section>
+
+  <section id="about" class="block">
+    <h2>পরিচিতি</h2>
+    <div class="about-grid">
+      <div id="aboutText"></div>
+      <ul class="skills" id="skills"></ul>
+    </div>
+  </section>
+
+  <section id="services" class="block alt">
+    <h2>আমি যা করি</h2>
+    <div class="grid" id="serviceGrid"></div>
+  </section>
+
+  <section id="work" class="block">
+    <h2>নির্বাচিত কাজ</h2>
+    <div class="filters" id="filters" role="group" aria-label="ক্যাটেগরি ফিল্টার"></div>
+    <div class="grid" id="projectGrid"></div>
+    <p class="empty" id="projectEmpty" hidden>এই ক্যাটেগরিতে এখনো কোনো কাজ যোগ করা হয়নি।</p>
+  </section>
+
+  <section id="blog" class="block alt">
+    <h2>সাম্প্রতিক লেখা</h2>
+    <div class="grid" id="postGrid"></div>
+  </section>
+
+  <section id="contact" class="block">
+    <h2>যোগাযোগ</h2>
+    <div class="contact-grid">
+      <ul class="contact-list" id="contactList"></ul>
+      <form id="contactForm" novalidate>
+        <label>আপনার নাম<input name="name" required autocomplete="name"></label>
+        <label>ইমেইল বা ফোন<input name="contact" required></label>
+        <label>সেবা
+          <select name="service" id="serviceSelect"></select>
+        </label>
+        <label>বার্তা<textarea name="message" rows="4" required></textarea></label>
+        <button class="btn" type="submit">হোয়াটসঅ্যাপে পাঠান</button>
+        <p class="form-note" id="formNote" role="status"></p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <p>© <span id="year"></span> <span data-t="name">আপনার নাম</span>। সর্বস্বত্ব সংরক্ষিত।</p>
+  <ul class="social" id="social"></ul>
+</footer>
+
+<script src="data.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
