@@ -1,14 +1,119 @@
 /* ============================================================
    RUBayed HASAN — PORTFOLIO
-   Language toggle · Mobile menu · Scroll reveal · Form handling
+   Language · Menu · Reveal · Form · Premium PNG Favicon
    ============================================================ */
 
 (function () {
   'use strict';
 
-  /* ---------- Utilities ---------- */
   const $  = (sel, ctx = document) => ctx.querySelector(sel);
   const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
+
+  /* ============================================================
+     0. PREMIUM PNG FAVICON GENERATOR
+     ============================================================ */
+
+  /**
+   * Draws a premium gold rounded-square mark with dark serif "RH" monogram.
+   * Exported as PNG (128×128) and set as favicon + shown in footer preview.
+   */
+  function generatePremiumFavicon() {
+    const S = 128;
+    const canvas = document.createElement('canvas');
+    canvas.width = S;
+    canvas.height = S;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return null;
+
+    const radius = 28;
+
+    // Rounded-rect path
+    ctx.beginPath();
+    ctx.moveTo(radius, 0);
+    ctx.lineTo(S - radius, 0);
+    ctx.quadraticCurveTo(S, 0, S, radius);
+    ctx.lineTo(S, S - radius);
+    ctx.quadraticCurveTo(S, S, S - radius, S);
+    ctx.lineTo(radius, S);
+    ctx.quadraticCurveTo(0, S, 0, S - radius);
+    ctx.lineTo(0, radius);
+    ctx.quadraticCurveTo(0, 0, radius, 0);
+    ctx.closePath();
+
+    // Gold gradient background
+    const bgGrad = ctx.createLinearGradient(0, 0, S, S);
+    bgGrad.addColorStop(0.00, '#e8b87c');
+    bgGrad.addColorStop(0.50, '#d9a86c');
+    bgGrad.addColorStop(1.00, '#b87a4a');
+    ctx.fillStyle = bgGrad;
+    ctx.fill();
+
+    // Top-left highlight for premium depth
+    const hl = ctx.createRadialGradient(S * 0.28, S * 0.22, 0, S * 0.3, S * 0.25, S * 0.75);
+    hl.addColorStop(0.0, 'rgba(255, 255, 255, 0.35)');
+    hl.addColorStop(0.5, 'rgba(255, 255, 255, 0)');
+    ctx.fillStyle = hl;
+    ctx.fill();
+
+    // Inner border
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.32)';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    // Slight inner shadow at bottom
+    const sh = ctx.createLinearGradient(0, S * 0.55, 0, S);
+    sh.addColorStop(0.0, 'rgba(0, 0, 0, 0)');
+    sh.addColorStop(1.0, 'rgba(0, 0, 0, 0.12)');
+    ctx.fillStyle = sh;
+    ctx.fill();
+
+    // "RH" monogram in dark serif
+    ctx.fillStyle = '#14100a';
+    ctx.font = 'bold 56px Georgia, "Instrument Serif", "Times New Roman", serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('RH', S / 2, S / 2 + 3);
+
+    return canvas.toDataURL('image/png');
+  }
+
+  function applyFavicon() {
+    const dataUrl = generatePremiumFavicon();
+    if (!dataUrl) return;
+
+    // 1) Set as the site favicon (replaces the placeholder)
+    const existing = document.getElementById('siteFavicon');
+    if (existing) {
+      existing.type = 'image/png';
+      existing.href = dataUrl;
+    } else {
+      const link = document.createElement('link');
+      link.rel = 'icon';
+      link.type = 'image/png';
+      link.href = dataUrl;
+      document.head.appendChild(link);
+    }
+
+    // 2) Remove any leftover shortcut / apple-touch icons that might conflict
+    $$("link[rel='shortcut icon'], link[rel='apple-touch-icon']").forEach((el) => el.remove());
+
+    // 3) Add a clean apple-touch-icon with the same premium PNG
+    const apple = document.createElement('link');
+    apple.rel = 'apple-touch-icon';
+    apple.href = dataUrl;
+    document.head.appendChild(apple);
+
+    // 4) Show the actual PNG in the footer as a live preview
+    const preview = document.getElementById('footerFavicon');
+    if (preview) preview.src = dataUrl;
+  }
+
+  // Run as early as possible
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', applyFavicon, { once: true });
+  } else {
+    applyFavicon();
+  }
 
   /* ============================================================
      1. LANGUAGE TOGGLE
@@ -17,36 +122,27 @@
   const langButtons = $$('[data-set-lang]');
 
   function applyLanguage(lang) {
-    // Set the html lang attribute — CSS handles visibility of
-    // [lang="en"] / [lang="bn"] child elements automatically.
     document.documentElement.lang = lang;
     localStorage.setItem(LANG_KEY, lang);
 
-    // Update active state on toggle buttons
     langButtons.forEach((btn) => {
       const isActive = btn.dataset.setLang === lang;
       btn.classList.toggle('active', isActive);
       btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
     });
 
-    // Update form placeholders
     $$('[data-ph-en]').forEach((el) => {
       const text = lang === 'bn' ? el.dataset.phBn : el.dataset.phEn;
       if (text) el.setAttribute('placeholder', text);
     });
 
-    // Notify any listeners (optional)
     document.dispatchEvent(new CustomEvent('languagechange', { detail: { lang } }));
   }
 
-  // Bind language buttons
   langButtons.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      applyLanguage(btn.dataset.setLang);
-    });
+    btn.addEventListener('click', () => applyLanguage(btn.dataset.setLang));
   });
 
-  // Initialise on load (HTML <head> script already set html lang)
   const initialLang = document.documentElement.lang === 'bn' ? 'bn' : 'en';
   applyLanguage(initialLang);
 
@@ -70,19 +166,14 @@
       menuToggle.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
     });
 
-    // Close menu when a link is tapped
-    $$('a', mobileMenu).forEach((link) => {
-      link.addEventListener('click', closeMenu);
-    });
+    $$('a', mobileMenu).forEach((link) => link.addEventListener('click', closeMenu));
 
-    // Close on outside click
     document.addEventListener('click', (e) => {
       if (!mobileMenu.classList.contains('open')) return;
       if (mobileMenu.contains(e.target) || menuToggle.contains(e.target)) return;
       closeMenu();
     });
 
-    // Close on Escape
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') closeMenu();
     });
@@ -92,7 +183,6 @@
      3. HEADER SCROLL STATE
      ============================================================ */
   const header = $('#header');
-
   function updateHeader() {
     if (!header) return;
     header.classList.toggle('scrolled', window.scrollY > 12);
@@ -117,10 +207,8 @@
       },
       { threshold: 0.12, rootMargin: '0px 0px -60px 0px' }
     );
-
     revealEls.forEach((el) => revealObserver.observe(el));
   } else {
-    // Fallback: reveal everything
     revealEls.forEach((el) => el.classList.add('visible'));
   }
 
@@ -143,7 +231,6 @@
       },
       { rootMargin: '-45% 0px -50% 0px', threshold: 0 }
     );
-
     sections.forEach((section) => navObserver.observe(section));
   }
 
@@ -158,7 +245,6 @@
     const nameEl = $('#name');
     const emailEl = $('#email');
     const messageEl = $('#message');
-
     const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
     function setMessage(text, isOk) {
@@ -167,7 +253,6 @@
       formMessage.classList.toggle('ok', !!isOk);
     }
 
-    // Clear error state while typing
     [nameEl, emailEl, messageEl].forEach((el) => {
       if (!el) return;
       el.addEventListener('input', () => {
@@ -187,7 +272,6 @@
       const message = messageEl ? messageEl.value.trim() : '';
       const lang = document.documentElement.lang;
 
-      // Validation messages (bilingual)
       const t = {
         en: {
           name: 'Please enter your name.',
@@ -219,7 +303,6 @@
         return;
       }
 
-      // Simulate async send
       if (submitBtn) {
         submitBtn.classList.add('loading');
         submitBtn.disabled = true;
@@ -232,14 +315,6 @@
         }
         form.reset();
         setMessage(t.success || 'Message sent!', true);
-
-        // NOTE: To send real emails, integrate Formspree / EmailJS here.
-        // Example (Formspree):
-        //   fetch('https://formspree.io/f/XXXXXXX', {
-        //     method: 'POST',
-        //     headers: { 'Content-Type': 'application/json' },
-        //     body: JSON.stringify({ name, email, message })
-        //   });
       }, 1300);
     });
   }
@@ -249,16 +324,5 @@
      ============================================================ */
   const yearEl = $('#year');
   if (yearEl) yearEl.textContent = String(new Date().getFullYear());
-
-  /* ============================================================
-     8. SMOOTH ANCHOR SCROLL (with sticky header offset)
-     ============================================================ */
-  // Native CSS scroll-behavior + scroll-margin-top handles this,
-  // but we also close the mobile menu on anchor clicks (done above).
-
-  /* ============================================================
-     9. KEYBOARD: return focus to toggle when menu closes
-     ============================================================ */
-  // (Handled implicitly — Escape closes menu.)
 
 })();
