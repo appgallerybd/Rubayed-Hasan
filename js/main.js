@@ -1,6 +1,6 @@
 /* ============================================================
    RUBayed HASAN — PORTFOLIO
-   Language · Menu · Reveal · Form · Premium PNG Favicon
+   Language · Menu · Reveal · WhatsApp Form · Premium Favicon
    ============================================================ */
 
 (function () {
@@ -12,11 +12,6 @@
   /* ============================================================
      0. PREMIUM PNG FAVICON GENERATOR
      ============================================================ */
-
-  /**
-   * Draws a premium gold rounded-square mark with dark serif "RH" monogram.
-   * Exported as PNG (128×128) and set as favicon + shown in footer preview.
-   */
   function generatePremiumFavicon() {
     const S = 128;
     const canvas = document.createElement('canvas');
@@ -26,8 +21,6 @@
     if (!ctx) return null;
 
     const radius = 28;
-
-    // Rounded-rect path
     ctx.beginPath();
     ctx.moveTo(radius, 0);
     ctx.lineTo(S - radius, 0);
@@ -40,34 +33,30 @@
     ctx.quadraticCurveTo(0, 0, radius, 0);
     ctx.closePath();
 
-    // Gold gradient background
+    // Rich Gold Gradient
     const bgGrad = ctx.createLinearGradient(0, 0, S, S);
-    bgGrad.addColorStop(0.00, '#e8b87c');
-    bgGrad.addColorStop(0.50, '#d9a86c');
-    bgGrad.addColorStop(1.00, '#b87a4a');
+    bgGrad.addColorStop(0.00, '#f3e5ab');
+    bgGrad.addColorStop(0.50, '#d4af37');
+    bgGrad.addColorStop(1.00, '#b8862d');
     ctx.fillStyle = bgGrad;
     ctx.fill();
 
-    // Top-left highlight for premium depth
     const hl = ctx.createRadialGradient(S * 0.28, S * 0.22, 0, S * 0.3, S * 0.25, S * 0.75);
-    hl.addColorStop(0.0, 'rgba(255, 255, 255, 0.35)');
+    hl.addColorStop(0.0, 'rgba(255, 255, 255, 0.45)');
     hl.addColorStop(0.5, 'rgba(255, 255, 255, 0)');
     ctx.fillStyle = hl;
     ctx.fill();
 
-    // Inner border
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.32)';
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.4)';
     ctx.lineWidth = 2;
     ctx.stroke();
 
-    // Slight inner shadow at bottom
     const sh = ctx.createLinearGradient(0, S * 0.55, 0, S);
     sh.addColorStop(0.0, 'rgba(0, 0, 0, 0)');
-    sh.addColorStop(1.0, 'rgba(0, 0, 0, 0.12)');
+    sh.addColorStop(1.0, 'rgba(0, 0, 0, 0.2)');
     ctx.fillStyle = sh;
     ctx.fill();
 
-    // "RH" monogram in dark serif
     ctx.fillStyle = '#14100a';
     ctx.font = 'bold 56px Georgia, "Instrument Serif", "Times New Roman", serif';
     ctx.textAlign = 'center';
@@ -81,7 +70,6 @@
     const dataUrl = generatePremiumFavicon();
     if (!dataUrl) return;
 
-    // 1) Set as the site favicon (replaces the placeholder)
     const existing = document.getElementById('siteFavicon');
     if (existing) {
       existing.type = 'image/png';
@@ -94,21 +82,17 @@
       document.head.appendChild(link);
     }
 
-    // 2) Remove any leftover shortcut / apple-touch icons that might conflict
     $$("link[rel='shortcut icon'], link[rel='apple-touch-icon']").forEach((el) => el.remove());
 
-    // 3) Add a clean apple-touch-icon with the same premium PNG
     const apple = document.createElement('link');
     apple.rel = 'apple-touch-icon';
     apple.href = dataUrl;
     document.head.appendChild(apple);
 
-    // 4) Show the actual PNG in the footer as a live preview
     const preview = document.getElementById('footerFavicon');
     if (preview) preview.src = dataUrl;
   }
 
-  // Run as early as possible
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', applyFavicon, { once: true });
   } else {
@@ -235,11 +219,12 @@
   }
 
   /* ============================================================
-     6. CONTACT FORM
+     6. CONTACT FORM -> WHATSAPP REDIRECT
      ============================================================ */
   const form = $('#contactForm');
   const submitBtn = $('#submitBtn');
   const formMessage = $('#formMessage');
+  const WA_NUMBER = '8801776561371'; // Your WhatsApp number
 
   if (form) {
     const nameEl = $('#name');
@@ -277,28 +262,28 @@
           name: 'Please enter your name.',
           email: 'Please enter a valid email address.',
           message: 'Please write a slightly longer message.',
-          success: 'Thanks! Your message has been sent — I\'ll reply within 24 hours.'
+          success: 'Opening WhatsApp...'
         },
         bn: {
           name: 'অনুগ্রহ করে আপনার নাম লিখুন।',
           email: 'অনুগ্রহ করে একটি সঠিক ইমেইল ঠিকানা লিখুন।',
           message: 'অনুগ্রহ করে একটু বিস্তারিত বার্তা লিখুন।',
-          success: 'ধন্যবাদ! আপনার বার্তা পাঠানো হয়েছে — আমি ২৪ ঘণ্টার মধ্যে উত্তর দেব।'
+          success: 'হোয়াটসঅ্যাপ খোলা হচ্ছে...'
         }
       }[lang] || {};
 
       if (!name) {
-        setMessage(t.name || 'Please enter your name.', false);
+        setMessage(t.name, false);
         nameEl && nameEl.focus();
         return;
       }
       if (!EMAIL_RE.test(email)) {
-        setMessage(t.email || 'Please enter a valid email address.', false);
+        setMessage(t.email, false);
         emailEl && emailEl.focus();
         return;
       }
       if (message.length < 10) {
-        setMessage(t.message || 'Please write a slightly longer message.', false);
+        setMessage(t.message, false);
         messageEl && messageEl.focus();
         return;
       }
@@ -307,15 +292,22 @@
         submitBtn.classList.add('loading');
         submitBtn.disabled = true;
       }
+      setMessage(t.success, true);
+
+      // Construct WhatsApp Message
+      const waText = `Hello Rubayed,\n\nName: ${name}\nEmail: ${email}\n\nMessage:\n${message}`;
+      const waUrl = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(waText)}`;
 
       setTimeout(() => {
+        window.open(waUrl, '_blank');
+        
         if (submitBtn) {
           submitBtn.classList.remove('loading');
           submitBtn.disabled = false;
         }
         form.reset();
-        setMessage(t.success || 'Message sent!', true);
-      }, 1300);
+        setMessage(lang === 'bn' ? 'বার্তা পাঠানো হয়েছে।' : 'Message sent.', true);
+      }, 1000);
     });
   }
 
