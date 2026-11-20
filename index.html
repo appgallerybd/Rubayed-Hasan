@@ -1,98 +1,540 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>আপনার নাম | পোর্টফলিও</title>
-<meta name="description" content="আমার কাজ, সেবা ও যোগাযোগের তথ্য।">
-<meta name="theme-color" content="#0b6e4f">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600&family=Noto+Serif+Bengali:wght@600;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Rubayed Hasan — Graphic Designer & Brand Specialist based in Shatkhira, Bangladesh. Brand identity, logo design, editorial, packaging & UI/UX." />
+  <meta name="theme-color" content="#0a0a0d" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Rubayed Hasan — Graphic Designer" />
+  <meta property="og:description" content="Brand identity, logo design & visual storytelling from Shatkhira, Bangladesh." />
+  <meta property="og:type" content="website" />
+
+  <title>Rubayed Hasan — Graphic Designer</title>
+
+  <!-- Favicon (inline SVG) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%23d9a86c'/><text x='50' y='69' font-size='50' font-family='Georgia,serif' font-weight='bold' text-anchor='middle' fill='%230a0a0d'>RH</text></svg>" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/style.css" />
+
+  <!-- Set language before render to avoid flash -->
+  <script>
+    (function () {
+      var saved = localStorage.getItem('rh-lang');
+      if (!saved) {
+        saved = (navigator.language || 'en').toLowerCase().indexOf('bn') === 0 ? 'bn' : 'en';
+      }
+      document.documentElement.lang = saved;
+    })();
+  </script>
 </head>
 <body>
 
-<header class="site-header" id="top">
-  <a class="brand" href="#top" data-t="name">আপনার নাম</a>
-  <button class="menu-btn" id="menuBtn" aria-label="মেনু খুলুন" aria-expanded="false">☰</button>
-  <nav id="nav" aria-label="প্রধান মেনু">
-    <a href="#about">পরিচিতি</a>
-    <a href="#services">সেবা</a>
-    <a href="#work">কাজ</a>
-    <a href="#blog">লেখা</a>
-    <a href="#contact">যোগাযোগ</a>
-    <a class="btn btn-sm" data-wa href="#contact">হোয়াটসঅ্যাপ</a>
-  </nav>
-</header>
+  <!-- ================= HEADER ================= -->
+  <header class="site-header" id="header">
+    <div class="container header-inner">
 
-<main>
-  <section class="hero">
-    <div class="hero-text">
-      <p class="hello">আসসালামু আলাইকুম</p>
-      <h1><span data-t="name">আপনার নাম</span></h1>
-      <h2 data-t="title">আপনার পেশা বা পরিচয়</h2>
-      <p class="lead" data-t="intro">এখানে দুই-তিন লাইনে নিজের পরিচয় ও কাজের ধরন লিখুন।</p>
-      <div class="actions">
-        <a class="btn" href="#contact">কাজের জন্য বলুন</a>
-        <a class="btn btn-ghost" href="#work">কাজ দেখুন</a>
+      <a href="#home" class="logo" aria-label="Rubayed Hasan — Home">
+        <span class="logo-mark">RH</span>
+        <span class="logo-text">
+          <span lang="en">Rubayed Hasan</span>
+          <span lang="bn">রুবায়েদ হাসান</span>
+        </span>
+      </a>
+
+      <nav class="nav-desktop" aria-label="Primary navigation">
+        <a href="#home"><span lang="en">Home</span><span lang="bn">হোম</span></a>
+        <a href="#about"><span lang="en">About</span><span lang="bn">সম্পর্কে</span></a>
+        <a href="#services"><span lang="en">Services</span><span lang="bn">সেবা</span></a>
+        <a href="#work"><span lang="en">Work</span><span lang="bn">কাজ</span></a>
+        <a href="#contact"><span lang="en">Contact</span><span lang="bn">যোগাযোগ</span></a>
+      </nav>
+
+      <div class="header-actions">
+        <div class="lang-toggle" role="group" aria-label="Language selector">
+          <button type="button" data-set-lang="en" class="active" aria-label="Switch to English">EN</button>
+          <button type="button" data-set-lang="bn" aria-label="বাংলায় পরিবর্তন করুন">বাংলা</button>
+        </div>
+
+        <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+          <span></span><span></span><span></span>
+        </button>
       </div>
     </div>
-    <div class="hero-side">
-      <img id="photo" src="assets/photo.jpg" alt="প্রোফাইল ছবি" width="420" height="420" onerror="this.style.display='none'">
-      <ul class="stats" id="stats"></ul>
+
+    <!-- Mobile menu -->
+    <div class="mobile-menu" id="mobileMenu">
+      <nav aria-label="Mobile navigation">
+        <a href="#home"><span lang="en">Home</span><span lang="bn">হোম</span></a>
+        <a href="#about"><span lang="en">About</span><span lang="bn">সম্পর্কে</span></a>
+        <a href="#services"><span lang="en">Services</span><span lang="bn">সেবা</span></a>
+        <a href="#work"><span lang="en">Work</span><span lang="bn">কাজ</span></a>
+        <a href="#contact"><span lang="en">Contact</span><span lang="bn">যোগাযোগ</span></a>
+      </nav>
     </div>
-  </section>
+  </header>
 
-  <section id="about" class="block">
-    <h2>পরিচিতি</h2>
-    <div class="about-grid">
-      <div id="aboutText"></div>
-      <ul class="skills" id="skills"></ul>
+  <main>
+
+    <!-- ================= HERO ================= -->
+    <section id="home" class="hero">
+      <div class="container hero-inner">
+
+        <div class="hero-content">
+          <p class="eyebrow">
+            <span class="dot"></span>
+            <span lang="en">Graphic Designer &amp; Visual Storyteller</span>
+            <span lang="bn">গ্রাফিক ডিজাইনার ও ভিজ্যুয়াল স্টোরিটেলার</span>
+          </p>
+
+          <h1 class="hero-title">
+            <span lang="en">Rubayed <em>Hasan</em></span>
+            <span lang="bn">রুবায়েদ <em>হাসান</em></span>
+          </h1>
+
+          <p class="hero-location">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+            </svg>
+            <span lang="en">Shatkhira, Bangladesh</span>
+            <span lang="bn">সাতক্ষীরা, বাংলাদেশ</span>
+          </p>
+
+          <p class="hero-tagline">
+            <span lang="en">I craft bold brands and visual identities that leave a lasting impression — blending strategic thinking with a relentless attention to craft.</span>
+            <span lang="bn">আমি সাহসী ব্র্যান্ড এবং ভিজ্যুয়াল আইডেন্টিটি তৈরি করি যা স্থায়ী ছাপ রেখে যায় — কৌশলগত চিন্তা এবং কারুকাজের প্রতি নিরলস মনোযোগের মিশ্রণে।</span>
+          </p>
+
+          <div class="hero-cta">
+            <a href="#work" class="btn btn-primary">
+              <span lang="en">View Work</span><span lang="bn">কাজ দেখুন</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+            <a href="#contact" class="btn btn-ghost">
+              <span lang="en">Get in Touch</span><span lang="bn">যোগাযোগ করুন</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="hero-art" aria-hidden="true">
+          <div class="art-card card-back"></div>
+          <div class="art-card card-mid"></div>
+          <div class="art-card card-front">
+            <span class="art-monogram">RH</span>
+            <span class="art-caption">
+              <span lang="en">Brand · Editorial · Digital</span>
+              <span lang="bn">ব্র্যান্ড · এডিটোরিয়াল · ডিজিটাল</span>
+            </span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= ABOUT ================= -->
+    <section id="about" class="section about">
+      <div class="container">
+
+        <div class="section-head reveal">
+          <span class="section-label"><span lang="en">01 — About</span><span lang="bn">০১ — সম্পর্কে</span></span>
+          <h2 class="section-title">
+            <span lang="en">Design with purpose, built to last.</span>
+            <span lang="bn">উদ্দেশ্যপূর্ণ ডিজাইন, যা দীর্ঘস্থায়ী।</span>
+          </h2>
+        </div>
+
+        <div class="about-grid">
+
+          <div class="about-text reveal">
+            <p>
+              <span lang="en">I'm Rubayed Hasan, a graphic designer based in Shatkhira, Bangladesh. For over six years, I've helped brands find their voice through thoughtful design — from identity systems and packaging to editorial layouts and digital experiences.</span>
+              <span lang="bn">আমি রুবায়েদ হাসান, সাতক্ষীরা, বাংলাদেশে অবস্থিত একজন গ্রাফিক ডিজাইনার। ছয় বছরেরও বেশি সময় ধরে আমি ব্র্যান্ডগুলোকে তাদের কণ্ঠস্বর খুঁজে পেতে সাহায্য করছি — আইডেন্টিটি সিস্টেম, প্যাকেজিং থেকে শুরু করে এডিটোরিয়াল লেআউট এবং ডিজিটাল অভিজ্ঞতা পর্যন্ত।</span>
+            </p>
+            <p>
+              <span lang="en">My work blends strategic thinking with a relentless attention to craft. I believe great design isn't just beautiful — it's purposeful, memorable, and built to last.</span>
+              <span lang="bn">আমার কাজ কৌশলগত চিন্তা এবং কারুকাজের প্রতি নিরলস মনোযোগের মিশ্রণ। আমি বিশ্বাস করি দুর্দান্ত ডিজাইন শুধু সুন্দর নয় — এটি উদ্দেশ্যপূর্ণ, স্মরণীয় এবং দীর্ঘস্থায়ী।</span>
+            </p>
+
+            <div class="about-facts">
+              <div class="fact">
+                <span class="fact-label"><span lang="en">Based in</span><span lang="bn">অবস্থান</span></span>
+                <span class="fact-value"><span lang="en">Shatkhira, Bangladesh</span><span lang="bn">সাতক্ষীরা, বাংলাদেশ</span></span>
+              </div>
+              <div class="fact">
+                <span class="fact-label"><span lang="en">Experience</span><span lang="bn">অভিজ্ঞতা</span></span>
+                <span class="fact-value"><span lang="en">6+ years</span><span lang="bn">৬+ বছর</span></span>
+              </div>
+              <div class="fact">
+                <span class="fact-label"><span lang="en">Specialties</span><span lang="bn">বিশেষত্ব</span></span>
+                <span class="fact-value"><span lang="en">Branding · Editorial · Digital</span><span lang="bn">ব্র্যান্ডিং · এডিটোরিয়াল · ডিজিটাল</span></span>
+              </div>
+              <div class="fact">
+                <span class="fact-label"><span lang="en">Languages</span><span lang="bn">ভাষা</span></span>
+                <span class="fact-value"><span lang="en">English · Bangla</span><span lang="bn">ইংরেজি · বাংলা</span></span>
+              </div>
+            </div>
+          </div>
+
+          <aside class="profile-card reveal" data-delay="1">
+            <div class="profile-visual" aria-hidden="true">
+              <span class="profile-monogram">RH</span>
+            </div>
+            <div class="profile-body">
+              <h3><span lang="en">Rubayed Hasan</span><span lang="bn">রুবায়েদ হাসান</span></h3>
+              <p class="profile-role"><span lang="en">Graphic Designer</span><span lang="bn">গ্রাফিক ডিজাইনার</span></p>
+              <span class="status-pill">
+                <span class="status-dot"></span>
+                <span lang="en">Available for projects</span>
+                <span lang="bn">প্রকল্পের জন্য উপলব্ধ</span>
+              </span>
+            </div>
+          </aside>
+
+        </div>
+
+        <div class="stats reveal" data-delay="2">
+          <div class="stat">
+            <strong>6+</strong>
+            <span><span lang="en">Years of Experience</span><span lang="bn">বছরের অভিজ্ঞতা</span></span>
+          </div>
+          <div class="stat">
+            <strong>120+</strong>
+            <span><span lang="en">Projects Delivered</span><span lang="bn">প্রকল্প সম্পন্ন</span></span>
+          </div>
+          <div class="stat">
+            <strong>45+</strong>
+            <span><span lang="en">Happy Clients</span><span lang="bn">সন্তুষ্ট ক্লায়েন্ট</span></span>
+          </div>
+          <div class="stat">
+            <strong>12</strong>
+            <span><span lang="en">Design Awards</span><span lang="bn">ডিজাইন অ্যাওয়ার্ড</span></span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= SERVICES ================= -->
+    <section id="services" class="section services">
+      <div class="container">
+
+        <div class="section-head reveal">
+          <span class="section-label"><span lang="en">02 — Services</span><span lang="bn">০২ — সেবা</span></span>
+          <h2 class="section-title">
+            <span lang="en">What I can do for your brand.</span>
+            <span lang="bn">আপনার ব্র্যান্ডের জন্য আমি যা করতে পারি।</span>
+          </h2>
+        </div>
+
+        <div class="services-grid">
+
+          <article class="service-card reveal">
+            <div class="service-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></svg>
+            </div>
+            <h3><span lang="en">Brand Identity</span><span lang="bn">ব্র্যান্ড আইডেন্টিটি</span></h3>
+            <p><span lang="en">Complete brand systems — from strategy and naming to a cohesive visual language.</span><span lang="bn">সম্পূর্ণ ব্র্যান্ড সিস্টেম — স্ট্র্যাটেজি, নেমিং থেকে সুসংগত ভিজ্যুয়াল ল্যাঙ্গুয়েজ পর্যন্ত।</span></p>
+          </article>
+
+          <article class="service-card reveal" data-delay="1">
+            <div class="service-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>
+            </div>
+            <h3><span lang="en">Logo Design</span><span lang="bn">লোগো ডিজাইন</span></h3>
+            <p><span lang="en">Distinctive, memorable marks engineered to work everywhere — print, screen, and beyond.</span><span lang="bn">স্বতন্ত্র ও স্মরণীয় লোগো, যা সর্বত্র কার্যকর — প্রিন্ট, স্ক্রিন এবং তার বাইরেও।</span></p>
+          </article>
+
+          <article class="service-card reveal" data-delay="2">
+            <div class="service-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h5"/></svg>
+            </div>
+            <h3><span lang="en">Print &amp; Editorial</span><span lang="bn">প্রিন্ট ও এডিটোরিয়াল</span></h3>
+            <p><span lang="en">Magazines, brochures, and publications designed with typographic precision.</span><span lang="bn">ম্যাগাজিন, ব্রোশিওর ও প্রকাশনা — টাইপোগ্রাফিক নিখুঁততায় ডিজাইন করা।</span></p>
+          </article>
+
+          <article class="service-card reveal" data-delay="3">
+            <div class="service-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18M9 21V9"/></svg>
+            </div>
+            <h3><span lang="en">Social Media Design</span><span lang="bn">সোশ্যাল মিডিয়া ডিজাইন</span></h3>
+            <p><span lang="en">Scroll-stopping visuals and cohesive content systems for every platform.</span><span lang="bn">স্ক্রল থামিয়ে দেওয়া ভিজ্যুয়াল এবং প্রতিটি প্ল্যাটফর্মের জন্য সুসংগত কনটেন্ট সিস্টেম।</span></p>
+          </article>
+
+          <article class="service-card reveal" data-delay="4">
+            <div class="service-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="M3.27 6.96 12 12.01l8.73-5.05"/><path d="M12 22.08V12"/></svg>
+            </div>
+            <h3><span lang="en">Packaging</span><span lang="bn">প্যাকেজিং</span></h3>
+            <p><span lang="en">Shelf-ready packaging that tells your product's story and sells itself.</span><span lang="bn">শেলফ-রেডি প্যাকেজিং, যা আপনার পণ্যের গল্প বলে এবং নিজেই বিক্রি হয়।</span></p>
+          </article>
+
+          <article class="service-card reveal" data-delay="5">
+            <div class="service-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><path d="M7 8h6M7 11h3"/></svg>
+            </div>
+            <h3><span lang="en">UI / UX Design</span><span lang="bn">ইউআই / ইউএক্স ডিজাইন</span></h3>
+            <p><span lang="en">Clean, usable interfaces for web and mobile products that people love to use.</span><span lang="bn">ওয়েব ও মোবাইল পণ্যের জন্য পরিষ্কার, ব্যবহারযোগ্য ইন্টারফেস — যা মানুষ ব্যবহার করতে ভালোবাসে।</span></p>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= WORK ================= -->
+    <section id="work" class="section work">
+      <div class="container">
+
+        <div class="section-head reveal">
+          <span class="section-label"><span lang="en">03 — Selected Work</span><span lang="bn">০৩ — নির্বাচিত কাজ</span></span>
+          <h2 class="section-title">
+            <span lang="en">Recent projects.</span>
+            <span lang="bn">সাম্প্রতিক প্রকল্প।</span>
+          </h2>
+          <p class="section-sub">
+            <span lang="en">A selection of brand identities, editorial layouts, and digital products.</span>
+            <span lang="bn">ব্র্যান্ড আইডেন্টিটি, এডিটোরিয়াল লেআউট এবং ডিজিটাল পণ্যের একটি নির্বাচন।</span>
+          </p>
+        </div>
+
+        <div class="work-grid">
+
+          <article class="project reveal">
+            <div class="project-visual visual-1">
+              <span class="project-index">01</span>
+            </div>
+            <div class="project-info">
+              <h3>Aurora Coffee Co.</h3>
+              <p><span lang="en">Brand Identity</span><span lang="bn">ব্র্যান্ড আইডেন্টিটি</span> · 2024</p>
+            </div>
+          </article>
+
+          <article class="project reveal" data-delay="1">
+            <div class="project-visual visual-2">
+              <span class="project-index">02</span>
+            </div>
+            <div class="project-info">
+              <h3>Nomad Athletics</h3>
+              <p><span lang="en">Logo &amp; Visual System</span><span lang="bn">লোগো ও ভিজ্যুয়াল সিস্টেম</span> · 2024</p>
+            </div>
+          </article>
+
+          <article class="project reveal" data-delay="2">
+            <div class="project-visual visual-3">
+              <span class="project-index">03</span>
+            </div>
+            <div class="project-info">
+              <h3>Lumen Magazine</h3>
+              <p><span lang="en">Editorial Design</span><span lang="bn">এডিটোরিয়াল ডিজাইন</span> · 2023</p>
+            </div>
+          </article>
+
+          <article class="project reveal" data-delay="3">
+            <div class="project-visual visual-4">
+              <span class="project-index">04</span>
+            </div>
+            <div class="project-info">
+              <h3>Petal &amp; Stone</h3>
+              <p><span lang="en">Packaging</span><span lang="bn">প্যাকেজিং</span> · 2023</p>
+            </div>
+          </article>
+
+          <article class="project reveal" data-delay="4">
+            <div class="project-visual visual-5">
+              <span class="project-index">05</span>
+            </div>
+            <div class="project-info">
+              <h3>Verve Studio</h3>
+              <p><span lang="en">Social Campaign</span><span lang="bn">সোশ্যাল ক্যাম্পেইন</span> · 2022</p>
+            </div>
+          </article>
+
+          <article class="project reveal" data-delay="5">
+            <div class="project-visual visual-6">
+              <span class="project-index">06</span>
+            </div>
+            <div class="project-info">
+              <h3>Kite Financial</h3>
+              <p><span lang="en">UI / UX Design</span><span lang="bn">ইউআই / ইউএক্স ডিজাইন</span> · 2022</p>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= TESTIMONIALS ================= -->
+    <section id="testimonials" class="section testimonials">
+      <div class="container">
+
+        <div class="section-head reveal">
+          <span class="section-label"><span lang="en">04 — Testimonials</span><span lang="bn">০৪ — প্রশংসাপত্র</span></span>
+          <h2 class="section-title">
+            <span lang="en">Kind words from clients.</span>
+            <span lang="bn">ক্লায়েন্টদের ভালোবাসার কথা।</span>
+          </h2>
+        </div>
+
+        <div class="testimonial-grid">
+
+          <figure class="testimonial reveal">
+            <svg class="quote-mark" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9.5 5C6.5 6.7 4 9.6 4 13.5 4 16.5 5.9 18 8 18c1.9 0 3.3-1.4 3.3-3.3 0-1.8-1.3-3.1-3-3.1-.4 0-.8.1-1 .2.4-2 2-3.7 3.7-4.6L9.5 5zm8.4 0c-3 1.7-5.5 4.6-5.5 8.5 0 3 1.9 4.5 4 4.5 1.9 0 3.3-1.4 3.3-3.3 0-1.8-1.3-3.1-3-3.1-.4 0-.8.1-1 .2.4-2 2-3.7 3.7-4.6L17.9 5z"/></svg>
+            <blockquote>
+              <span lang="en">Rubayed transformed our brand from forgettable to iconic. The attention to detail is unmatched.</span>
+              <span lang="bn">রুবায়েদ আমাদের ব্র্যান্ডকে সাধারণ থেকে আইকনিকে রূপান্তরিত করেছেন। ডিটেইলে তাঁর মনোযোগ অতুলনীয়।</span>
+            </blockquote>
+            <figcaption>
+              <strong>Sarah Mitchell</strong>
+              <span><span lang="en">Founder, Aurora Coffee Co.</span><span lang="bn">প্রতিষ্ঠাতা, অরোরা কফি কোং.</span></span>
+            </figcaption>
+          </figure>
+
+          <figure class="testimonial reveal" data-delay="1">
+            <svg class="quote-mark" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9.5 5C6.5 6.7 4 9.6 4 13.5 4 16.5 5.9 18 8 18c1.9 0 3.3-1.4 3.3-3.3 0-1.8-1.3-3.1-3-3.1-.4 0-.8.1-1 .2.4-2 2-3.7 3.7-4.6L9.5 5zm8.4 0c-3 1.7-5.5 4.6-5.5 8.5 0 3 1.9 4.5 4 4.5 1.9 0 3.3-1.4 3.3-3.3 0-1.8-1.3-3.1-3-3.1-.4 0-.8.1-1 .2.4-2 2-3.7 3.7-4.6L17.9 5z"/></svg>
+            <blockquote>
+              <span lang="en">Working with Rubayed was seamless. He understood our vision instantly and delivered beyond expectations.</span>
+              <span lang="bn">রুবায়েদের সাথে কাজ করা ছিল খুব সহজ। তিনি আমাদের ভিশন সাথে সাথেই বুঝেছিলেন এবং প্রত্যাশার বাইরে ডেলিভারি দিয়েছেন।</span>
+            </blockquote>
+            <figcaption>
+              <strong>Daniel Okafor</strong>
+              <span><span lang="en">Creative Director, Nomad Athletics</span><span lang="bn">ক্রিয়েটিভ ডিরেক্টর, নোম্যাড অ্যাথলেটিক্স</span></span>
+            </figcaption>
+          </figure>
+
+          <figure class="testimonial reveal" data-delay="2">
+            <svg class="quote-mark" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9.5 5C6.5 6.7 4 9.6 4 13.5 4 16.5 5.9 18 8 18c1.9 0 3.3-1.4 3.3-3.3 0-1.8-1.3-3.1-3-3.1-.4 0-.8.1-1 .2.4-2 2-3.7 3.7-4.6L9.5 5zm8.4 0c-3 1.7-5.5 4.6-5.5 8.5 0 3 1.9 4.5 4 4.5 1.9 0 3.3-1.4 3.3-3.3 0-1.8-1.3-3.1-3-3.1-.4 0-.8.1-1 .2.4-2 2-3.7 3.7-4.6L17.9 5z"/></svg>
+            <blockquote>
+              <span lang="en">Every deliverable was thoughtful, on-brand, and beautifully crafted. A true professional.</span>
+              <span lang="bn">প্রতিটি ডেলিভারেবল ছিল ভেবেচিন্তে তৈরি, ব্র্যান্ড-সামঞ্জস্যপূর্ণ এবং সুন্দরভাবে সম্পন্ন। একজন সত্যিকারের পেশাদার।</span>
+            </blockquote>
+            <figcaption>
+              <strong>Priya Nair</strong>
+              <span><span lang="en">Marketing Lead, Kite Financial</span><span lang="bn">মার্কেটিং লিড, কাইট ফাইন্যান্সিয়াল</span></span>
+            </figcaption>
+          </figure>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CONTACT ================= -->
+    <section id="contact" class="section contact">
+      <div class="container">
+
+        <div class="section-head reveal">
+          <span class="section-label"><span lang="en">05 — Contact</span><span lang="bn">০৫ — যোগাযোগ</span></span>
+          <h2 class="section-title">
+            <span lang="en">Let's build something great.</span>
+            <span lang="bn">চলুন একসাথে দারুণ কিছু তৈরি করি।</span>
+          </h2>
+          <p class="section-sub">
+            <span lang="en">Have a project in mind? I'd love to hear about it. I typically respond within 24 hours.</span>
+            <span lang="bn">মনে কোনো প্রকল্প আছে? শুনতে ভালো লাগবে। আমি সাধারণত ২৪ ঘণ্টার মধ্যে উত্তর দিই।</span>
+          </p>
+        </div>
+
+        <div class="contact-grid">
+
+          <div class="contact-info reveal">
+
+            <a class="contact-item" href="mailto:hello@rubayedhasan.com">
+              <span class="contact-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4.5" width="19" height="15" rx="3"/><path d="M3 7l9 6 9-6"/></svg>
+              </span>
+              <span class="contact-meta">
+                <span class="contact-label">Email</span>
+                <span class="contact-value">hello@rubayedhasan.com</span>
+              </span>
+            </a>
+
+            <a class="contact-item" href="tel:+8801700000000">
+              <span class="contact-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              </span>
+              <span class="contact-meta">
+                <span class="contact-label"><span lang="en">Phone</span><span lang="bn">ফোন</span></span>
+                <span class="contact-value">+880 1700 000000</span>
+              </span>
+            </a>
+
+            <div class="contact-item static">
+              <span class="contact-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              </span>
+              <span class="contact-meta">
+                <span class="contact-label"><span lang="en">Location</span><span lang="bn">অবস্থান</span></span>
+                <span class="contact-value"><span lang="en">Shatkhira, Bangladesh</span><span lang="bn">সাতক্ষীরা, বাংলাদেশ</span></span>
+              </span>
+            </div>
+
+            <div class="socials">
+              <a href="#" aria-label="Behance">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 7h-7V5h7v2zm-1.6 8.9c-.4.6-1.1.9-2 .9-1.7 0-2.6-1-2.6-2.4h6.7c0-.3 0-.6-.1-.9-.1-1.8-1.5-3.3-3.9-3.3-2.6 0-4.3 1.8-4.3 4.6 0 2.8 1.7 4.6 4.4 4.6 2 0 3.4-.9 4-2.6l-2.2-.9zM16.4 14c.1-1.1.8-1.8 1.8-1.8s1.6.7 1.7 1.8h-3.5zM7.8 12.6c1-.4 1.5-1.1 1.5-2.3 0-2-1.5-3.1-3.8-3.1H0v11.6h5.6c2.5 0 4.1-1.2 4.1-3.5 0-1.4-.7-2.3-1.9-2.7zM2.5 9.4h2.4c1.1 0 1.7.5 1.7 1.4 0 .9-.6 1.4-1.7 1.4H2.5V9.4zm2.7 7.2H2.5v-2.9h2.7c1.2 0 1.9.5 1.9 1.5s-.7 1.4-1.9 1.4z"/></svg>
+              </a>
+              <a href="#" aria-label="Dribbble">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="10"/><path d="M8.6 3.3C11.5 7 14 11 15.2 15.9M20.6 8.3c-4.5 1.4-9.6 1-13.6-1M22 12.5c-5.6-1-11 .5-14.7 4.6M6 21c1.8-4.7 5.2-8.5 9.6-10.4"/></svg>
+              </a>
+              <a href="#" aria-label="Instagram">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.6" cy="6.4" r="1.1" fill="currentColor" stroke="none"/></svg>
+              </a>
+              <a href="#" aria-label="LinkedIn">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+              </a>
+            </div>
+
+          </div>
+
+          <form class="contact-form reveal" id="contactForm" data-delay="1" novalidate>
+            <div class="field">
+              <label for="name"><span lang="en">Your Name</span><span lang="bn">আপনার নাম</span></label>
+              <input id="name" name="name" type="text" data-ph-en="Jane Doe" data-ph-bn="জেন ডো" autocomplete="name" />
+            </div>
+
+            <div class="field">
+              <label for="email"><span lang="en">Email Address</span><span lang="bn">ইমেইল ঠিকানা</span></label>
+              <input id="email" name="email" type="email" data-ph-en="jane@example.com" data-ph-bn="jane@example.com" autocomplete="email" />
+            </div>
+
+            <div class="field">
+              <label for="message"><span lang="en">Your Message</span><span lang="bn">আপনার বার্তা</span></label>
+              <textarea id="message" name="message" rows="5" data-ph-en="Tell me about your project..." data-ph-bn="আপনার প্রকল্প সম্পর্কে বলুন..."></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block" id="submitBtn">
+              <span class="btn-label"><span lang="en">Send Message</span><span lang="bn">বার্তা পাঠান</span></span>
+              <span class="btn-spinner" aria-hidden="true"></span>
+            </button>
+
+            <p class="form-message" id="formMessage" role="status" aria-live="polite"></p>
+          </form>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <span class="logo-mark">RH</span>
+        <div>
+          <strong><span lang="en">Rubayed Hasan</span><span lang="bn">রুবায়েদ হাসান</span></strong>
+          <span class="footer-tagline"><span lang="en">Graphic Designer · Shatkhira, Bangladesh</span><span lang="bn">গ্রাফিক ডিজাইনার · সাতক্ষীরা, বাংলাদেশ</span></span>
+        </div>
+      </div>
+      <p class="footer-copy">
+        © <span id="year">2025</span> Rubayed Hasan. <span lang="en">All rights reserved.</span><span lang="bn">সর্বস্বত্ব সংরক্ষিত।</span>
+      </p>
     </div>
-  </section>
+  </footer>
 
-  <section id="services" class="block alt">
-    <h2>আমি যা করি</h2>
-    <div class="grid" id="serviceGrid"></div>
-  </section>
-
-  <section id="work" class="block">
-    <h2>নির্বাচিত কাজ</h2>
-    <div class="filters" id="filters" role="group" aria-label="ক্যাটেগরি ফিল্টার"></div>
-    <div class="grid" id="projectGrid"></div>
-    <p class="empty" id="projectEmpty" hidden>এই ক্যাটেগরিতে এখনো কোনো কাজ যোগ করা হয়নি।</p>
-  </section>
-
-  <section id="blog" class="block alt">
-    <h2>সাম্প্রতিক লেখা</h2>
-    <div class="grid" id="postGrid"></div>
-  </section>
-
-  <section id="contact" class="block">
-    <h2>যোগাযোগ</h2>
-    <div class="contact-grid">
-      <ul class="contact-list" id="contactList"></ul>
-      <form id="contactForm" novalidate>
-        <label>আপনার নাম<input name="name" required autocomplete="name"></label>
-        <label>ইমেইল বা ফোন<input name="contact" required></label>
-        <label>সেবা
-          <select name="service" id="serviceSelect"></select>
-        </label>
-        <label>বার্তা<textarea name="message" rows="4" required></textarea></label>
-        <button class="btn" type="submit">হোয়াটসঅ্যাপে পাঠান</button>
-        <p class="form-note" id="formNote" role="status"></p>
-      </form>
-    </div>
-  </section>
-</main>
-
-<footer class="site-footer">
-  <p>© <span id="year"></span> <span data-t="name">আপনার নাম</span>। সর্বস্বত্ব সংরক্ষিত।</p>
-  <ul class="social" id="social"></ul>
-</footer>
-
-<script src="data.js"></script>
-<script src="script.js"></script>
+  <script src="js/main.js"></script>
 </body>
-</html>
+            </html>
