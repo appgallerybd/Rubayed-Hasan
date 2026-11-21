@@ -12,8 +12,9 @@
 
   <title>Rubayed Hasan — Graphic Designer</title>
 
-  <!-- Favicon placeholder (JS will replace with premium PNG) -->
-  <link rel="icon" href="data:," id="siteFavicon" />
+  <!-- Favicon directly using your profile picture -->
+  <link rel="icon" type="image/png" href="images/profile.png" id="siteFavicon" />
+  <link rel="apple-touch-icon" href="images/profile.png" />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -38,7 +39,7 @@
   <header class="site-header" id="header">
     <div class="container header-inner">
       <a href="#home" class="logo" aria-label="Rubayed Hasan — Home">
-        <span class="logo-mark">RH</span>
+        <img src="images/profile.png" alt="Rubayed Hasan" class="logo-img" />
         <span class="logo-text">
           <span lang="en">Rubayed Hasan</span>
           <span lang="bn">রুবায়েদ হাসান</span>
@@ -80,6 +81,15 @@
     <section id="home" class="hero">
       <div class="hero-glow" aria-hidden="true"></div>
       <div class="container hero-inner">
+        
+        <!-- Image above text for mobile layout -->
+        <div class="hero-art">
+          <div class="portrait-glow"></div>
+          <div class="portrait-wrapper">
+            <img src="images/profile.png" alt="Rubayed Hasan - Graphic Designer" class="portrait-img" />
+          </div>
+        </div>
+
         <div class="hero-content">
           <p class="eyebrow">
             <span class="dot"></span>
@@ -114,12 +124,7 @@
           </div>
         </div>
 
-                <div class="hero-art">
-          <div class="portrait-glow"></div>
-          <div class="portrait-wrapper">
-            <img src="images/profile.png" alt="Rubayed Hasan - Graphic Designer" class="portrait-img" />
-          </div>
-        </div>
+      </div>
     </section>
 
     <!-- ================= ABOUT ================= -->
@@ -163,21 +168,6 @@
               </div>
             </div>
           </div>
-
-          <aside class="profile-card reveal" data-delay="1">
-            <div class="profile-visual" aria-hidden="true">
-              <span class="profile-monogram">RH</span>
-            </div>
-            <div class="profile-body">
-              <h3><span lang="en">Rubayed Hasan</span><span lang="bn">রুবায়েদ হাসান</span></h3>
-              <p class="profile-role"><span lang="en">Graphic Designer</span><span lang="bn">গ্রাফিক ডিজাইনার</span></p>
-              <span class="status-pill">
-                <span class="status-dot"></span>
-                <span lang="en">Available for projects</span>
-                <span lang="bn">প্রকল্পের জন্য উপলব্ধ</span>
-              </span>
-            </div>
-          </aside>
         </div>
 
         <div class="stats reveal" data-delay="2">
@@ -240,7 +230,7 @@
       </div>
     </section>
 
-    <!-- ================= WORK / PORTFOLIO ================= -->
+    <!-- ================= WORK / PORTFOLIO (MARQUEE) ================= -->
     <section id="work" class="section work">
       <div class="container">
         <div class="section-head reveal">
@@ -250,131 +240,100 @@
             <span lang="bn">সাম্প্রতিক প্রকল্প।</span>
           </h2>
           <p class="section-sub">
-            <span lang="en">A selection of brand identities, calligraphy, editorial layouts, and print products.</span>
-            <span lang="bn">ব্র্যান্ড আইডেন্টিটি, ক্যালিগ্রাফি, এডিটোরিয়াল লেআউট এবং প্রিন্ট পণ্যের একটি নির্বাচন।</span>
+            <span lang="en">A selection of brand identities, calligraphy, editorial layouts, and print products. Hover to pause.</span>
+            <span lang="bn">ব্র্যান্ড আইডেন্টিটি, ক্যালিগ্রাফি, এডিটোরিয়াল লেআউট এবং প্রিন্ট পণ্যের একটি নির্বাচন। থামাতে হোভার করুন।</span>
           </p>
         </div>
+      </div>
 
-        <div class="work-grid">
-          <!-- Project 1 -->
-          <article class="project reveal">
-            <div class="project-visual">
-              <img src="images/project-1.png" alt="Shikder Enterprise" loading="lazy" />
-            </div>
-            <div class="project-info">
-              <h3>Shikder Enterprise</h3>
-              <p class="project-cat"><span lang="en">Automotive Brand Identity</span><span lang="bn">অটোমোটিভ ব্র্যান্ড আইডেন্টিটি</span></p>
-              <p class="project-desc"><span lang="en">A bold and dynamic automotive logo featuring a sleek sports car silhouette, racing-inspired typography, and a premium red, silver, and gold color combination.</span><span lang="bn">একটি সাহসী এবং গতিশীল অটোমোটিভ লোগো, যেখানে স্পোর্টস কার, রেসিং-অনুপ্রাণিত টাইপোগ্রাফি এবং প্রিমিয়াম লাল, রূপালী ও সোনালী রঙের সমন্বয় রয়েছে।</span></p>
-            </div>
+      <!-- Marquee Container -->
+      <div class="work-marquee">
+        <div class="work-track" id="workTrack">
+          
+          <!-- Original 10 Projects -->
+          <article class="project">
+            <div class="project-visual"><img src="images/project-1.png" alt="Shikder Enterprise" loading="lazy" /></div>
+            <div class="project-info"><h3>Shikder Enterprise</h3><p class="project-cat"><span lang="en">Automotive Brand Identity</span><span lang="bn">অটোমোটিভ ব্র্যান্ড আইডেন্টিটি</span></p></div>
+          </article>
+          <article class="project">
+            <div class="project-visual"><img src="images/project-2.png" alt="Al Wafa Shop" loading="lazy" /></div>
+            <div class="project-info"><h3>Al Wafa Shop</h3><p class="project-cat"><span lang="en">Retail Brand Identity</span><span lang="bn">রিটেইল ব্র্যান্ড আইডেন্টিটি</span></p></div>
+          </article>
+          <article class="project">
+            <div class="project-visual"><img src="images/project-3.png" alt="HL Fashion House" loading="lazy" /></div>
+            <div class="project-info"><h3>HL Fashion House</h3><p class="project-cat"><span lang="en">Luxury Fashion Branding</span><span lang="bn">লাক্সারি ফ্যাশন ব্র্যান্ডিং</span></p></div>
+          </article>
+          <article class="project">
+            <div class="project-visual"><img src="images/project-4.png" alt="Takmil Certificate" loading="lazy" /></div>
+            <div class="project-info"><h3>Takmil Certificate</h3><p class="project-cat"><span lang="en">Islamic Certificate Design</span><span lang="bn">ইসলামিক সার্টিফিকেট ডিজাইন</span></p></div>
+          </article>
+          <article class="project">
+            <div class="project-visual"><img src="images/project-5.png" alt="Kaldanga Rawjul Ulum" loading="lazy" /></div>
+            <div class="project-info"><h3>Kaldanga Rawjul Ulum</h3><p class="project-cat"><span lang="en">Institutional Logo Design</span><span lang="bn">প্রাতিষ্ঠানিক লোগো ডিজাইন</span></p></div>
+          </article>
+          <article class="project">
+            <div class="project-visual"><img src="images/project-6.png" alt="Creative Designer" loading="lazy" /></div>
+            <div class="project-info"><h3>Creative Designer</h3><p class="project-cat"><span lang="en">Personal Brand Identity</span><span lang="bn">পার্সোনাল ব্র্যান্ড আইডেন্টিটি</span></p></div>
+          </article>
+          <article class="project">
+            <div class="project-visual"><img src="images/project-7.png" alt="Allah Calligraphy" loading="lazy" /></div>
+            <div class="project-info"><h3>Allah Calligraphy</h3><p class="project-cat"><span lang="en">Arabic Typography Design</span><span lang="bn">আরবি টাইপোগ্রাফি ডিজাইন</span></p></div>
+          </article>
+          <article class="project">
+            <div class="project-visual"><img src="images/project-8.png" alt="Creative Pen" loading="lazy" /></div>
+            <div class="project-info"><h3>Creative Pen</h3><p class="project-cat"><span lang="en">Conceptual Logo Design</span><span lang="bn">কনসেপচুয়াল লোগো ডিজাইন</span></p></div>
+          </article>
+          <article class="project">
+            <div class="project-visual"><img src="images/project-9.png" alt="Raghunathpur Hasania Madrasha" loading="lazy" /></div>
+            <div class="project-info"><h3>Raghunathpur Hasania Madrasha</h3><p class="project-cat"><span lang="en">Visiting Card Design</span><span lang="bn">ভিজিটিং কার্ড ডিজাইন</span></p></div>
+          </article>
+          <article class="project">
+            <div class="project-visual"><img src="images/project-10.png" alt="Alhamdulillah Calligraphy" loading="lazy" /></div>
+            <div class="project-info"><h3>Alhamdulillah</h3><p class="project-cat"><span lang="en">Arabic Calligraphy Logo</span><span lang="bn">আরবি ক্যালিগ্রাফি লোগো</span></p></div>
           </article>
 
-          <!-- Project 2 -->
-          <article class="project reveal" data-delay="1">
-            <div class="project-visual">
-              <img src="images/project-2.png" alt="Al Wafa Shop" loading="lazy" />
-            </div>
-            <div class="project-info">
-              <h3>Al Wafa Shop</h3>
-              <p class="project-cat"><span lang="en">Retail Brand Identity</span><span lang="bn">রিটেইল ব্র্যান্ড আইডেন্টিটি</span></p>
-              <p class="project-desc"><span lang="en">A modern retail brand logo combining creative Arabic-inspired typography with vibrant red and teal elements to establish a distinctive visual identity.</span><span lang="bn">আধুনিক রিটেইল ব্র্যান্ড লোগো, যেখানে সৃজনশীল আরবি-অনুপ্রাণিত টাইপোগ্রাফির সাথে প্রাণবন্ত লাল এবং টিল উপাদানের সমন্বয় ঘটানো হয়েছে।</span></p>
-            </div>
+          <!-- Duplicated 10 Projects for Infinite Scroll -->
+          <article class="project">
+            <div class="project-visual"><img src="images/project-1.png" alt="Shikder Enterprise" loading="lazy" /></div>
+            <div class="project-info"><h3>Shikder Enterprise</h3><p class="project-cat"><span lang="en">Automotive Brand Identity</span><span lang="bn">অটোমোটিভ ব্র্যান্ড আইডেন্টিটি</span></p></div>
+          </article>
+          <article class="project">
+            <div class="project-visual"><img src="images/project-2.png" alt="Al Wafa Shop" loading="lazy" /></div>
+            <div class="project-info"><h3>Al Wafa Shop</h3><p class="project-cat"><span lang="en">Retail Brand Identity</span><span lang="bn">রিটেইল ব্র্যান্ড আইডেন্টিটি</span></p></div>
+          </article>
+          <article class="project">
+            <div class="project-visual"><img src="images/project-3.png" alt="HL Fashion House" loading="lazy" /></div>
+            <div class="project-info"><h3>HL Fashion House</h3><p class="project-cat"><span lang="en">Luxury Fashion Branding</span><span lang="bn">লাক্সারি ফ্যাশন ব্র্যান্ডিং</span></p></div>
+          </article>
+          <article class="project">
+            <div class="project-visual"><img src="images/project-4.png" alt="Takmil Certificate" loading="lazy" /></div>
+            <div class="project-info"><h3>Takmil Certificate</h3><p class="project-cat"><span lang="en">Islamic Certificate Design</span><span lang="bn">ইসলামিক সার্টিফিকেট ডিজাইন</span></p></div>
+          </article>
+          <article class="project">
+            <div class="project-visual"><img src="images/project-5.png" alt="Kaldanga Rawjul Ulum" loading="lazy" /></div>
+            <div class="project-info"><h3>Kaldanga Rawjul Ulum</h3><p class="project-cat"><span lang="en">Institutional Logo Design</span><span lang="bn">প্রাতিষ্ঠানিক লোগো ডিজাইন</span></p></div>
+          </article>
+          <article class="project">
+            <div class="project-visual"><img src="images/project-6.png" alt="Creative Designer" loading="lazy" /></div>
+            <div class="project-info"><h3>Creative Designer</h3><p class="project-cat"><span lang="en">Personal Brand Identity</span><span lang="bn">পার্সোনাল ব্র্যান্ড আইডেন্টিটি</span></p></div>
+          </article>
+          <article class="project">
+            <div class="project-visual"><img src="images/project-7.png" alt="Allah Calligraphy" loading="lazy" /></div>
+            <div class="project-info"><h3>Allah Calligraphy</h3><p class="project-cat"><span lang="en">Arabic Typography Design</span><span lang="bn">আরবি টাইপোগ্রাফি ডিজাইন</span></p></div>
+          </article>
+          <article class="project">
+            <div class="project-visual"><img src="images/project-8.png" alt="Creative Pen" loading="lazy" /></div>
+            <div class="project-info"><h3>Creative Pen</h3><p class="project-cat"><span lang="en">Conceptual Logo Design</span><span lang="bn">কনসেপচুয়াল লোগো ডিজাইন</span></p></div>
+          </article>
+          <article class="project">
+            <div class="project-visual"><img src="images/project-9.png" alt="Raghunathpur Hasania Madrasha" loading="lazy" /></div>
+            <div class="project-info"><h3>Raghunathpur Hasania Madrasha</h3><p class="project-cat"><span lang="en">Visiting Card Design</span><span lang="bn">ভিজিটিং কার্ড ডিজাইন</span></p></div>
+          </article>
+          <article class="project">
+            <div class="project-visual"><img src="images/project-10.png" alt="Alhamdulillah Calligraphy" loading="lazy" /></div>
+            <div class="project-info"><h3>Alhamdulillah</h3><p class="project-cat"><span lang="en">Arabic Calligraphy Logo</span><span lang="bn">আরবি ক্যালিগ্রাফি লোগো</span></p></div>
           </article>
 
-          <!-- Project 3 -->
-          <article class="project reveal" data-delay="2">
-            <div class="project-visual">
-              <img src="images/project-3.png" alt="HL Fashion House" loading="lazy" />
-            </div>
-            <div class="project-info">
-              <h3>HL Fashion House</h3>
-              <p class="project-cat"><span lang="en">Luxury Fashion Branding</span><span lang="bn">লাক্সারি ফ্যাশন ব্র্যান্ডিং</span></p>
-              <p class="project-desc"><span lang="en">An elegant monogram logo combining sophisticated typography and luxurious golden aesthetics to create a premium fashion brand identity.</span><span lang="bn">একটি মার্জিত মনোগ্রাম লোগো, যা পরিশীলিত টাইপোগ্রাফি এবং বিলাসবহুল সোনালী নান্দনিকতার সমন্বয়ে একটি প্রিমিয়াম ফ্যাশন ব্র্যান্ড তৈরি করেছে।</span></p>
-            </div>
-          </article>
-
-          <!-- Project 4 -->
-          <article class="project reveal">
-            <div class="project-visual">
-              <img src="images/project-4.png" alt="Takmil Certificate" loading="lazy" />
-            </div>
-            <div class="project-info">
-              <h3>Takmil Certificate</h3>
-              <p class="project-cat"><span lang="en">Islamic Certificate Design</span><span lang="bn">ইসলামিক সার্টিফিকেট ডিজাইন</span></p>
-              <p class="project-desc"><span lang="en">A premium Islamic educational certificate featuring traditional Arabic calligraphy, intricate ornamental borders, and a professional bilingual layout.</span><span lang="bn">ঐতিহ্যবাহী আরবি ক্যালিগ্রাফি, অলঙ্কৃত বর্ডার এবং পেশাদার দ্বিভাষিক লেআউট সহ একটি প্রিমিয়াম ইসলামিক শিক্ষা সার্টিফিকেট।</span></p>
-            </div>
-          </article>
-
-          <!-- Project 5 -->
-          <article class="project reveal" data-delay="1">
-            <div class="project-visual">
-              <img src="images/project-5.png" alt="Kaldanga Rawjul Ulum" loading="lazy" />
-            </div>
-            <div class="project-info">
-              <h3>Kaldanga Rawjul Ulum</h3>
-              <p class="project-cat"><span lang="en">Institutional Logo Design</span><span lang="bn">প্রাতিষ্ঠানিক লোগো ডিজাইন</span></p>
-              <p class="project-desc"><span lang="en">An Islamic institutional emblem featuring Quran-inspired symbolism, Arabic calligraphy, and a traditional black, white, and gold color palette.</span><span lang="bn">কুরআন-অনুপ্রাণিত প্রতীক, আরবি ক্যালিগ্রাফি এবং ঐতিহ্যবাহী কালো, সাদা ও সোনালী রঙের প্যালেট সম্বলিত একটি ইসলামিক প্রাতিষ্ঠানিক প্রতীক।</span></p>
-            </div>
-          </article>
-
-          <!-- Project 6 -->
-          <article class="project reveal" data-delay="2">
-            <div class="project-visual">
-              <img src="images/project-6.png" alt="Creative Designer" loading="lazy" />
-            </div>
-            <div class="project-info">
-              <h3>Creative Designer</h3>
-              <p class="project-cat"><span lang="en">Personal Brand Identity</span><span lang="bn">পার্সোনাল ব্র্যান্ড আইডেন্টিটি</span></p>
-              <p class="project-desc"><span lang="en">A distinctive graphic designer monogram logo combining geometric letterforms, vibrant blue and golden colors, and a modern creative aesthetic.</span><span lang="bn">জ্যামিতিক অক্ষর, প্রাণবন্ত নীল ও সোনালী রঙ এবং আধুনিক সৃজনশীল নান্দনিকতা সম্বলিত একটি স্বতন্ত্র গ্রাফিক ডিজাইনার মনোগ্রাম লোগো।</span></p>
-            </div>
-          </article>
-
-          <!-- Project 7 -->
-          <article class="project reveal">
-            <div class="project-visual">
-              <img src="images/project-7.png" alt="Allah Calligraphy" loading="lazy" />
-            </div>
-            <div class="project-info">
-              <h3>Allah Calligraphy</h3>
-              <p class="project-cat"><span lang="en">Arabic Typography Design</span><span lang="bn">আরবি টাইপোগ্রাফি ডিজাইন</span></p>
-              <p class="project-desc"><span lang="en">A creative Arabic calligraphy artwork featuring bold golden lettering, elegant geometric composition, and an Islamic-inspired visual style.</span><span lang="bn">সাহসী সোনালী লেখা, মার্জিত জ্যামিতিক কম্পোজিশন এবং ইসলামিক-অনুপ্রাণিত ভিজ্যুয়াল স্টাইল সম্বলিত একটি সৃজনশীল আরবি ক্যালিগ্রাফি আর্টওয়ার্ক।</span></p>
-            </div>
-          </article>
-
-          <!-- Project 8 -->
-          <article class="project reveal" data-delay="1">
-            <div class="project-visual">
-              <img src="images/project-8.png" alt="Creative Pen" loading="lazy" />
-            </div>
-            <div class="project-info">
-              <h3>Creative Pen</h3>
-              <p class="project-cat"><span lang="en">Conceptual Logo Design</span><span lang="bn">কনসেপচুয়াল লোগো ডিজাইন</span></p>
-              <p class="project-desc"><span lang="en">A unique pen-inspired logo combining writing elements, artistic symbolism, and elegant typography to represent creativity and design.</span><span lang="bn">সৃজনশীলতা এবং ডিজাইনকে উপস্থাপন করতে লেখার উপাদান, শৈল্পিক প্রতীক এবং মার্জিত টাইপোগ্রাফির সমন্বয়ে একটি অনন্য কলম-অনুপ্রাণিত লোগো।</span></p>
-            </div>
-          </article>
-
-          <!-- Project 9 -->
-          <article class="project reveal" data-delay="2">
-            <div class="project-visual">
-              <img src="images/project-9.png" alt="Raghunathpur Hasania Madrasha" loading="lazy" />
-            </div>
-            <div class="project-info">
-              <h3>Raghunathpur Hasania Madrasha</h3>
-              <p class="project-cat"><span lang="en">Visiting Card Design</span><span lang="bn">ভিজিটিং কার্ড ডিজাইন</span></p>
-              <p class="project-desc"><span lang="en">A professional institutional business card featuring custom branding, elegant Bengali and Arabic typography, and a refined green and gold color scheme.</span><span lang="bn">কাস্টম ব্র্যান্ডিং, মার্জিত বাংলা ও আরবি টাইপোগ্রাফি এবং পরিশীলিত সবুজ ও সোনালী রঙের স্কিম সহ একটি পেশাদার প্রাতিষ্ঠানিক বিজনেস কার্ড।</span></p>
-            </div>
-          </article>
-
-          <!-- Project 10 -->
-          <article class="project reveal">
-            <div class="project-visual">
-              <img src="images/project-10.png" alt="Alhamdulillah Calligraphy" loading="lazy" />
-            </div>
-            <div class="project-info">
-              <h3>Alhamdulillah</h3>
-              <p class="project-cat"><span lang="en">Arabic Calligraphy Logo</span><span lang="bn">আরবি ক্যালিগ্রাফি লোগো</span></p>
-              <p class="project-desc"><span lang="en">A distinctive Arabic calligraphy artwork featuring bold golden lettering and a creative Islamic visual composition.</span><span lang="bn">সাহসী সোনালী লেখা এবং সৃজনশীল ইসলামিক ভিজ্যুয়াল কম্পোজিশন সম্বলিত একটি স্বতন্ত্র আরবি ক্যালিগ্রাফি আর্টওয়ার্ক।</span></p>
-            </div>
-          </article>
         </div>
       </div>
     </section>
@@ -466,7 +425,7 @@
   <footer class="site-footer">
     <div class="container footer-inner">
       <div class="footer-favicon-preview">
-        <img id="footerFavicon" alt="Rubayed Hasan brand mark" width="64" height="64" />
+        <img src="images/profile.png" alt="Rubayed Hasan brand mark" width="64" height="64" />
       </div>
       <div class="footer-brand">
         <strong><span lang="en">Rubayed Hasan</span><span lang="bn">রুবায়েদ হাসান</span></strong>
@@ -480,4 +439,4 @@
 
   <script src="js/main.js"></script>
 </body>
-                                                                                    </html>
+  </html>
