@@ -5,12 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Rubayed Hasan — Graphic Designer from Khulna, Bangladesh." />
   <title>Rubayed Hasan — Graphic Designer</title>
+  
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="images/profile.png">
   <link rel="preload" as="image" href="images/profile.png">
   <link rel="icon" href="data:,">
+  
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
+  
   <script>
     (function () {
       var saved = localStorage.getItem('rh-lang');
@@ -19,11 +24,6 @@
   </script>
 </head>
 <body>
-
-  <!-- Floating WhatsApp Button -->
-  <a href="https://wa.me/8801776561371" class="floating-wa" target="_blank" aria-label="Chat on WhatsApp">
-    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-  </a>
 
   <header class="site-header" id="header">
     <div class="container header-inner">
@@ -58,6 +58,7 @@
   </header>
 
   <main>
+    <!-- HERO -->
     <section id="home" class="hero">
       <div class="hero-glow"></div>
       <div class="container hero-inner">
@@ -79,6 +80,7 @@
       </div>
     </section>
 
+    <!-- ABOUT & STATS -->
     <section id="about" class="section about">
       <div class="container">
         <div class="section-head reveal">
@@ -90,33 +92,24 @@
           </div>
         </div>
 
-        <!-- Stats -->
         <div class="stats-grid reveal">
           <div class="stat-card">
-            <div class="stat-number-wrap">
-              <div class="stat-number" data-target="3">0</div>
-              <div class="stat-suffix">+</div>
-            </div>
+            <div class="stat-number-wrap"><div class="stat-number" data-target="3">0</div><div class="stat-suffix">+</div></div>
             <div class="stat-label"><span lang="en">Years Experience</span><span lang="bn">বছরের অভিজ্ঞতা</span></div>
           </div>
           <div class="stat-card">
-            <div class="stat-number-wrap">
-              <div class="stat-number" data-target="15">0</div>
-              <div class="stat-suffix">+</div>
-            </div>
+            <div class="stat-number-wrap"><div class="stat-number" data-target="15">0</div><div class="stat-suffix">+</div></div>
             <div class="stat-label"><span lang="en">Projects</span><span lang="bn">প্রজেক্ট</span></div>
           </div>
           <div class="stat-card">
-            <div class="stat-number-wrap">
-              <div class="stat-number" data-target="99">0</div>
-              <div class="stat-suffix">%</div>
-            </div>
+            <div class="stat-number-wrap"><div class="stat-number" data-target="99">0</div><div class="stat-suffix">%</div></div>
             <div class="stat-label"><span lang="en">Happy Clients</span><span lang="bn">সন্তুষ্ট ক্লায়েন্ট</span></div>
           </div>
         </div>
       </div>
     </section>
 
+    <!-- SERVICES -->
     <section id="services" class="section services">
       <div class="container">
         <div class="section-head reveal">
@@ -153,7 +146,45 @@
       </div>
     </section>
 
-    <!-- REVIEWS (CLIENTS REVIEW) -->
+    <!-- PORTFOLIO MARQUEE -->
+    <section id="work" class="section work">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="section-label"><span lang="en">Portfolio</span><span lang="bn">পোর্টফোলিও</span></span>
+          <h2 class="section-title"><span lang="en">Selected Works</span><span lang="bn">নির্বাচিত কাজ</span></h2>
+          <p class="section-sub"><span lang="en">Here are some of my recent design projects.</span><span lang="bn">আমার করা কিছু ডিজাইনের কাজ।</span></p>
+          <div style="margin-top:20px;"><a href="portfolio.html" class="btn btn-primary"><span lang="en">View All Projects</span><span lang="bn">সব প্রজেক্ট দেখুন</span></a></div>
+        </div>
+      </div>
+      <div class="work-marquee">
+        <div class="work-track" id="workTrack">
+          <article class="project"><div class="project-visual"><img src="images/project-1.png" alt="Shikder Enterprise" loading="lazy" /></div><div class="project-info"><h3>Shikder Enterprise</h3><p class="project-cat"><span lang="en">Automotive Brand Identity</span><span lang="bn">অটোমোটিভ ব্র্যান্ড আইডেন্টিটি</span></p></div></article>
+          <article class="project"><div class="project-visual"><img src="images/project-2.png" alt="Al Wafa Shop" loading="lazy" /></div><div class="project-info"><h3>Al Wafa Shop</h3><p class="project-cat"><span lang="en">Retail Brand Identity</span><span lang="bn">রিটেইল ব্র্যান্ড আইডেন্টিটি</span></p></div></article>
+          <article class="project"><div class="project-visual"><img src="images/project-3.png" alt="HL Fashion House" loading="lazy" /></div><div class="project-info"><h3>HL Fashion House</h3><p class="project-cat"><span lang="en">Luxury Fashion Branding</span><span lang="bn">লাক্সারি ফ্যাশন ব্র্যান্ডিং</span></p></div></article>
+          <article class="project"><div class="project-visual"><img src="images/project-4.png" alt="Takmil Certificate" loading="lazy" /></div><div class="project-info"><h3>Takmil Certificate</h3><p class="project-cat"><span lang="en">Islamic Certificate Design</span><span lang="bn">ইসলামিক সার্টিফিকেট ডিজাইন</span></p></div></article>
+          <article class="project"><div class="project-visual"><img src="images/project-5.png" alt="Kaldanga Rawjul Ulum" loading="lazy" /></div><div class="project-info"><h3>Kaldanga Rawjul Ulum</h3><p class="project-cat"><span lang="en">Institutional Logo Design</span><span lang="bn">প্রাতিষ্ঠানিক লোগো ডিজাইন</span></p></div></article>
+          <article class="project"><div class="project-visual"><img src="images/project-6.png" alt="Creative Designer" loading="lazy" /></div><div class="project-info"><h3>Creative Designer</h3><p class="project-cat"><span lang="en">Personal Brand Identity</span><span lang="bn">পার্সোনাল ব্র্যান্ড আইডেন্টিটি</span></p></div></article>
+          <article class="project"><div class="project-visual"><img src="images/project-7.png" alt="Allah Calligraphy" loading="lazy" /></div><div class="project-info"><h3>Allah Calligraphy</h3><p class="project-cat"><span lang="en">Arabic Typography Design</span><span lang="bn">আরবি টাইপোগ্রাফি ডিজাইন</span></p></div></article>
+          <article class="project"><div class="project-visual"><img src="images/project-8.png" alt="Creative Pen" loading="lazy" /></div><div class="project-info"><h3>Creative Pen</h3><p class="project-cat"><span lang="en">Conceptual Logo Design</span><span lang="bn">কনসেপচুয়াল লোগো ডিজাইন</span></p></div></article>
+          <article class="project"><div class="project-visual"><img src="images/project-9.png" alt="Raghunathpur Hasania Madrasha" loading="lazy" /></div><div class="project-info"><h3>Raghunathpur Hasania Madrasha</h3><p class="project-cat"><span lang="en">Visiting Card Design</span><span lang="bn">ভিজিটিং কার্ড ডিজাইন</span></p></div></article>
+          <article class="project"><div class="project-visual"><img src="images/project-10.png" alt="Alhamdulillah Calligraphy" loading="lazy" /></div><div class="project-info"><h3>Alhamdulillah</h3><p class="project-cat"><span lang="en">Arabic Calligraphy Logo</span><span lang="bn">আরবি ক্যালিগ্রাফি লোগো</span></p></div></article>
+          
+          <!-- Duplicates for infinite scroll -->
+          <article class="project"><div class="project-visual"><img src="images/project-1.png" alt="Shikder Enterprise" loading="lazy" /></div><div class="project-info"><h3>Shikder Enterprise</h3><p class="project-cat"><span lang="en">Automotive Brand Identity</span><span lang="bn">অটোমোটিভ ব্র্যান্ড আইডেন্টিটি</span></p></div></article>
+          <article class="project"><div class="project-visual"><img src="images/project-2.png" alt="Al Wafa Shop" loading="lazy" /></div><div class="project-info"><h3>Al Wafa Shop</h3><p class="project-cat"><span lang="en">Retail Brand Identity</span><span lang="bn">রিটেইল ব্র্যান্ড আইডেন্টিটি</span></p></div></article>
+          <article class="project"><div class="project-visual"><img src="images/project-3.png" alt="HL Fashion House" loading="lazy" /></div><div class="project-info"><h3>HL Fashion House</h3><p class="project-cat"><span lang="en">Luxury Fashion Branding</span><span lang="bn">লাক্সারি ফ্যাশন ব্র্যান্ডিং</span></p></div></article>
+          <article class="project"><div class="project-visual"><img src="images/project-4.png" alt="Takmil Certificate" loading="lazy" /></div><div class="project-info"><h3>Takmil Certificate</h3><p class="project-cat"><span lang="en">Islamic Certificate Design</span><span lang="bn">ইসলামিক সার্টিফিকেট ডিজাইন</span></p></div></article>
+          <article class="project"><div class="project-visual"><img src="images/project-5.png" alt="Kaldanga Rawjul Ulum" loading="lazy" /></div><div class="project-info"><h3>Kaldanga Rawjul Ulum</h3><p class="project-cat"><span lang="en">Institutional Logo Design</span><span lang="bn">প্রাতিষ্ঠানিক লোগো ডিজাইন</span></p></div></article>
+          <article class="project"><div class="project-visual"><img src="images/project-6.png" alt="Creative Designer" loading="lazy" /></div><div class="project-info"><h3>Creative Designer</h3><p class="project-cat"><span lang="en">Personal Brand Identity</span><span lang="bn">পার্সোনাল ব্র্যান্ড আইডেন্টিটি</span></p></div></article>
+          <article class="project"><div class="project-visual"><img src="images/project-7.png" alt="Allah Calligraphy" loading="lazy" /></div><div class="project-info"><h3>Allah Calligraphy</h3><p class="project-cat"><span lang="en">Arabic Typography Design</span><span lang="bn">আরবি টাইপোগ্রাফি ডিজাইন</span></p></div></article>
+          <article class="project"><div class="project-visual"><img src="images/project-8.png" alt="Creative Pen" loading="lazy" /></div><div class="project-info"><h3>Creative Pen</h3><p class="project-cat"><span lang="en">Conceptual Logo Design</span><span lang="bn">কনসেপচুয়াল লোগো ডিজাইন</span></p></div></article>
+          <article class="project"><div class="project-visual"><img src="images/project-9.png" alt="Raghunathpur Hasania Madrasha" loading="lazy" /></div><div class="project-info"><h3>Raghunathpur Hasania Madrasha</h3><p class="project-cat"><span lang="en">Visiting Card Design</span><span lang="bn">ভিজিটিং কার্ড ডিজাইন</span></p></div></article>
+          <article class="project"><div class="project-visual"><img src="images/project-10.png" alt="Alhamdulillah Calligraphy" loading="lazy" /></div><div class="project-info"><h3>Alhamdulillah</h3><p class="project-cat"><span lang="en">Arabic Calligraphy Logo</span><span lang="bn">আরবি ক্যালিগ্রাফি লোগো</span></p></div></article>
+        </div>
+      </div>
+    </section>
+
+    <!-- REVIEWS CAROUSEL -->
     <section class="section reviews">
       <div class="container">
         <div class="section-head reveal" style="text-align: center; margin: 0 auto 52px;">
@@ -161,17 +192,10 @@
           <h2 class="section-title"><span lang="en">What Clients Say</span><span lang="bn">ক্লায়েন্টরা যা বলেন</span></h2>
         </div>
 
-        <div class="review-carousel reveal">
+        <div class="review-carousel reveal" id="reviewCarousel">
           
-          <!-- Review 1 -->
           <div class="review-card">
-            <div class="review-stars">
-              <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-              <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-              <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-              <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-              <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-            </div>
+            <div class="review-stars"><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></div>
             <p class="review-text"><span lang="en">"Rubayed designed our visiting card with great professionalism and premium quality. The design perfectly represents our institution, and everyone praised it."</span><span lang="bn">"রুবায়েদ ভাইয়ের ডিজাইন করা ভিজিটিং কার্ডটি দেখতে অত্যন্ত প্রিমিয়াম এবং পেশাদার। ডিজাইনটি আমাদের প্রতিষ্ঠানকে পুরোপুরি ফুটিয়ে তুলেছে, সবাই ভীষণ প্রশংসা করেছে।"</span></p>
             <div class="review-author">
               <div class="review-avatar">MS</div>
@@ -182,15 +206,8 @@
             </div>
           </div>
 
-          <!-- Review 2 -->
           <div class="review-card">
-            <div class="review-stars">
-              <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-              <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-              <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-              <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-              <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-            </div>
+            <div class="review-stars"><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></div>
             <p class="review-text"><span lang="en">"The Arabic certificate designed by him is extremely precise and beautiful. His expertise in Arabic calligraphy is truly exceptional."</span><span lang="bn">"তার ডিজাইন করা আরবি সার্টিফিকেটটি অত্যন্ত নিখুঁত ও সুন্দর। ক্যালিগ্রাফির কাজে তার দক্ষতা সত্যিই অসাধারণ।"</span></p>
             <div class="review-author">
               <div class="review-avatar">MT</div>
@@ -201,15 +218,8 @@
             </div>
           </div>
 
-          <!-- Review 3 -->
           <div class="review-card">
-            <div class="review-stars">
-              <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-              <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-              <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-              <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-              <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-            </div>
+            <div class="review-stars"><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></div>
             <p class="review-text"><span lang="en">"Thanks to Rubayed for beautifully capturing our Madrasa's logo. His creativity and design sense are highly commendable."</span><span lang="bn">"আমাদের মাদরাসার লোগোটি সুন্দরভাবে ফুটিয়ে তোলার জন্য রুবায়েদকে ধন্যবাদ। তার সৃজনশীলতা এবং ডিজাইন সেন্স প্রশংসনীয়।"</span></p>
             <div class="review-author">
               <div class="review-avatar">MH</div>
@@ -220,15 +230,8 @@
             </div>
           </div>
 
-          <!-- Review 4 -->
           <div class="review-card">
-            <div class="review-stars">
-              <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-              <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-              <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-              <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-              <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-            </div>
+            <div class="review-stars"><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></div>
             <p class="review-text"><span lang="en">"Our Shikder Enterprise logo has become modern and attractive. There's a true touch of professionalism in his work."</span><span lang="bn">"আমাদের শিকদার এন্টারপ্রাইজের লোগোটি আধুনিক এবং আকর্ষণীয় হয়েছে। তার কাজে সত্যিই পেশাদারিত্বের ছোঁয়া আছে।"</span></p>
             <div class="review-author">
               <div class="review-avatar">MA</div>
@@ -239,16 +242,9 @@
             </div>
           </div>
 
-          <!-- Review 5 -->
           <div class="review-card">
-            <div class="review-stars">
-              <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-              <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-              <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-              <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-              <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-            </div>
-            <p class="review-text"><span lang="en">"We are very satisfied with the Al Wafa Shop logo. He completed the work very quickly and with absolute perfection."</span><span lang="bn">"আল ওয়াফা শপের লোগোটি নিয়ে আমরা খুব সন্তুষ্ট। খুব দ্রুত এবং নিখুঁতভাবে কাজটি সম্পন্ন করেছেন।"</span></p>
+            <div class="review-stars"><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></div>
+            <p class="review-text"><span lang="en">"We are very satisfied with the Al Wafa Shop logo. He completed the work very quickly and with absolute perfection."</span><span lang="bn">"আল ওয়াফা শপের লোগোটি নিয়ে আমরা খুব সন্তুষ্ট। খুব দ্রুত এবং নিখুঁতভাবে কাজটি সম্পন্ন করেছেন।"</span></p>
             <div class="review-author">
               <div class="review-avatar">SI</div>
               <div class="review-author-info">
@@ -258,15 +254,8 @@
             </div>
           </div>
 
-          <!-- Review 6 -->
           <div class="review-card">
-            <div class="review-stars">
-              <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-              <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-              <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-              <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-              <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-            </div>
+            <div class="review-stars"><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></div>
             <p class="review-text"><span lang="en">"He created a visually stunning logo for our fashion house. The quality of his work is exceptionally high."</span><span lang="bn">"আমাদের ফ্যাশন হাউজের জন্য দৃষ্টিনন্দন একটি লোগো তৈরি করে দিয়েছেন। তার কাজের মান অত্যন্ত উচ্চ।"</span></p>
             <div class="review-author">
               <div class="review-avatar">AR</div>
@@ -277,15 +266,8 @@
             </div>
           </div>
 
-          <!-- Review 7 -->
           <div class="review-card">
-            <div class="review-stars">
-              <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-              <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-              <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-              <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-              <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-            </div>
+            <div class="review-stars"><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></div>
             <p class="review-text"><span lang="en">"Rubayed Bhai's Arabic calligraphy design is incredibly beautiful. His handcraft is truly praiseworthy."</span><span lang="bn">"রুবায়েদ ভাইয়ের আরবি ক্যালিগ্রাফি ডিজাইনটি দেখতে খুবই সুন্দর। তার হাতের কাজ সত্যিই প্রশংসনীয়।"</span></p>
             <div class="review-author">
               <div class="review-avatar">TD</div>
@@ -313,6 +295,28 @@
     </div>
   </footer>
 
+  <!-- ================= CHATBOT WIDGET ================= -->
+  <div class="chat-widget" id="chatWidget">
+    <div class="chat-header">
+      <div class="chat-profile">
+        <img src="images/profile.png" alt="Rubayed Hasan">
+        <div class="chat-name-wrap">
+          <strong><span lang="en">Rubayed Hasan</span><span lang="bn">রুবায়েদ হাসান</span></strong>
+          <span><span lang="en">Virtual Assistant</span><span lang="bn">ভার্চুয়াল অ্যাসিস্ট্যান্ট</span></span>
+        </div>
+      </div>
+      <a href="https://wa.me/8801776561371" target="_blank" class="direct-contact-btn">
+        <span lang="en">Direct Contact</span><span lang="bn">সরাসরি যোগাযোগ</span>
+      </a>
+    </div>
+    <div class="chat-body" id="chatBody"></div>
+    <div class="chat-quick-replies" id="chatQuickReplies"></div>
+  </div>
+
+  <button class="floating-wa" aria-label="Chat with Virtual Assistant">
+    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </button>
+
   <script src="js/main.js"></script>
 </body>
-        </html>
+  </html>
