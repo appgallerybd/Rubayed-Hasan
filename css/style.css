@@ -21,7 +21,6 @@ body {
 }
 
 :root {
-  /* Dark Brown & Gold Theme */
   --bg:            #0a0705;
   --bg-soft:       #120d09;
   --surface:       #17110d;
@@ -51,22 +50,14 @@ html[lang="bn"] [lang="en"] { display: none !important; }
 [lang="bn"] { font-family: 'Hind Siliguri', 'Plus Jakarta Sans', sans-serif; line-height: 1.8; }
 h1 [lang="bn"], h2 [lang="bn"], h3 [lang="bn"], .hero-title [lang="bn"] { font-weight: 700; letter-spacing: 0; }
 
-/* Text Justification */
-p, .hero-tagline, .about-text p, .section-sub {
-  text-align: justify;
-  text-justify: inter-word;
-}
+p, .hero-tagline, .about-text p, .section-sub { text-align: justify; text-justify: inter-word; }
 
 body::before {
   content: '';
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(720px circle at 12% 8%,  rgba(212, 175, 55, 0.1), transparent 60%),
-    radial-gradient(900px circle at 88% 82%, rgba(180, 120, 50, 0.08), transparent 60%),
-    radial-gradient(600px circle at 50% 55%, rgba(212, 175, 55, 0.03), transparent 70%);
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background: radial-gradient(720px circle at 12% 8%,  rgba(212, 175, 55, 0.1), transparent 60%),
+              radial-gradient(900px circle at 88% 82%, rgba(180, 120, 50, 0.08), transparent 60%),
+              radial-gradient(600px circle at 50% 55%, rgba(212, 175, 55, 0.03), transparent 70%);
   animation: ambientDrift 24s ease-in-out infinite;
 }
 
@@ -76,12 +67,7 @@ body::before {
 }
 
 body::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  opacity: 0.03;
+  content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.03;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
@@ -94,10 +80,7 @@ header, main, footer { position: relative; z-index: 2; }
 @media (min-width: 768px) { .section { padding: 120px 0; } }
 
 .section::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 50%;
-  transform: translateX(-50%);
+  content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
   width: 80%; max-width: 900px; height: 300px;
   background: radial-gradient(ellipse at top, rgba(212, 175, 55, 0.06), transparent 70%);
   pointer-events: none; z-index: 0;
@@ -124,8 +107,7 @@ h1, h2, h3, h4 { font-family: 'Instrument Serif', 'Hind Siliguri', Georgia, seri
 }
 .btn svg { width: 16px; height: 16px; }
 .btn-primary {
-  background: linear-gradient(135deg, var(--accent) 0%, #b8862d 100%);
-  color: #14100a;
+  background: linear-gradient(135deg, var(--accent) 0%, #b8862d 100%); color: #14100a;
   box-shadow: 0 16px 32px -14px rgba(212, 175, 55, 0.85), inset 0 1px 0 rgba(255, 255, 255, 0.35);
 }
 .btn-primary:hover { filter: brightness(1.08); transform: translateY(-2px); box-shadow: 0 22px 44px -14px rgba(212, 175, 55, 1), inset 0 1px 0 rgba(255, 255, 255, 0.4); }
@@ -138,30 +120,17 @@ h1, h2, h3, h4 { font-family: 'Instrument Serif', 'Hind Siliguri', Georgia, seri
 
 /* FLOATING WHATSAPP BUTTON */
 .floating-wa {
-  position: fixed;
-  bottom: 30px;
-  right: 30px;
-  width: 60px;
-  height: 60px;
-  background: #25D366;
-  color: #fff;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4);
-  z-index: 999;
-  transition: transform 0.3s var(--ease);
+  position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px;
+  background: #25D366; color: #fff; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4); z-index: 999;
+  transition: transform 0.3s var(--ease); cursor: pointer; border: none; outline: none;
 }
 .floating-wa:hover { transform: scale(1.1); }
 .floating-wa svg { width: 32px; height: 32px; fill: currentColor; }
 .floating-wa::before {
-  content: '';
-  position: absolute;
-  inset: -5px;
-  border-radius: 50%;
-  border: 2px solid #25D366;
-  animation: pulse-ring 2s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite;
+  content: ''; position: absolute; inset: -5px; border-radius: 50%;
+  border: 2px solid #25D366; animation: pulse-ring 2s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite;
 }
 @keyframes pulse-ring {
   0% { transform: scale(0.9); opacity: 1; }
@@ -170,24 +139,16 @@ h1, h2, h3, h4 { font-family: 'Instrument Serif', 'Hind Siliguri', Georgia, seri
 
 /* HEADER */
 .site-header {
-  position: sticky; top: 0; z-index: 100; 
-  background: var(--surface);
-  border-bottom: 1px solid var(--border); 
-  transition: background 0.3s, border-color 0.3s;
+  position: sticky; top: 0; z-index: 100; background: var(--surface);
+  border-bottom: 1px solid var(--border); transition: background 0.3s, border-color 0.3s;
 }
 .site-header.scrolled { background: var(--surface-2); }
 .header-inner { display: flex; align-items: center; justify-content: space-between; height: var(--header-h); gap: 16px; }
 
-/* Logo (Round Border) */
 .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--text); flex-shrink: 0; }
 .logo-img {
-  width: 44px; height: 44px; 
-  border-radius: 50%;
-  object-fit: cover; 
-  object-position: center top;
-  border: 2px solid var(--accent);
-  padding: 2px;
-  box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+  width: 44px; height: 44px; border-radius: 50%; object-fit: cover; object-position: center top;
+  border: 2px solid var(--accent); padding: 2px; box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
 }
 .logo-text { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 17px; font-weight: 700; letter-spacing: -0.02em; }
 @media (max-width: 480px) { .logo-text { display: none; } }
@@ -249,9 +210,7 @@ h1, h2, h3, h4 { font-family: 'Instrument Serif', 'Hind Siliguri', Georgia, seri
 
 .hero::before {
   content: ''; position: absolute; inset: 0;
-  background-image:
-    linear-gradient(rgba(212, 175, 55, 0.08) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(212, 175, 55, 0.08) 1px, transparent 1px);
+  background-image: linear-gradient(rgba(212, 175, 55, 0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(212, 175, 55, 0.08) 1px, transparent 1px);
   background-size: 56px 56px;
   -webkit-mask-image: radial-gradient(ellipse 70% 75% at 50% 45%, #000 25%, transparent 85%);
   mask-image: radial-gradient(ellipse 70% 75% at 50% 45%, #000 25%, transparent 85%);
@@ -420,17 +379,18 @@ h1, h2, h3, h4 { font-family: 'Instrument Serif', 'Hind Siliguri', Georgia, seri
 .project-info h3 { font-family: 'Plus Jakarta Sans', 'Hind Siliguri', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 6px; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .project-cat { font-family: 'Plus Jakarta Sans', 'Hind Siliguri', sans-serif; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 0; text-align: left; }
 
-/* REVIEWS / TESTIMONIALS CAROUSEL */
+/* REVIEWS CAROUSEL */
 .reviews { padding: 100px 0; background: var(--bg-soft); position: relative; }
 .review-carousel {
   position: relative;
   max-width: 800px;
   margin: 0 auto;
-  min-height: 320px; /* Fix height to prevent jumps */
+  display: grid;
+  place-items: center;
 }
 .review-card {
-  position: absolute;
-  top: 0; left: 0; width: 100%;
+  grid-area: 1 / 1;
+  width: 100%;
   background: var(--surface);
   border: 1px solid var(--border-strong);
   border-radius: var(--radius-lg);
@@ -438,15 +398,23 @@ h1, h2, h3, h4 { font-family: 'Instrument Serif', 'Hind Siliguri', Georgia, seri
   box-shadow: 0 30px 60px -30px rgba(0,0,0,0.9), inset 0 1px 0 rgba(255,255,255,0.05);
   opacity: 0;
   visibility: hidden;
-  transform: translateY(20px) scale(0.98);
-  transition: opacity 0.6s var(--ease), transform 0.6s var(--ease), visibility 0.6s;
+  transform: translateX(40px) scale(0.95);
+  filter: blur(8px);
+  transition: opacity 0.6s var(--ease), transform 0.6s var(--ease), visibility 0.6s, filter 0.6s var(--ease);
 }
 .review-card.active {
   opacity: 1;
   visibility: visible;
-  transform: translateY(0) scale(1);
-  position: relative; /* Take up space */
+  transform: translateX(0) scale(1);
+  filter: blur(0);
   z-index: 2;
+}
+.review-card.prev {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(-40px) scale(0.95);
+  filter: blur(8px);
+  z-index: 1;
 }
 .review-stars {
   color: var(--accent);
@@ -474,7 +442,8 @@ h1, h2, h3, h4 { font-family: 'Instrument Serif', 'Hind Siliguri', Georgia, seri
 .review-avatar {
   width: 56px;
   height: 56px;
-  border-radius: 50%;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%; /* Perfect Circle */
   background: var(--surface-2);
   border: 2px solid var(--accent);
   display: flex;
@@ -485,6 +454,8 @@ h1, h2, h3, h4 { font-family: 'Instrument Serif', 'Hind Siliguri', Georgia, seri
   font-weight: 700;
   color: var(--accent);
   box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+  flex-shrink: 0;
+  overflow: hidden;
 }
 .review-author-info { text-align: left; }
 .review-author-info strong {
@@ -500,36 +471,6 @@ h1, h2, h3, h4 { font-family: 'Instrument Serif', 'Hind Siliguri', Georgia, seri
   font-size: 13px;
   color: var(--muted);
 }
-
-/* PORTFOLIO PAGE */
-.portfolio-page-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 32px;
-  position: relative;
-  z-index: 1;
-}
-@media (min-width: 768px) { .portfolio-page-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (min-width: 1024px) { .portfolio-page-grid { grid-template-columns: repeat(3, 1fr); } }
-.portfolio-item {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  transition: transform 0.3s var(--ease), border-color 0.3s, box-shadow 0.3s;
-}
-.portfolio-item:hover {
-  transform: translateY(-5px);
-  border-color: rgba(212, 175, 55, 0.4);
-  box-shadow: 0 30px 60px -30px rgba(212, 175, 55, 0.2);
-}
-.portfolio-item .project-visual { aspect-ratio: 4 / 3; }
-.portfolio-item .project-info { padding: 24px; align-items: center; text-align: center; flex: 1; }
-.portfolio-item .project-info h3 { font-size: 20px; margin-bottom: 8px; }
-.portfolio-item .project-cat { margin-bottom: 20px; }
-.portfolio-item .btn { width: 100%; margin-top: auto; }
 
 /* CONTACT PAGE / SECTION */
 .contact-grid { display: grid; grid-template-columns: 1fr; gap: 40px; align-items: start; position: relative; z-index: 1; max-width: 800px; margin: 0 auto; }
@@ -568,8 +509,7 @@ h1, h2, h3, h4 { font-family: 'Instrument Serif', 'Hind Siliguri', Georgia, seri
 .footer-inner { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 24px; position: relative; z-index: 1; }
 .footer-favicon-preview { display: flex; justify-content: center; align-items: center; animation: favFloat 6s ease-in-out infinite; }
 .footer-favicon-preview img { 
-  width: 72px; height: 72px; 
-  border-radius: 50%; 
+  width: 72px; height: 72px; border-radius: 50%; 
   box-shadow: 0 20px 40px -12px rgba(212, 175, 55, 0.55), 0 0 0 2px rgba(212, 175, 55, 0.3); 
   display: block; transition: transform 0.3s var(--ease), box-shadow 0.3s; object-fit: cover; object-position: center top; 
 }
@@ -591,4 +531,163 @@ h1, h2, h3, h4 { font-family: 'Instrument Serif', 'Hind Siliguri', Georgia, seri
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
   .reveal { opacity: 1; transform: none; }
-   }
+}
+
+/* ============================================================
+   CHATBOT WIDGET (Virtual Assistant)
+   ============================================================ */
+.chat-widget {
+  position: fixed;
+  bottom: 100px;
+  right: 30px;
+  width: 350px;
+  max-width: calc(100vw - 40px);
+  height: 500px;
+  max-height: calc(100vh - 120px);
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 20px 60px -10px rgba(0,0,0,0.9), 0 0 0 1px rgba(212, 175, 55, 0.2);
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px) scale(0.95);
+  transform-origin: bottom right;
+  transition: opacity 0.3s var(--ease), transform 0.3s var(--ease), visibility 0.3s;
+}
+.chat-widget.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+
+/* Chat Header */
+.chat-header {
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--border);
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.chat-profile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.chat-profile img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--accent);
+}
+.chat-name-wrap { display: flex; flex-direction: column; }
+.chat-name-wrap strong {
+  font-family: 'Plus Jakarta Sans', 'Hind Siliguri', sans-serif;
+  font-size: 15px;
+  color: var(--text);
+  font-weight: 700;
+  line-height: 1.2;
+}
+.chat-name-wrap span {
+  font-family: 'Plus Jakarta Sans', 'Hind Siliguri', sans-serif;
+  font-size: 11px;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+.direct-contact-btn {
+  background: rgba(37, 211, 102, 0.15);
+  color: #25D366;
+  border: 1px solid rgba(37, 211, 102, 0.3);
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+.direct-contact-btn:hover { background: rgba(37, 211, 102, 0.25); }
+
+/* Chat Body */
+.chat-body {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background: var(--bg-soft);
+}
+.chat-msg {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  max-width: 85%;
+}
+.chat-msg.bot { align-self: flex-start; }
+.chat-msg.user { align-self: flex-end; flex-direction: row-reverse; }
+
+.chat-msg .msg-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 1px solid var(--accent);
+}
+.chat-msg .msg-bubble {
+  padding: 10px 14px;
+  border-radius: 14px;
+  font-size: 14px;
+  line-height: 1.5;
+  font-family: 'Plus Jakarta Sans', 'Hind Siliguri', sans-serif;
+}
+.chat-msg.bot .msg-bubble {
+  background: var(--surface);
+  color: var(--text-soft);
+  border-bottom-left-radius: 4px;
+  border: 1px solid var(--border);
+}
+.chat-msg.user .msg-bubble {
+  background: var(--accent);
+  color: #14100a;
+  border-bottom-right-radius: 4px;
+  font-weight: 500;
+}
+
+/* Chat Quick Replies */
+.chat-quick-replies {
+  padding: 12px;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+.chat-quick-replies::-webkit-scrollbar { display: none; }
+.quick-reply-btn {
+  background: var(--surface-2);
+  border: 1px solid var(--border-strong);
+  color: var(--text-soft);
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-family: 'Plus Jakarta Sans', 'Hind Siliguri', sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  flex-shrink: 0;
+}
+.quick-reply-btn:hover {
+  background: var(--accent);
+  color: #14100a;
+  border-color: var(--accent);
+                                                            }
