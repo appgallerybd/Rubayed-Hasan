@@ -3,33 +3,34 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Rubayed Hasan — Graphic Designer & Brand Specialist based in Paikgacha, Khulna, Bangladesh. Brand identity, logo design, Arabic calligraphy, editorial & print." />
+  <meta name="description" content="Rubayed Hasan — Graphic Designer from Khulna, Bangladesh. Logo design, branding, Arabic calligraphy, and print design." />
   <meta name="theme-color" content="#0a0705" />
 
   <meta property="og:title" content="Rubayed Hasan — Graphic Designer" />
-  <meta property="og:description" content="Brand identity, logo design & visual storytelling from Paikgacha, Khulna, Bangladesh." />
+  <meta property="og:description" content="Logo design, branding, Arabic calligraphy & print design." />
   <meta property="og:type" content="website" />
 
   <title>Rubayed Hasan — Graphic Designer</title>
 
-  <!-- Favicon directly using your profile picture -->
-  <link rel="icon" type="image/png" href="images/profile.png" id="siteFavicon" />
+  <!-- Preload Hero Image for Speed -->
+  <link rel="preload" as="image" href="images/profile.png">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="images/profile.png" />
   <link rel="apple-touch-icon" href="images/profile.png" />
 
-  <!-- Fonts -->
+  <!-- Premium Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="css/style.css" />
 
   <script>
     (function () {
       var saved = localStorage.getItem('rh-lang');
-      if (!saved) {
-        saved = (navigator.language || 'en').toLowerCase().indexOf('bn') === 0 ? 'bn' : 'en';
-      }
-      document.documentElement.lang = saved;
+      // Default to English if nothing saved
+      document.documentElement.lang = saved === 'bn' ? 'bn' : 'en';
     })();
   </script>
 </head>
@@ -50,7 +51,7 @@
         <a href="#home"><span lang="en">Home</span><span lang="bn">হোম</span></a>
         <a href="#about"><span lang="en">About</span><span lang="bn">সম্পর্কে</span></a>
         <a href="#services"><span lang="en">Services</span><span lang="bn">সেবা</span></a>
-        <a href="#work"><span lang="en">Work</span><span lang="bn">কাজ</span></a>
+        <a href="#work"><span lang="en">Portfolio</span><span lang="bn">কাজ</span></a>
         <a href="#contact"><span lang="en">Contact</span><span lang="bn">যোগাযোগ</span></a>
       </nav>
 
@@ -65,13 +66,29 @@
       </div>
     </div>
 
+    <!-- Mobile Menu -->
     <div class="mobile-menu" id="mobileMenu">
       <nav aria-label="Mobile navigation">
-        <a href="#home"><span lang="en">Home</span><span lang="bn">হোম</span></a>
-        <a href="#about"><span lang="en">About</span><span lang="bn">সম্পর্কে</span></a>
-        <a href="#services"><span lang="en">Services</span><span lang="bn">সেবা</span></a>
-        <a href="#work"><span lang="en">Work</span><span lang="bn">কাজ</span></a>
-        <a href="#contact"><span lang="en">Contact</span><span lang="bn">যোগাযোগ</span></a>
+        <a href="#home">
+          <span lang="en">Home</span><span lang="bn">হোম</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </a>
+        <a href="#about">
+          <span lang="en">About</span><span lang="bn">সম্পর্কে</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </a>
+        <a href="#services">
+          <span lang="en">Services</span><span lang="bn">সেবা</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        </a>
+        <a href="#work">
+          <span lang="en">Portfolio</span><span lang="bn">কাজ</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+        </a>
+        <a href="#contact">
+          <span lang="en">Contact</span><span lang="bn">যোগাযোগ</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </a>
       </nav>
     </div>
   </header>
@@ -82,44 +99,38 @@
       <div class="hero-glow" aria-hidden="true"></div>
       <div class="container hero-inner">
         
-        <!-- Image above text for mobile layout -->
         <div class="hero-art">
           <div class="portrait-glow"></div>
           <div class="portrait-wrapper">
-            <img src="images/profile.png" alt="Rubayed Hasan - Graphic Designer" class="portrait-img" />
+            <!-- Eager loading for immediate display -->
+            <img src="images/profile.png" alt="Rubayed Hasan" class="portrait-img" fetchpriority="high" />
           </div>
         </div>
 
         <div class="hero-content">
           <p class="eyebrow">
             <span class="dot"></span>
-            <span lang="en">Graphic Designer &amp; Visual Storyteller</span>
-            <span lang="bn">গ্রাফিক ডিজাইনার ও ভিজ্যুয়াল স্টোরিটেলার</span>
+            <span lang="en">Graphic Designer</span>
+            <span lang="bn">গ্রাফিক ডিজাইনার</span>
           </p>
 
           <h1 class="hero-title">
-            <span lang="en">Rubayed <em>Hasan</em></span>
-            <span lang="bn">রুবায়েদ <em>হাসান</em></span>
+            <span lang="en">Hi, I'm <br><em>Rubayed Hasan.</em></span>
+            <span lang="bn">হ্যালো, আমি <br><em>রুবায়েদ হাসান।</em></span>
           </h1>
 
-          <p class="hero-location">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            <span lang="en">Paikgacha, Khulna, Bangladesh</span>
-            <span lang="bn">পাইকগাছা, খুলনা, বাংলাদেশ</span>
-          </p>
-
           <p class="hero-tagline">
-            <span lang="en">I craft bold brands and visual identities that leave a lasting impression — blending strategic thinking with a relentless attention to craft.</span>
-            <span lang="bn">আমি সাহসী ব্র্যান্ড এবং ভিজ্যুয়াল আইডেন্টিটি তৈরি করি যা স্থায়ী ছাপ রেখে যায় — কৌশলগত চিন্তা এবং কারুকাজের প্রতি নিরলস মনোযোগের মিশ্রণে।</span>
+            <span lang="en">I'm a graphic designer. I work on logos, branding, Arabic calligraphy and print design.</span>
+            <span lang="bn">আমি একজন গ্রাফিক ডিজাইনার। লোগো, ব্র্যান্ডিং, আরবি ক্যালিগ্রাফি ও প্রিন্ট ডিজাইনের কাজ করি।</span>
           </p>
 
           <div class="hero-cta">
             <a href="#work" class="btn btn-primary">
-              <span lang="en">View Work</span><span lang="bn">কাজ দেখুন</span>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              <span lang="en">View My Work</span><span lang="bn">আমার কাজ দেখুন</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
             </a>
             <a href="#contact" class="btn btn-ghost">
-              <span lang="en">Get in Touch</span><span lang="bn">যোগাযোগ করুন</span>
+              <span lang="en">Contact Me</span><span lang="bn">যোগাযোগ করুন</span>
             </a>
           </div>
         </div>
@@ -131,50 +142,35 @@
     <section id="about" class="section about">
       <div class="container">
         <div class="section-head reveal">
-          <span class="section-label"><span lang="en">01 — About</span><span lang="bn">০১ — সম্পর্কে</span></span>
-          <h2 class="section-title">
-            <span lang="en">Design with purpose, built to last.</span>
-            <span lang="bn">উদ্দেশ্যপূর্ণ ডিজাইন, যা দীর্ঘস্থায়ী।</span>
-          </h2>
+          <span class="section-label"><span lang="en">01 — About Me</span><span lang="bn">০১ — সম্পর্কে</span></span>
         </div>
 
         <div class="about-grid">
           <div class="about-text reveal">
             <p>
-              <span lang="en">I'm Rubayed Hasan, a graphic designer based in Paikgacha, Khulna. For over six years, I've helped brands find their voice through thoughtful design — from identity systems and packaging to Arabic calligraphy and editorial layouts.</span>
-              <span lang="bn">আমি রুবায়েদ হাসান, খুলনার পাইকগাছায় অবস্থিত একজন গ্রাফিক ডিজাইনার। ছয় বছরেরও বেশি সময় ধরে আমি ব্র্যান্ডগুলোকে তাদের কণ্ঠস্বর খুঁজে পেতে সাহায্য করছি — আইডেন্টিটি সিস্টেম, প্যাকেজিং থেকে শুরু করে আরবি ক্যালিগ্রাফি এবং এডিটোরিয়াল লেআউট পর্যন্ত।</span>
-            </p>
-            <p>
-              <span lang="en">My work blends strategic thinking with a relentless attention to craft. I believe great design isn't just beautiful — it's purposeful, memorable, and built to last.</span>
-              <span lang="bn">আমার কাজ কৌশলগত চিন্তা এবং কারুকাজের প্রতি নিরলস মনোযোগের মিশ্রণ। আমি বিশ্বাস করি দুর্দান্ত ডিজাইন শুধু সুন্দর নয় — এটি উদ্দেশ্যপূর্ণ, স্মরণীয় এবং দীর্ঘস্থায়ী।</span>
+              <span lang="en">I'm Rubayed Hasan, a graphic designer from Khulna, Bangladesh. I enjoy working with typography, colors and creative ideas. Most of my work focuses on logo design, branding, Arabic calligraphy and print materials.</span>
+              <span lang="bn">আমি রুবায়েদ হাসান। খুলনা, বাংলাদেশ থেকে গ্রাফিক ডিজাইনের কাজ করি। টাইপোগ্রাফি, রং ও নতুন আইডিয়া নিয়ে কাজ করতে ভালো লাগে। মূলত লোগো, ব্র্যান্ডিং, আরবি ক্যালিগ্রাফি ও বিভিন্ন প্রিন্ট ডিজাইন করি।</span>
             </p>
 
             <div class="about-facts">
               <div class="fact">
-                <span class="fact-label"><span lang="en">Based in</span><span lang="bn">অবস্থান</span></span>
-                <span class="fact-value"><span lang="en">Paikgacha, Khulna</span><span lang="bn">পাইকগাছা, খুলনা</span></span>
+                <span class="fact-label"><span lang="en">Location</span><span lang="bn">অবস্থান</span></span>
+                <span class="fact-value"><span lang="en">Khulna, Bangladesh</span><span lang="bn">খুলনা, বাংলাদেশ</span></span>
               </div>
               <div class="fact">
                 <span class="fact-label"><span lang="en">Experience</span><span lang="bn">অভিজ্ঞতা</span></span>
-                <span class="fact-value"><span lang="en">6+ years</span><span lang="bn">৬+ বছর</span></span>
+                <span class="fact-value"><span lang="en">3+ Years</span><span lang="bn">৩+ বছর</span></span>
               </div>
               <div class="fact">
-                <span class="fact-label"><span lang="en">Specialties</span><span lang="bn">বিশেষত্ব</span></span>
-                <span class="fact-value"><span lang="en">Branding · Calligraphy · Print</span><span lang="bn">ব্র্যান্ডিং · ক্যালিগ্রাফি · প্রিন্ট</span></span>
+                <span class="fact-label"><span lang="en">Projects</span><span lang="bn">প্রজেক্ট</span></span>
+                <span class="fact-value"><span lang="en">15+</span><span lang="bn">১৫+</span></span>
               </div>
               <div class="fact">
-                <span class="fact-label"><span lang="en">Languages</span><span lang="bn">ভাষা</span></span>
-                <span class="fact-value"><span lang="en">English · Bangla</span><span lang="bn">ইংরেজি · বাংলা</span></span>
+                <span class="fact-label"><span lang="en">Happy Clients</span><span lang="bn">সন্তুষ্ট ক্লায়েন্ট</span></span>
+                <span class="fact-value"><span lang="en">15+</span><span lang="bn">১৫+</span></span>
               </div>
             </div>
           </div>
-        </div>
-
-        <div class="stats reveal" data-delay="2">
-          <div class="stat"><strong>6+</strong><span><span lang="en">Years of Experience</span><span lang="bn">বছরের অভিজ্ঞতা</span></span></div>
-          <div class="stat"><strong>120+</strong><span><span lang="en">Projects Delivered</span><span lang="bn">প্রকল্প সম্পন্ন</span></span></div>
-          <div class="stat"><strong>45+</strong><span><span lang="en">Happy Clients</span><span lang="bn">সন্তুষ্ট ক্লায়েন্ট</span></span></div>
-          <div class="stat"><strong>12</strong><span><span lang="en">Design Awards</span><span lang="bn">ডিজাইন অ্যাওয়ার্ড</span></span></div>
         </div>
       </div>
     </section>
@@ -185,46 +181,46 @@
         <div class="section-head reveal">
           <span class="section-label"><span lang="en">02 — Services</span><span lang="bn">০২ — সেবা</span></span>
           <h2 class="section-title">
-            <span lang="en">What I can do for your brand.</span>
-            <span lang="bn">আপনার ব্র্যান্ডের জন্য আমি যা করতে পারি।</span>
+            <span lang="en">What I Do</span>
+            <span lang="bn">আমি যা করি</span>
           </h2>
         </div>
 
         <div class="services-grid">
           <article class="service-card reveal">
-            <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></svg></div>
-            <h3><span lang="en">Brand Identity</span><span lang="bn">ব্র্যান্ড আইডেন্টিটি</span></h3>
-            <p><span lang="en">Complete brand systems — from strategy and naming to a cohesive visual language.</span><span lang="bn">সম্পূর্ণ ব্র্যান্ড সিস্টেম — স্ট্র্যাটেজি, নেমিং থেকে সুসংগত ভিজ্যুয়াল ল্যাঙ্গুয়েজ পর্যন্ত।</span></p>
+            <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg></div>
+            <h3><span lang="en">01. Logo Design</span><span lang="bn">০১. লোগো ডিজাইন</span></h3>
+            <p><span lang="en">Logo Design.</span><span lang="bn">লোগো ডিজাইন।</span></p>
           </article>
 
           <article class="service-card reveal" data-delay="1">
-            <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg></div>
-            <h3><span lang="en">Logo Design</span><span lang="bn">লোগো ডিজাইন</span></h3>
-            <p><span lang="en">Distinctive, memorable marks engineered to work everywhere — print, screen, and beyond.</span><span lang="bn">স্বতন্ত্র ও স্মরণীয় লোগো, যা সর্বত্র কার্যকর — প্রিন্ট, স্ক্রিন এবং তার বাইরেও।</span></p>
+            <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></svg></div>
+            <h3><span lang="en">02. Brand Identity</span><span lang="bn">০২. ব্র্যান্ড আইডেন্টিটি</span></h3>
+            <p><span lang="en">Brand Identity.</span><span lang="bn">ব্র্যান্ডের ভিজ্যুয়াল পরিচিতি তৈরি।</span></p>
           </article>
 
           <article class="service-card reveal" data-delay="2">
-            <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h5"/></svg></div>
-            <h3><span lang="en">Print &amp; Editorial</span><span lang="bn">প্রিন্ট ও এডিটোরিয়াল</span></h3>
-            <p><span lang="en">Certificates, visiting cards, brochures, and publications designed with typographic precision.</span><span lang="bn">সার্টিফিকেট, ভিজিটিং কার্ড, ব্রোশিওর ও প্রকাশনা — টাইপোগ্রাফিক নিখুঁততায় ডিজাইন করা।</span></p>
+            <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="M3.27 6.96 12 12.01l8.73-5.05"/><path d="M12 22.08V12"/></svg></div>
+            <h3><span lang="en">03. Arabic Calligraphy</span><span lang="bn">০৩. আরবি ক্যালিগ্রাফি</span></h3>
+            <p><span lang="en">Arabic Calligraphy &amp; Typography.</span><span lang="bn">আরবি ক্যালিগ্রাফি ও টাইপোগ্রাফি।</span></p>
           </article>
 
           <article class="service-card reveal" data-delay="3">
-            <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18M9 21V9"/></svg></div>
-            <h3><span lang="en">Social Media Design</span><span lang="bn">সোশ্যাল মিডিয়া ডিজাইন</span></h3>
-            <p><span lang="en">Scroll-stopping visuals and cohesive content systems for every platform.</span><span lang="bn">স্ক্রল থামিয়ে দেওয়া ভিজ্যুয়াল এবং প্রতিটি প্ল্যাটফর্মের জন্য সুসংগত কনটেন্ট সিস্টেম।</span></p>
+            <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h5"/></svg></div>
+            <h3><span lang="en">04. Print Design</span><span lang="bn">০৪. প্রিন্ট ডিজাইন</span></h3>
+            <p><span lang="en">Certificates, visiting cards, brochures &amp; book design.</span><span lang="bn">সার্টিফিকেট, ভিজিটিং কার্ড, ব্রোশিওর ও বইয়ের ডিজাইন।</span></p>
           </article>
 
           <article class="service-card reveal" data-delay="4">
-            <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="M3.27 6.96 12 12.01l8.73-5.05"/><path d="M12 22.08V12"/></svg></div>
-            <h3><span lang="en">Arabic Calligraphy</span><span lang="bn">আরবি ক্যালিগ্রাফি</span></h3>
-            <p><span lang="en">Traditional and modern Arabic typography for logos, branding, and artwork.</span><span lang="bn">লোগো, ব্র্যান্ডিং এবং আর্টওয়ার্কের জন্য ঐতিহ্যবাহী ও আধুনিক আরবি টাইপোগ্রাফি।</span></p>
+            <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18M9 21V9"/></svg></div>
+            <h3><span lang="en">05. Social Media Design</span><span lang="bn">০৫. সোশ্যাল মিডিয়া ডিজাইন</span></h3>
+            <p><span lang="en">Social media posts, banners &amp; campaign design.</span><span lang="bn">সোশ্যাল মিডিয়া পোস্ট, ব্যানার ও প্রচারণার ডিজাইন।</span></p>
           </article>
 
           <article class="service-card reveal" data-delay="5">
             <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><path d="M7 8h6M7 11h3"/></svg></div>
-            <h3><span lang="en">UI / UX Design</span><span lang="bn">ইউআই / ইউএক্স ডিজাইন</span></h3>
-            <p><span lang="en">Clean, usable interfaces for web and mobile products that people love to use.</span><span lang="bn">ওয়েব ও মোবাইল পণ্যের জন্য পরিষ্কার, ব্যবহারযোগ্য ইন্টারফেস — যা মানুষ ব্যবহার করতে ভালোবাসে।</span></p>
+            <h3><span lang="en">06. UI Design</span><span lang="bn">০৬. ইউআই ডিজাইন</span></h3>
+            <p><span lang="en">Website and app interface design.</span><span lang="bn">ওয়েবসাইট ও অ্যাপের ইন্টারফেস ডিজাইন।</span></p>
           </article>
         </div>
       </div>
@@ -234,14 +230,14 @@
     <section id="work" class="section work">
       <div class="container">
         <div class="section-head reveal">
-          <span class="section-label"><span lang="en">03 — Selected Work</span><span lang="bn">০৩ — নির্বাচিত কাজ</span></span>
+          <span class="section-label"><span lang="en">03 — Portfolio</span><span lang="bn">০৩ — পোর্টফোলিও</span></span>
           <h2 class="section-title">
-            <span lang="en">Recent projects.</span>
-            <span lang="bn">সাম্প্রতিক প্রকল্প।</span>
+            <span lang="en">Selected Works</span>
+            <span lang="bn">নির্বাচিত কাজ</span>
           </h2>
           <p class="section-sub">
-            <span lang="en">A selection of brand identities, calligraphy, editorial layouts, and print products. Hover to pause.</span>
-            <span lang="bn">ব্র্যান্ড আইডেন্টিটি, ক্যালিগ্রাফি, এডিটোরিয়াল লেআউট এবং প্রিন্ট পণ্যের একটি নির্বাচন। থামাতে হোভার করুন।</span>
+            <span lang="en">Here are some of my recent design projects.</span>
+            <span lang="bn">আমার করা কিছু ডিজাইনের কাজ।</span>
           </p>
         </div>
       </div>
@@ -344,12 +340,12 @@
         <div class="section-head reveal">
           <span class="section-label"><span lang="en">04 — Contact</span><span lang="bn">০৪ — যোগাযোগ</span></span>
           <h2 class="section-title">
-            <span lang="en">Let's build something great.</span>
-            <span lang="bn">চলুন একসাথে দারুণ কিছু তৈরি করি।</span>
+            <span lang="en">Let's Talk</span>
+            <span lang="bn">চলুন কথা বলি</span>
           </h2>
           <p class="section-sub">
-            <span lang="en">Have a project in mind? I'd love to hear about it. I typically respond within 24 hours.</span>
-            <span lang="bn">মনে কোনো প্রকল্প আছে? শুনতে ভালো লাগবে। আমি সাধারণত ২৪ ঘণ্টার মধ্যে উত্তর দিই।</span>
+            <span lang="en">Have a design project? Feel free to contact me.</span>
+            <span lang="bn">ডিজাইন সংক্রান্ত কোনো কাজ থাকলে যোগাযোগ করতে পারেন।</span>
           </p>
         </div>
 
@@ -379,7 +375,6 @@
               </span>
             </div>
 
-            <!-- Socials Centered -->
             <div class="socials">
               <a href="https://www.facebook.com/share/1E4YBLA2Ai/" target="_blank" rel="noopener" aria-label="Facebook">
                 <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.99 3.66 9.12 8.44 9.88v-6.99H7.9V12h2.54V9.79c0-2.5 1.49-3.89 3.77-3.89 1.09 0 2.23.2 2.23.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.45 2.89h-2.33v6.99C18.34 21.12 22 16.99 22 12z"/></svg>
@@ -395,12 +390,12 @@
 
           <form class="contact-form reveal" id="contactForm" data-delay="1" novalidate>
             <div class="field">
-              <label for="name"><span lang="en">Your Name</span><span lang="bn">আপনার নাম</span></label>
+              <label for="name"><span lang="en">Name</span><span lang="bn">নাম</span></label>
               <input id="name" name="name" type="text" data-ph-en="Jane Doe" data-ph-bn="জেন ডো" autocomplete="name" />
             </div>
 
             <div class="field">
-              <label for="email"><span lang="en">Email Address</span><span lang="bn">ইমেইল ঠিকানা</span></label>
+              <label for="email"><span lang="en">Email</span><span lang="bn">ইমেইল</span></label>
               <input id="email" name="email" type="email" data-ph-en="jane@example.com" data-ph-bn="jane@example.com" autocomplete="email" />
             </div>
 
@@ -410,7 +405,7 @@
             </div>
 
             <button type="submit" class="btn btn-primary btn-block" id="submitBtn">
-              <span class="btn-label"><span lang="en">Send via WhatsApp</span><span lang="bn">হোয়াটসঅ্যাপে পাঠান</span></span>
+              <span class="btn-label"><span lang="en">Send Message</span><span lang="bn">বার্তা পাঠান</span></span>
               <span class="btn-spinner" aria-hidden="true"></span>
             </button>
 
@@ -425,14 +420,16 @@
   <footer class="site-footer">
     <div class="container footer-inner">
       <div class="footer-favicon-preview">
+        <!-- Round Favicon Image -->
         <img src="images/profile.png" alt="Rubayed Hasan brand mark" width="64" height="64" />
       </div>
       <div class="footer-brand">
         <strong><span lang="en">Rubayed Hasan</span><span lang="bn">রুবায়েদ হাসান</span></strong>
-        <span class="footer-tagline"><span lang="en">Graphic Designer · Paikgacha, Khulna</span><span lang="bn">গ্রাফিক ডিজাইনার · পাইকগাছা, খুলনা</span></span>
+        <span class="footer-tagline"><span lang="en">Graphic Designer</span><span lang="bn">গ্রাফিক ডিজাইনার</span></span>
+        <span class="footer-tagline"><span lang="en">Paikgacha, Khulna, Bangladesh.</span><span lang="bn">পাইকগাছা, খুলনা, বাংলাদেশ।</span></span>
       </div>
       <p class="footer-copy">
-        © <span id="year">2024</span> Rubayed Hasan. <span lang="en">All rights reserved.</span><span lang="bn">সর্বস্বত্ব সংরক্ষিত।</span>
+        © 2026 Rubayed Hasan. <span lang="en">All rights reserved.</span><span lang="bn">সর্বস্বত্ব সংরক্ষিত।</span>
       </p>
     </div>
   </footer>
