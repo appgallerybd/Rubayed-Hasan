@@ -10,7 +10,7 @@
   const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
 
   /* ============================================================
-     1. LANGUAGE TOGGLE
+     1. LANGUAGE TOGGLE (Default: English)
      ============================================================ */
   const LANG_KEY = 'rh-lang';
   const langButtons = $$('[data-set-lang]');
@@ -37,6 +37,7 @@
     btn.addEventListener('click', () => applyLanguage(btn.dataset.setLang));
   });
 
+  // Default is English unless saved explicitly as 'bn'
   const initialLang = document.documentElement.lang === 'bn' ? 'bn' : 'en';
   applyLanguage(initialLang);
 
@@ -129,7 +130,7 @@
   }
 
   /* ============================================================
-     6. MARQUEE SCROLLING LOGIC
+     6. MARQUEE SCROLLING LOGIC (5s Pause)
      ============================================================ */
   const track = $('#workTrack');
   
@@ -139,10 +140,8 @@
     let isPaused = false;
     let hoverTimeout = null;
 
-    // Calculate half width (since we duplicated items)
     let trackWidth = track.scrollWidth / 2;
 
-    // Recalculate on resize
     window.addEventListener('resize', () => {
       trackWidth = track.scrollWidth / 2;
     });
@@ -150,7 +149,6 @@
     function animateMarquee() {
       if (!isPaused) {
         scrollPos -= speed;
-        // Reset when reaching half width (end of duplicated items)
         if (Math.abs(scrollPos) >= trackWidth) {
           scrollPos = 0;
         }
@@ -159,24 +157,20 @@
       requestAnimationFrame(animateMarquee);
     }
 
-    // Start animation
     requestAnimationFrame(animateMarquee);
 
-    // Pause on Hover / Touch
     const pauseEvents = ['mouseenter', 'touchstart'];
     const resumeEvents = ['mouseleave', 'touchend', 'touchcancel'];
 
     function pauseMarquee() {
       isPaused = true;
       clearTimeout(hoverTimeout);
-      // Auto-resume after 5 seconds
       hoverTimeout = setTimeout(() => {
         isPaused = false;
-      }, 5000);
+      }, 5000); // Resume after 5 seconds
     }
 
     function resumeMarquee() {
-      // Only resume early if mouse leaves before 5 seconds
       clearTimeout(hoverTimeout);
       isPaused = false;
     }
