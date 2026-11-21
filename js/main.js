@@ -1,6 +1,6 @@
 /* ============================================================
    RUBayed HASAN — PORTFOLIO
-   Language · Menu · Reveal · WhatsApp Form · Premium Favicon
+   Language · Menu · Reveal · WhatsApp Form · Auto Scroll Marquee
    ============================================================ */
 
 (function () {
@@ -8,96 +8,6 @@
 
   const $  = (sel, ctx = document) => ctx.querySelector(sel);
   const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
-
-  /* ============================================================
-     0. PREMIUM PNG FAVICON GENERATOR
-     ============================================================ */
-  function generatePremiumFavicon() {
-    const S = 128;
-    const canvas = document.createElement('canvas');
-    canvas.width = S;
-    canvas.height = S;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return null;
-
-    const radius = 28;
-    ctx.beginPath();
-    ctx.moveTo(radius, 0);
-    ctx.lineTo(S - radius, 0);
-    ctx.quadraticCurveTo(S, 0, S, radius);
-    ctx.lineTo(S, S - radius);
-    ctx.quadraticCurveTo(S, S, S - radius, S);
-    ctx.lineTo(radius, S);
-    ctx.quadraticCurveTo(0, S, 0, S - radius);
-    ctx.lineTo(0, radius);
-    ctx.quadraticCurveTo(0, 0, radius, 0);
-    ctx.closePath();
-
-    // Rich Gold Gradient
-    const bgGrad = ctx.createLinearGradient(0, 0, S, S);
-    bgGrad.addColorStop(0.00, '#f3e5ab');
-    bgGrad.addColorStop(0.50, '#d4af37');
-    bgGrad.addColorStop(1.00, '#b8862d');
-    ctx.fillStyle = bgGrad;
-    ctx.fill();
-
-    const hl = ctx.createRadialGradient(S * 0.28, S * 0.22, 0, S * 0.3, S * 0.25, S * 0.75);
-    hl.addColorStop(0.0, 'rgba(255, 255, 255, 0.45)');
-    hl.addColorStop(0.5, 'rgba(255, 255, 255, 0)');
-    ctx.fillStyle = hl;
-    ctx.fill();
-
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.4)';
-    ctx.lineWidth = 2;
-    ctx.stroke();
-
-    const sh = ctx.createLinearGradient(0, S * 0.55, 0, S);
-    sh.addColorStop(0.0, 'rgba(0, 0, 0, 0)');
-    sh.addColorStop(1.0, 'rgba(0, 0, 0, 0.2)');
-    ctx.fillStyle = sh;
-    ctx.fill();
-
-    ctx.fillStyle = '#14100a';
-    ctx.font = 'bold 56px Georgia, "Instrument Serif", "Times New Roman", serif';
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText('RH', S / 2, S / 2 + 3);
-
-    return canvas.toDataURL('image/png');
-  }
-
-  function applyFavicon() {
-    const dataUrl = generatePremiumFavicon();
-    if (!dataUrl) return;
-
-    const existing = document.getElementById('siteFavicon');
-    if (existing) {
-      existing.type = 'image/png';
-      existing.href = dataUrl;
-    } else {
-      const link = document.createElement('link');
-      link.rel = 'icon';
-      link.type = 'image/png';
-      link.href = dataUrl;
-      document.head.appendChild(link);
-    }
-
-    $$("link[rel='shortcut icon'], link[rel='apple-touch-icon']").forEach((el) => el.remove());
-
-    const apple = document.createElement('link');
-    apple.rel = 'apple-touch-icon';
-    apple.href = dataUrl;
-    document.head.appendChild(apple);
-
-    const preview = document.getElementById('footerFavicon');
-    if (preview) preview.src = dataUrl;
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', applyFavicon, { once: true });
-  } else {
-    applyFavicon();
-  }
 
   /* ============================================================
      1. LANGUAGE TOGGLE
@@ -219,12 +129,69 @@
   }
 
   /* ============================================================
-     6. CONTACT FORM -> WHATSAPP REDIRECT
+     6. MARQUEE SCROLLING LOGIC
+     ============================================================ */
+  const track = $('#workTrack');
+  
+  if (track) {
+    let scrollPos = 0;
+    let speed = 1.2; // Pixels per frame
+    let isPaused = false;
+    let hoverTimeout = null;
+
+    // Calculate half width (since we duplicated items)
+    let trackWidth = track.scrollWidth / 2;
+
+    // Recalculate on resize
+    window.addEventListener('resize', () => {
+      trackWidth = track.scrollWidth / 2;
+    });
+
+    function animateMarquee() {
+      if (!isPaused) {
+        scrollPos -= speed;
+        // Reset when reaching half width (end of duplicated items)
+        if (Math.abs(scrollPos) >= trackWidth) {
+          scrollPos = 0;
+        }
+        track.style.transform = `translateX(${scrollPos}px)`;
+      }
+      requestAnimationFrame(animateMarquee);
+    }
+
+    // Start animation
+    requestAnimationFrame(animateMarquee);
+
+    // Pause on Hover / Touch
+    const pauseEvents = ['mouseenter', 'touchstart'];
+    const resumeEvents = ['mouseleave', 'touchend', 'touchcancel'];
+
+    function pauseMarquee() {
+      isPaused = true;
+      clearTimeout(hoverTimeout);
+      // Auto-resume after 5 seconds
+      hoverTimeout = setTimeout(() => {
+        isPaused = false;
+      }, 5000);
+    }
+
+    function resumeMarquee() {
+      // Only resume early if mouse leaves before 5 seconds
+      clearTimeout(hoverTimeout);
+      isPaused = false;
+    }
+
+    pauseEvents.forEach(evt => track.addEventListener(evt, pauseMarquee, { passive: true }));
+    resumeEvents.forEach(evt => track.addEventListener(evt, resumeMarquee, { passive: true }));
+  }
+
+  /* ============================================================
+     7. CONTACT FORM -> WHATSAPP REDIRECT
      ============================================================ */
   const form = $('#contactForm');
   const submitBtn = $('#submitBtn');
   const formMessage = $('#formMessage');
-  const WA_NUMBER = '8801776561371'; // Your WhatsApp number
+  const WA_NUMBER = '8801776561371'; 
 
   if (form) {
     const nameEl = $('#name');
@@ -294,7 +261,6 @@
       }
       setMessage(t.success, true);
 
-      // Construct WhatsApp Message
       const waText = `Hello Rubayed,\n\nName: ${name}\nEmail: ${email}\n\nMessage:\n${message}`;
       const waUrl = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(waText)}`;
 
@@ -312,7 +278,7 @@
   }
 
   /* ============================================================
-     7. FOOTER YEAR
+     8. FOOTER YEAR
      ============================================================ */
   const yearEl = $('#year');
   if (yearEl) yearEl.textContent = String(new Date().getFullYear());
