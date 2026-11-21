@@ -1,6 +1,6 @@
 /* ============================================================
    RUBayed HASAN — PORTFOLIO
-   Language · Menu · Reveal · WhatsApp · Counters · Favicon
+   Language · Menu · Reveal · WhatsApp · Counters · Favicon · Carousel
    ============================================================ */
 
 (function () {
@@ -14,32 +14,29 @@
      ============================================================ */
   function generateRoundFavicon() {
     const img = new Image();
-    img.src = 'images/profile.png'; // Ensure this path is correct
+    img.src = 'images/profile.png'; 
     img.crossOrigin = 'Anonymous';
     
     img.onload = function() {
-      const S = 64; // Favicon size
+      const S = 64; 
       const canvas = document.createElement('canvas');
       canvas.width = S;
       canvas.height = S;
       const ctx = canvas.getContext('2d');
       
-      // Draw circular clip
       ctx.beginPath();
       ctx.arc(S / 2, S / 2, S / 2, 0, Math.PI * 2);
       ctx.closePath();
       ctx.clip();
       
-      // Draw image to fill canvas
-      // (Assuming square source, draw directly. If not, adjust sx, sy, sw, sh)
       const aspect = img.width / img.height;
       let sx = 0, sy = 0, sw = img.width, sh = img.height;
-      if (aspect > 1) { // Landscape
+      if (aspect > 1) {
         sw = img.height;
         sx = (img.width - sw) / 2;
-      } else if (aspect < 1) { // Portrait
+      } else if (aspect < 1) {
         sh = img.width;
-        sy = (img.height - sh) / 2; // Center crop (or top crop if preferred)
+        sy = (img.height - sh) / 2;
       }
       
       ctx.drawImage(img, sx, sy, sw, sh, 0, 0, S, S);
@@ -55,7 +52,7 @@
   generateRoundFavicon();
 
   /* ============================================================
-     1. LANGUAGE TOGGLE (Default: English)
+     1. LANGUAGE TOGGLE
      ============================================================ */
   const LANG_KEY = 'rh-lang';
   const langButtons = $$('[data-set-lang]');
@@ -83,7 +80,7 @@
   applyLanguage(initialLang);
 
   /* ============================================================
-     2. MOBILE MENU (Click Outside to Close)
+     2. MOBILE MENU
      ============================================================ */
   const menuToggle = $('#menuToggle');
   const mobileMenu = $('#mobileMenu');
@@ -101,7 +98,6 @@
       menuToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
     });
 
-    // Close when clicking outside
     document.addEventListener('click', (e) => {
       if (!mobileMenu.classList.contains('open')) return;
       if (mobileMenu.contains(e.target) || menuToggle.contains(e.target)) return;
@@ -146,7 +142,7 @@
   }
 
   /* ============================================================
-     5. STATS COUNTER ANIMATION (If exists on page)
+     5. STATS COUNTER ANIMATION
      ============================================================ */
   const statNumbers = $$('.stat-number');
   if (statNumbers.length && 'IntersectionObserver' in window) {
@@ -155,7 +151,7 @@
         if (entry.isIntersecting) {
           const el = entry.target;
           const target = parseInt(el.getAttribute('data-target'), 10);
-          const duration = 2000; // 2 seconds
+          const duration = 2000; 
           const startTime = performance.now();
 
           function updateCount(currentTime) {
@@ -164,14 +160,14 @@
             
             // Easing function (easeOutQuad)
             const easeOut = progress * (2 - progress);
-            const currentValue = Math.floor(easeOut * target);
+            const currentVal = Math.floor(easeOut * target);
             
-            el.textContent = currentVal + (target > 0 ? '+' : '');
+            el.textContent = currentVal;
             
             if (progress < 1) {
               requestAnimationFrame(updateCount);
             } else {
-              el.textContent = target + '+';
+              el.textContent = target;
             }
           }
           requestAnimationFrame(updateCount);
@@ -184,12 +180,12 @@
   }
 
   /* ============================================================
-     6. MARQUEE SCROLLING LOGIC (Home page only)
+     6. MARQUEE SCROLLING LOGIC (Home page)
      ============================================================ */
   const track = $('#workTrack');
   if (track) {
     let scrollPos = 0;
-    let speed = 2.0; // Increased speed
+    let speed = 2.0; 
     let isPaused = false;
     let hoverTimeout = null;
     let trackWidth = track.scrollWidth / 2;
@@ -227,56 +223,20 @@
   }
 
   /* ============================================================
-     7. CONTACT FORM -> WHATSAPP REDIRECT (Home page only)
+     7. CLIENT REVIEWS CAROUSEL (5s Auto-slide)
      ============================================================ */
-  const form = $('#contactForm');
-  const submitBtn = $('#submitBtn');
-  const formMessage = $('#formMessage');
-  const WA_NUMBER = '8801776561371'; 
+  const reviews = $$('.review-card');
+  if (reviews.length > 0) {
+    let currentReview = 0;
+    
+    // Set first as active
+    reviews[0].classList.add('active');
 
-  if (form) {
-    const nameEl = $('#name');
-    const emailEl = $('#email');
-    const messageEl = $('#message');
-    const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-
-    const setMessage = (text, isOk) => {
-      if (!formMessage) return;
-      formMessage.textContent = text;
-      formMessage.classList.toggle('ok', !!isOk);
-    };
-
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      if (submitBtn && submitBtn.classList.contains('loading')) return;
-
-      const name = nameEl ? nameEl.value.trim() : '';
-      const email = emailEl ? emailEl.value.trim() : '';
-      const message = messageEl ? messageEl.value.trim() : '';
-      const lang = document.documentElement.lang;
-
-      const t = {
-        en: { name: 'Please enter your name.', email: 'Please enter a valid email address.', message: 'Please write a slightly longer message.', success: 'Opening WhatsApp...' },
-        bn: { name: 'অনুগ্রহ করে আপনার নাম লিখুন।', email: 'অনুগ্রহ করে একটি সঠিক ইমেইল ঠিকানা লিখুন।', message: 'অনুগ্রহ করে একটু বিস্তারিত বার্তা লিখুন।', success: 'হোয়াটসঅ্যাপ খোলা হচ্ছে...' }
-      }[lang] || {};
-
-      if (!name) { setMessage(t.name, false); nameEl.focus(); return; }
-      if (!EMAIL_RE.test(email)) { setMessage(t.email, false); emailEl.focus(); return; }
-      if (message.length < 10) { setMessage(t.message, false); messageEl.focus(); return; }
-
-      if (submitBtn) { submitBtn.classList.add('loading'); submitBtn.disabled = true; }
-      setMessage(t.success, true);
-
-      const waText = `Hello Rubayed,\n\nName: ${name}\nEmail: ${email}\n\nMessage:\n${message}`;
-      const waUrl = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(waText)}`;
-
-      setTimeout(() => {
-        window.open(waUrl, '_blank');
-        if (submitBtn) { submitBtn.classList.remove('loading'); submitBtn.disabled = false; }
-        form.reset();
-        setMessage(lang === 'bn' ? 'বার্তা পাঠানো হয়েছে।' : 'Message sent.', true);
-      }, 1000);
-    });
+    setInterval(() => {
+      reviews[currentReview].classList.remove('active');
+      currentReview = (currentReview + 1) % reviews.length;
+      reviews[currentReview].classList.add('active');
+    }, 5000);
   }
 
 })();
