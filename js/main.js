@@ -360,3 +360,30 @@
   }
 
 })();
+
+const SUPABASE_URL = 'https://qynaqzukiwtnxjsciazk.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_dTX5xkv4svMJA9-M5QMHKA_YctCIi19';
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+async function loadDynamicData() {
+  // সেটিংস লোড
+  const { data: settings } = await supabaseClient.from('site_settings').select('*');
+  if (settings) {
+    const dict = {};
+    settings.forEach(s => dict[s.key] = s.value);
+    // এখানে আগের মতোই DOM এ বসিয়ে দিন (hero_title_en, hero_tagline_en ইত্যাদি)
+  }
+
+  // প্রজেক্ট লোড
+  const { data: projects } = await supabaseClient.from('projects').select('*').order('created_at', { ascending: false });
+  if (projects && document.getElementById('workTrack')) {
+    // আগের মতোই মার্কি HTML জেনারেট করুন
+  }
+
+  // রিভিউ লোড
+  const { data: reviews } = await supabaseClient.from('reviews').select('*').order('created_at', { ascending: false });
+  if (reviews && document.querySelector('.review-carousel')) {
+    // আগের মতোই রিভিউ কার্ড জেনারেট করুন
+  }
+}
+document.addEventListener('DOMContentLoaded', loadDynamicData);
