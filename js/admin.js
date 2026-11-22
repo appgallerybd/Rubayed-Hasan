@@ -3,8 +3,8 @@
    ============================================================ */
 
 // ⚠️ এখানে আপনার Supabase URL এবং Anon Key বসান ⚠️
-const SUPABASE_URL = 'YOUR_SUPABASE_URL';
-const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
+const SUPABASE_URL = 'https://qynaqzukiwtnxjsciazk.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_dTX5xkv4svMJA9-M5QMHKA_YctCIi19';
 
 // Initialize Supabase Client
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
