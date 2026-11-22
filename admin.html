@@ -10,7 +10,8 @@
     /* Basic fallback styles if admin.css is missing */
     .login-box { max-width: 400px; margin: 100px auto; padding: 40px; background: #17110d; border-radius: 20px; border: 1px solid rgba(212, 175, 55, 0.3); text-align: center; }
     .login-box input { width: 100%; padding: 14px; margin-bottom: 15px; background: #111; border: 1px solid #333; color: #fff; border-radius: 10px; font-family: inherit; }
-    .login-box button { width: 100%; padding: 14px; background: #d4af37; color: #000; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; font-family: inherit; }
+    .login-box button { width: 100%; padding: 14px; background: #d4af37; color: #000; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; font-family: inherit; transition: 0.2s; }
+    .login-box button:hover { filter: brightness(1.1); }
     #login-error { color: #ef4444; font-size: 14px; margin-top: 15px; display: none; }
   </style>
 </head>
@@ -26,7 +27,7 @@
       <input type="email" id="adminEmail" placeholder="Email Address" autocomplete="email">
       <input type="password" id="adminPass" placeholder="Password" autocomplete="current-password">
       
-      <button id="loginBtn">Log In</button>
+      <button type="button" id="loginBtn">Log In</button>
       <p id="login-error"></p>
     </div>
   </div>
@@ -112,8 +113,8 @@
     </main>
   </div>
 
-  <!-- Supabase JS CDN -->
+  <!-- Supabase CDN MUST BE LOADED BEFORE ADMIN.JS -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/admin.js"></script>
 </body>
-                                       </html>
+                                                                    </html>
