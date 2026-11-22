@@ -387,3 +387,83 @@ async function loadDynamicData() {
   }
 }
 document.addEventListener('DOMContentLoaded', loadDynamicData);
+
+// ============================================================
+// SUPABASE DYNAMIC DATA LOADER
+// ============================================================
+const SUPABASE_URL = 'https://qynaqzukiwtnxjsciazk.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_dTX5xkv4svMJA9-M5QMHKA_YctCIi19';
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+async function loadDynamicData() {
+  // 1. Load Settings
+  const { data: settings } = await supabaseClient.from('site_settings').select('*');
+  if (settings) {
+    const dict = {};
+    settings.forEach(s => dict[s.key] = s.value);
+    
+    const heroTitleEn = document.querySelector('.hero-title [lang="en"]');
+    const heroTitleBn = document.querySelector('.hero-title [lang="bn"]');
+    if (heroTitleEn && dict.hero_title_en) heroTitleEn.innerHTML = dict.hero_title_en.replace('Rubayed Hasan', '<em>Rubayed Hasan</em>');
+    if (heroTitleBn && dict.hero_title_bn) heroTitleBn.innerHTML = dict.hero_title_bn.replace('রুবায়েদ হাসান', '<em>রুবায়েদ হাসান</em>');
+
+    const heroTagEn = document.querySelector('.hero-tagline [lang="en"]');
+    const heroTagBn = document.querySelector('.hero-tagline [lang="bn"]');
+    if (heroTagEn && dict.hero_tagline_en) heroTagEn.textContent = dict.hero_tagline_en;
+    if (heroTagBn && dict.hero_tagline_bn) heroTagBn.textContent = dict.hero_tagline_bn;
+
+    const statExp = document.querySelector('.stat-number[data-target="3"]');
+    if (statExp && dict.stat_experience) statExp.setAttribute('data-target', dict.stat_experience);
+    const statProj = document.querySelector('.stat-number[data-target="15"]');
+    if (statProj && dict.stat_projects) statProj.setAttribute('data-target', dict.stat_projects);
+    const statClient = document.querySelector('.stat-number[data-target="99"]');
+    if (statClient && dict.stat_clients) statClient.setAttribute('data-target', dict.stat_clients);
+
+    const aboutEn = document.querySelector('.about-text p [lang="en"]');
+    const aboutBn = document.querySelector('.about-text p [lang="bn"]');
+    if (aboutEn && dict.about_text_en) aboutEn.textContent = dict.about_text_en;
+    if (aboutBn && dict.about_text_bn) aboutBn.textContent = dict.about_text_bn;
+  }
+
+  // 2. Load Projects (Update Marquee)
+  const { data: projects } = await supabaseClient.from('projects').select('*').order('created_at', { ascending: false });
+  if (projects && document.getElementById('workTrack')) {
+    const track = document.getElementById('workTrack');
+    const projectHTML = projects.map(p => `
+      <article class="project">
+        <div class="project-visual"><img src="${p.image_url}" alt="${p.name}" loading="lazy" /></div>
+        <div class="project-info">
+          <h3>${p.name}</h3>
+          <p class="project-cat"><span lang="en">${p.category_en}</span><span lang="bn">${p.category_bn}</span></p>
+        </div>
+      </article>
+    `).join('');
+    track.innerHTML = projectHTML + projectHTML; 
+  }
+
+  // 3. Load Reviews
+  const { data: reviews } = await supabaseClient.from('reviews').select('*').order('created_at', { ascending: false });
+  const reviewCarousel = document.querySelector('.review-carousel');
+  if (reviews && reviewCarousel) {
+    reviewCarousel.innerHTML = reviews.map((r, index) => `
+      <div class="review-card ${index === 0 ? 'active' : ''}">
+        <div class="review-stars">
+          <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+        </div>
+        <p class="review-text"><span lang="en">"${r.review_text_en}"</span><span lang="bn">"${r.review_text_bn}"</span></p>
+        <div class="review-author">
+          <div class="review-avatar">${r.client_name.charAt(0)}</div>
+          <div class="review-author-info">
+            <strong><span lang="en">${r.client_name}</span><span lang="bn">${r.client_name}</span></strong>
+            <span><span lang="en">${r.client_role}</span><span lang="bn">${r.client_role}</span></span>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+}
+document.addEventListener('DOMContentLoaded', loadDynamicData);
