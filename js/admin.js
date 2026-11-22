@@ -11,7 +11,7 @@ const loginError = document.getElementById('loginError');
 const logoutBtn = document.getElementById('logoutBtn');
 
 // Set default password (Can be changed in code)
-const CORRECT_PASSWORD = "admin123";
+const CORRECT_PASSWORD = "Rubayed24";
 
 // Check if already logged in (session)
 if (sessionStorage.getItem('adminLoggedIn') === 'true') {
