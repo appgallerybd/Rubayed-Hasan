@@ -1,288 +1,268 @@
 /* ============================================================
-   ADMIN PANEL LOGIC
+   ADMIN PANEL LOGIC - SUPABASE INTEGRATION
    ============================================================ */
 
-// --- Login Logic ---
+// ⚠️ এখানে আপনার Supabase URL এবং Anon Key বসান ⚠️
+const SUPABASE_URL = 'YOUR_SUPABASE_URL';
+const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
+
+// Initialize Supabase Client
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+// DOM Elements
 const loginScreen = document.getElementById('loginScreen');
 const adminPanel = document.getElementById('adminPanel');
 const loginBtn = document.getElementById('loginBtn');
-const adminPass = document.getElementById('adminPass');
-const loginError = document.getElementById('loginError');
 const logoutBtn = document.getElementById('logoutBtn');
+const loginError = document.getElementById('login-error');
 
-// Set default password (Can be changed in code)
-const CORRECT_PASSWORD = "Rubayed24";
+// ============================================================
+// 1. AUTHENTICATION FLOW
+// ============================================================
 
-// Check if already logged in (session)
-if (sessionStorage.getItem('adminLoggedIn') === 'true') {
-  loginScreen.style.display = 'none';
-  adminPanel.style.display = 'flex';
-}
-
-loginBtn.addEventListener('click', () => {
-  if (adminPass.value === CORRECT_PASSWORD) {
-    sessionStorage.setItem('adminLoggedIn', 'true');
-    loginScreen.style.display = 'none';
-    adminPanel.style.display = 'flex';
-    loadDashboardData();
+// Check if user is already logged in
+async function checkSession() {
+  const { data: { session } } = await supabase.auth.getSession();
+  if (session) {
+    showAdminPanel();
   } else {
+    loginScreen.style.display = 'block';
+    adminPanel.style.display = 'none';
+  }
+}
+
+// Login Handler
+loginBtn.addEventListener('click', async () => {
+  const email = document.getElementById('adminEmail').value.trim();
+  const password = document.getElementById('adminPass').value;
+
+  if (!email || !password) {
+    loginError.textContent = 'Please enter both email and password.';
     loginError.style.display = 'block';
-    adminPass.value = '';
-  }
-});
-
-adminPass.addEventListener('keypress', (e) => {
-  if (e.key === 'Enter') loginBtn.click();
-});
-
-logoutBtn.addEventListener('click', () => {
-  sessionStorage.removeItem('adminLoggedIn');
-  location.reload();
-});
-
-// --- Tab Switching Logic ---
-const navItems = document.querySelectorAll('.nav-item');
-const tabContents = document.querySelectorAll('.tab-content');
-
-navItems.forEach(item => {
-  item.addEventListener('click', (e) => {
-    e.preventDefault();
-    navItems.forEach(nav => nav.classList.remove('active'));
-    tabContents.forEach(tab => tab.classList.remove('active'));
-    
-    item.classList.add('active');
-    const target = item.getAttribute('data-target');
-    document.getElementById(target).classList.add('active');
-  });
-});
-
-// --- Database Simulation (LocalStorage) ---
-// Default Data
-const defaultProjects = [
-  { id: 1, name: "Shikder Enterprise", catEn: "Automotive Brand Identity", catBn: "অটোমোটিভ ব্র্যান্ড আইডেন্টিটি", img: "images/project-1.png" },
-  { id: 2, name: "Al Wafa Shop", catEn: "Retail Brand Identity", catBn: "রিটেইল ব্র্যান্ড আইডেন্টিটি", img: "images/project-2.png" },
-  { id: 3, name: "HL Fashion House", catEn: "Luxury Fashion Branding", catBn: "লাক্সারি ফ্যাশন ব্র্যান্ডিং", img: "images/project-3.png" },
-];
-
-const defaultReviews = [
-  { id: 1, name: "Mufti Shihabuddin", role: "Muhtamim, Raghunathpur Hasania Madrasha", textEn: "Rubayed designed our visiting card with great professionalism...", textBn: "রুবায়েদ ভাইয়ের ডিজাইন করা ভিজিটিং কার্ডটি দেখতে অত্যন্ত প্রিমিয়াম..." },
-  { id: 2, name: "Mawlana Tafazzul Hossain", role: "Muhtamim, Kaldanga Madrasha", textEn: "The Arabic certificate designed by him is extremely precise...", textBn: "তার ডিজাইন করা আরবি সার্টিফিকেটটি অত্যন্ত নিখুঁত ও সুন্দর..." },
-];
-
-// Initialize DB
-function initDB() {
-  if (!localStorage.getItem('rh_projects')) {
-    localStorage.setItem('rh_projects', JSON.stringify(defaultProjects));
-  }
-  if (!localStorage.getItem('rh_reviews')) {
-    localStorage.setItem('rh_reviews', JSON.stringify(defaultReviews));
-  }
-}
-initDB();
-
-function getProjects() { return JSON.parse(localStorage.getItem('rh_projects')) || []; }
-function saveProjects(data) { localStorage.setItem('rh_projects', JSON.stringify(data)); }
-function getReviews() { return JSON.parse(localStorage.getItem('rh_reviews')) || []; }
-function saveReviews(data) { localStorage.setItem('rh_reviews', JSON.stringify(data)); }
-
-// --- Dashboard Stats ---
-function loadDashboardData() {
-  document.getElementById('statProjects').textContent = getProjects().length;
-  document.getElementById('statReviews').textContent = getReviews().length;
-}
-
-// ============================================================
-// PROJECTS MANAGER
-// ============================================================
-const projectsTableBody = document.getElementById('projectsTableBody');
-const projectFormContainer = document.getElementById('projectFormContainer');
-const projectForm = document.getElementById('projectForm');
-const addProjectBtn = document.getElementById('addProjectBtn');
-const cancelProjectBtn = document.getElementById('cancelProjectBtn');
-
-function renderProjects() {
-  const projects = getProjects();
-  projectsTableBody.innerHTML = '';
-  
-  if (projects.length === 0) {
-    projectsTableBody.innerHTML = '<tr><td colspan="4" style="text-align:center; padding:20px; color: #8f857d;">No projects found. Add one!</td></tr>';
     return;
   }
 
-  projects.forEach(proj => {
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td><img src="${proj.img}" alt="${proj.name}" onerror="this.src='images/profile.png'"></td>
-      <td style="font-weight:600; color:#fff;">${proj.name}</td>
-      <td>${proj.catEn}</td>
-      <td>
-        <div class="actions">
-          <button class="btn-edit" onclick="editProject(${proj.id})">Edit</button>
-          <button class="btn-danger" onclick="deleteProject(${proj.id})">Delete</button>
-        </div>
-      </td>
-    `;
-    projectsTableBody.appendChild(tr);
-  });
+  loginBtn.textContent = 'Logging in...';
+  loginBtn.disabled = true;
+  loginError.style.display = 'none';
+
+  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+
+  if (error) {
+    loginError.textContent = error.message;
+    loginError.style.display = 'block';
+    loginBtn.textContent = 'Log In';
+    loginBtn.disabled = false;
+  } else {
+    showAdminPanel();
+  }
+});
+
+// Logout Handler
+logoutBtn.addEventListener('click', async () => {
+  await supabase.auth.signOut();
+  window.location.reload();
+});
+
+function showAdminPanel() {
+  loginScreen.style.display = 'none';
+  adminPanel.style.display = 'flex';
   loadDashboardData();
 }
 
-addProjectBtn.addEventListener('click', () => {
-  projectForm.reset();
-  document.getElementById('projId').value = '';
-  document.getElementById('projectFormTitle').textContent = 'Add New Project';
-  projectFormContainer.style.display = 'block';
+// Listen for auth state changes
+supabase.auth.onAuthStateChange((event, session) => {
+  if (event === 'SIGNED_IN') showAdminPanel();
+  if (event === 'SIGNED_OUT') window.location.reload();
 });
 
-cancelProjectBtn.addEventListener('click', () => {
-  projectFormContainer.style.display = 'none';
+// ============================================================
+// 2. TAB NAVIGATION & DASHBOARD
+// ============================================================
+document.querySelectorAll('.nav-item').forEach(item => {
+  item.addEventListener('click', (e) => {
+    e.preventDefault();
+    document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+    item.classList.add('active');
+    document.getElementById(item.dataset.target).classList.add('active');
+  });
 });
 
-projectForm.addEventListener('submit', (e) => {
+async function loadDashboardData() {
+  const { count: projectCount } = await supabase.from('projects').select('*', { count: 'exact', head: true });
+  const { count: reviewCount } = await supabase.from('reviews').select('*', { count: 'exact', head: true });
+  
+  document.getElementById('statProjects').textContent = projectCount || 0;
+  document.getElementById('statReviews').textContent = reviewCount || 0;
+  
+  loadProjects();
+  loadReviews();
+  loadSettings();
+}
+
+// ============================================================
+// 3. PROJECTS CRUD
+// ============================================================
+async function loadProjects() {
+  const { data: projects } = await supabase.from('projects').select('*').order('created_at', { ascending: false });
+  const table = document.getElementById('projectsTable');
+  
+  if (!projects || projects.length === 0) {
+    table.innerHTML = '<p>No projects found.</p>';
+    return;
+  }
+
+  table.innerHTML = projects.map(p => `
+    <div style="background:#17110d; padding:15px; margin-bottom:10px; border-radius:10px; display:flex; align-items:center; justify-content:space-between; border:1px solid rgba(212,175,55,0.2);">
+      <div style="display:flex; align-items:center; gap:15px;">
+        <img src="${p.image_url || 'images/profile.png'}" style="width:50px; height:50px; object-fit:cover; border-radius:8px;">
+        <div>
+          <h4 style="margin-bottom:4px;">${p.name}</h4>
+          <p style="font-size:12px; color:#8f857d;">${p.category_en}</p>
+        </div>
+      </div>
+      <button onclick="deleteProject(${p.id})" style="background:rgba(239,68,68,0.1); color:#ef4444; border:1px solid rgba(239,68,68,0.2); padding:6px 12px; border-radius:6px; cursor:pointer;">Delete</button>
+    </div>
+  `).join('');
+}
+
+document.getElementById('addProjectBtn').addEventListener('click', () => {
+  document.getElementById('projectFormContainer').style.display = 'block';
+});
+
+document.getElementById('projectForm').addEventListener('submit', async (e) => {
   e.preventDefault();
-  const id = document.getElementById('projId').value;
   const name = document.getElementById('projName').value;
   const catEn = document.getElementById('projCatEn').value;
   const catBn = document.getElementById('projCatBn').value;
-  const img = document.getElementById('projImg').value;
+  const file = document.getElementById('projImage').files[0];
 
-  let projects = getProjects();
+  if (!file) return alert('Please select an image!');
 
-  if (id) {
-    // Edit existing
-    const index = projects.findIndex(p => p.id == id);
-    if (index > -1) {
-      projects[index] = { id: Number(id), name, catEn, catBn, img };
-    }
-  } else {
-    // Add new
-    const newId = Date.now(); // Unique ID
-    projects.push({ id: newId, name, catEn, catBn, img });
-  }
+  // Upload Image to Supabase Storage
+  const fileName = `${Date.now()}_${file.name}`;
+  const { error: uploadError } = await supabase.storage.from('site-assets').upload(fileName, file);
+  if (uploadError) return alert('Upload failed: ' + uploadError.message);
 
-  saveProjects(projects);
-  projectFormContainer.style.display = 'none';
-  renderProjects();
+  const { data: urlData } = supabase.storage.from('site-assets').getPublicUrl(fileName);
+
+  // Insert into Database
+  const { error } = await supabase.from('projects').insert([{ 
+    name, category_en: catEn, category_bn: catBn, image_url: urlData.publicUrl 
+  }]);
+
+  if (error) return alert('Error: ' + error.message);
+
+  document.getElementById('projectFormContainer').style.display = 'none';
+  document.getElementById('projectForm').reset();
+  loadProjects();
+  loadDashboardData();
 });
 
-window.editProject = function(id) {
-  const projects = getProjects();
-  const proj = projects.find(p => p.id == id);
-  if (!proj) return;
-
-  document.getElementById('projId').value = proj.id;
-  document.getElementById('projName').value = proj.name;
-  document.getElementById('projCatEn').value = proj.catEn;
-  document.getElementById('projCatBn').value = proj.catBn;
-  document.getElementById('projImg').value = proj.img;
-
-  document.getElementById('projectFormTitle').textContent = 'Edit Project';
-  projectFormContainer.style.display = 'block';
-};
-
-window.deleteProject = function(id) {
-  if (!confirm('Are you sure you want to delete this project?')) return;
-  let projects = getProjects();
-  projects = projects.filter(p => p.id != id);
-  saveProjects(projects);
-  renderProjects();
+window.deleteProject = async (id) => {
+  if (!confirm('Delete this project?')) return;
+  await supabase.from('projects').delete().eq('id', id);
+  loadProjects();
+  loadDashboardData();
 };
 
 // ============================================================
-// REVIEWS MANAGER
+// 4. REVIEWS CRUD
 // ============================================================
-const reviewsTableBody = document.getElementById('reviewsTableBody');
-const reviewFormContainer = document.getElementById('reviewFormContainer');
-const reviewForm = document.getElementById('reviewForm');
-const addReviewBtn = document.getElementById('addReviewBtn');
-const cancelReviewBtn = document.getElementById('cancelReviewBtn');
-
-function renderReviews() {
-  const reviews = getReviews();
-  reviewsTableBody.innerHTML = '';
+async function loadReviews() {
+  const { data: reviews } = await supabase.from('reviews').select('*').order('created_at', { ascending: false });
+  const table = document.getElementById('reviewsTable');
   
-  if (reviews.length === 0) {
-    reviewsTableBody.innerHTML = '<tr><td colspan="4" style="text-align:center; padding:20px; color: #8f857d;">No reviews found. Add one!</td></tr>';
+  if (!reviews || reviews.length === 0) {
+    table.innerHTML = '<p>No reviews found.</p>';
     return;
   }
 
-  reviews.forEach(rev => {
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td style="font-weight:600; color:#fff;">${rev.name}</td>
-      <td>${rev.role}</td>
-      <td style="max-width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${rev.textEn}</td>
-      <td>
-        <div class="actions">
-          <button class="btn-edit" onclick="editReview(${rev.id})">Edit</button>
-          <button class="btn-danger" onclick="deleteReview(${rev.id})">Delete</button>
-        </div>
-      </td>
-    `;
-    reviewsTableBody.appendChild(tr);
-  });
-  loadDashboardData();
+  table.innerHTML = reviews.map(r => `
+    <div style="background:#17110d; padding:15px; margin-bottom:10px; border-radius:10px; display:flex; align-items:center; justify-content:space-between; border:1px solid rgba(212,175,55,0.2);">
+      <div>
+        <h4 style="margin-bottom:4px;">${r.client_name}</h4>
+        <p style="font-size:12px; color:#8f857d;">${r.client_role}</p>
+        <p style="font-size:13px; margin-top:8px; color:#c4c4cf;">"${r.review_text_en}"</p>
+      </div>
+      <button onclick="deleteReview(${r.id})" style="background:rgba(239,68,68,0.1); color:#ef4444; border:1px solid rgba(239,68,68,0.2); padding:6px 12px; border-radius:6px; cursor:pointer;">Delete</button>
+    </div>
+  `).join('');
 }
 
-addReviewBtn.addEventListener('click', () => {
-  reviewForm.reset();
-  document.getElementById('revId').value = '';
-  document.getElementById('reviewFormTitle').textContent = 'Add New Review';
-  reviewFormContainer.style.display = 'block';
+document.getElementById('addReviewBtn').addEventListener('click', () => {
+  document.getElementById('reviewFormContainer').style.display = 'block';
 });
 
-cancelReviewBtn.addEventListener('click', () => {
-  reviewFormContainer.style.display = 'none';
-});
-
-reviewForm.addEventListener('submit', (e) => {
+document.getElementById('reviewForm').addEventListener('submit', async (e) => {
   e.preventDefault();
-  const id = document.getElementById('revId').value;
   const name = document.getElementById('revName').value;
   const role = document.getElementById('revRole').value;
   const textEn = document.getElementById('revTextEn').value;
   const textBn = document.getElementById('revTextBn').value;
 
-  let reviews = getReviews();
+  const { error } = await supabase.from('reviews').insert([{ 
+    client_name: name, client_role: role, review_text_en: textEn, review_text_bn: textBn 
+  }]);
 
-  if (id) {
-    const index = reviews.findIndex(r => r.id == id);
-    if (index > -1) {
-      reviews[index] = { id: Number(id), name, role, textEn, textBn };
-    }
-  } else {
-    const newId = Date.now();
-    reviews.push({ id: newId, name, role, textEn, textBn });
-  }
+  if (error) return alert('Error: ' + error.message);
 
-  saveReviews(reviews);
-  reviewFormContainer.style.display = 'none';
-  renderReviews();
+  document.getElementById('reviewFormContainer').style.display = 'none';
+  document.getElementById('reviewForm').reset();
+  loadReviews();
+  loadDashboardData();
 });
 
-window.editReview = function(id) {
-  const reviews = getReviews();
-  const rev = reviews.find(r => r.id == id);
-  if (!rev) return;
-
-  document.getElementById('revId').value = rev.id;
-  document.getElementById('revName').value = rev.name;
-  document.getElementById('revRole').value = rev.role;
-  document.getElementById('revTextEn').value = rev.textEn;
-  document.getElementById('revTextBn').value = rev.textBn;
-
-  document.getElementById('reviewFormTitle').textContent = 'Edit Review';
-  reviewFormContainer.style.display = 'block';
+window.deleteReview = async (id) => {
+  if (!confirm('Delete this review?')) return;
+  await supabase.from('reviews').delete().eq('id', id);
+  loadReviews();
+  loadDashboardData();
 };
 
-window.deleteReview = function(id) {
-  if (!confirm('Are you sure you want to delete this review?')) return;
-  let reviews = getReviews();
-  reviews = reviews.filter(r => r.id != id);
-  saveReviews(reviews);
-  renderReviews();
-};
+// ============================================================
+// 5. SETTINGS CRUD
+// ============================================================
+async function loadSettings() {
+  const { data } = await supabase.from('site_settings').select('*');
+  if (!data) return;
 
-// Initial Render
-renderProjects();
-renderReviews();
+  const dict = {};
+  data.forEach(item => dict[item.key] = item.value);
+
+  document.getElementById('set_hero_title_en').value = dict.hero_title_en || '';
+  document.getElementById('set_hero_title_bn').value = dict.hero_title_bn || '';
+  document.getElementById('set_hero_tagline_en').value = dict.hero_tagline_en || '';
+  document.getElementById('set_hero_tagline_bn').value = dict.hero_tagline_bn || '';
+  document.getElementById('set_about_text_en').value = dict.about_text_en || '';
+  document.getElementById('set_about_text_bn').value = dict.about_text_bn || '';
+  document.getElementById('set_stat_experience').value = dict.stat_experience || '3';
+  document.getElementById('set_stat_projects').value = dict.stat_projects || '15';
+  document.getElementById('set_stat_clients').value = dict.stat_clients || '99';
+}
+
+document.getElementById('settingsForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  
+  const updates = [
+    { key: 'hero_title_en', value: document.getElementById('set_hero_title_en').value },
+    { key: 'hero_title_bn', value: document.getElementById('set_hero_title_bn').value },
+    { key: 'hero_tagline_en', value: document.getElementById('set_hero_tagline_en').value },
+    { key: 'hero_tagline_bn', value: document.getElementById('set_hero_tagline_bn').value },
+    { key: 'about_text_en', value: document.getElementById('set_about_text_en').value },
+    { key: 'about_text_bn', value: document.getElementById('set_about_text_bn').value },
+    { key: 'stat_experience', value: document.getElementById('set_stat_experience').value },
+    { key: 'stat_projects', value: document.getElementById('set_stat_projects').value },
+    { key: 'stat_clients', value: document.getElementById('set_stat_clients').value },
+  ];
+
+  for (const item of updates) {
+    await supabase.from('site_settings').update({ value: item.value }).eq('key', item.key);
+  }
+
+  alert('Settings saved successfully!');
+});
+
+// Initialize
+checkSession();
