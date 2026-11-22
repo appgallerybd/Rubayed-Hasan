@@ -3,196 +3,117 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Login - Rubayed Hasan</title>
+  <title>Admin Panel - Rubayed Hasan</title>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/admin.css">
   <style>
-    :root {
-      --bg: #0a0705; --surface: #17110d;
-      --border: rgba(212, 175, 55, 0.3); --text: #f4f4f7;
-      --accent: #d4af37; --danger: #ef4444;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--text); display: flex; height: 100vh; align-items: center; justify-content: center; }
-    
-    /* Login Box Style */
-    .login-box { background: var(--surface); padding: 40px; border-radius: 20px; border: 1px solid var(--border); text-align: center; max-width: 400px; width: 100%; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
-    .login-box h2 { margin-bottom: 10px; color: var(--accent); font-size: 24px; }
-    .login-box p { color: #8f857d; margin-bottom: 24px; font-size: 14px; }
-    
-    .input-group { margin-bottom: 16px; text-align: left; }
-    .input-group label { display: block; font-size: 12px; font-weight: 600; color: #8f857d; margin-bottom: 6px; text-transform: uppercase; }
-    .input-group input { width: 100%; padding: 14px; border-radius: 10px; border: 1px solid #333; background: #111; color: #fff; font-size: 15px; outline: none; transition: 0.2s; font-family: inherit; }
-    .input-group input:focus { border-color: var(--accent); }
-    
-    /* Button Style - Fixed Cursor */
-    .btn-login {
-      width: 100%;
-      padding: 14px;
-      border-radius: 10px;
-      border: none;
-      background: var(--accent);
-      color: #000;
-      font-size: 16px;
-      font-weight: 700;
-      cursor: pointer !important; /* Force pointer */
-      transition: 0.2s;
-      font-family: inherit;
-      margin-top: 10px;
-    }
-    .btn-login:hover { filter: brightness(1.1); }
-    .btn-login:disabled { opacity: 0.7; cursor: not-allowed !important; }
-
-    /* Error Message */
-    #login-error { color: var(--danger); font-size: 13px; margin-top: 15px; display: none; font-weight: 500; }
-
-    /* Hidden Admin Panel Content (Initially) */
-    #admin-panel { display: none; }
+    /* Basic fallback styles if admin.css is missing */
+    .login-box { max-width: 400px; margin: 100px auto; padding: 40px; background: #17110d; border-radius: 20px; border: 1px solid rgba(212, 175, 55, 0.3); text-align: center; }
+    .login-box input { width: 100%; padding: 14px; margin-bottom: 15px; background: #111; border: 1px solid #333; color: #fff; border-radius: 10px; font-family: inherit; }
+    .login-box button { width: 100%; padding: 14px; background: #d4af37; color: #000; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; font-family: inherit; }
+    #login-error { color: #ef4444; font-size: 14px; margin-top: 15px; display: none; }
   </style>
 </head>
 <body>
 
   <!-- Login Screen -->
-  <div id="login-screen">
+  <div id="loginScreen">
     <div class="login-box">
-      <h2>Admin Login</h2>
-      <p>Sign in with your authorized email and password.</p>
+      <img src="images/profile.png" alt="Admin" style="width:80px; height:80px; border-radius:50%; border:2px solid #d4af37; margin-bottom:20px;">
+      <h2 style="color:#d4af37; margin-bottom:10px;">Admin Login</h2>
+      <p style="color:#8f857d; font-size:14px; margin-bottom:20px;">Sign in with your authorized email and password.</p>
       
-      <div class="input-group">
-        <label>Email Address</label>
-        <input type="email" id="login-email" placeholder="admin@example.com">
-      </div>
+      <input type="email" id="adminEmail" placeholder="Email Address" autocomplete="email">
+      <input type="password" id="adminPass" placeholder="Password" autocomplete="current-password">
       
-      <div class="input-group">
-        <label>Password</label>
-        <input type="password" id="login-password" placeholder="••••••••">
-      </div>
-      
-      <button id="login-btn" class="btn-login">Log In</button>
-      
-      <p id="login-error">Error: Could not connect to database.</p>
+      <button id="loginBtn">Log In</button>
+      <p id="login-error"></p>
     </div>
   </div>
 
-  <!-- Admin Panel (Will show after login) -->
-  <div id="admin-panel" style="width: 100%; height: 100vh; padding: 40px; text-align: center;">
-    <h1 style="color: var(--accent); margin-bottom: 20px;">Welcome to Admin Dashboard!</h1>
-    <p>You are successfully logged in.</p>
-    <br>
-    <button id="logout-btn" style="padding: 10px 20px; background: var(--danger); color: #fff; border: none; border-radius: 8px; cursor: pointer;">Logout</button>
+  <!-- Admin Dashboard (Hidden by default) -->
+  <div class="admin-layout" id="adminPanel" style="display:none;">
+    <aside class="sidebar">
+      <div class="sidebar-brand"><img src="images/profile.png" alt="Logo"><span>Admin Panel</span></div>
+      <nav class="sidebar-nav">
+        <a href="#" class="nav-item active" data-target="dashboard">Dashboard</a>
+        <a href="#" class="nav-item" data-target="projects">Manage Projects</a>
+        <a href="#" class="nav-item" data-target="reviews">Manage Reviews</a>
+        <a href="#" class="nav-item" data-target="settings">Site Settings</a>
+      </nav>
+      <div class="sidebar-footer">
+        <a href="index.html" target="_blank">View Website</a>
+        <button id="logoutBtn">Logout</button>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <section id="dashboard" class="tab-content active">
+        <h1>Dashboard Overview</h1>
+        <div class="stats-row">
+          <div class="stat-card"><h3>Total Projects</h3><p id="statProjects">0</p></div>
+          <div class="stat-card"><h3>Total Reviews</h3><p id="statReviews">0</p></div>
+        </div>
+      </section>
+
+      <section id="projects" class="tab-content">
+        <h1>Manage Projects</h1>
+        <div class="form-container" id="projectFormContainer" style="display:none;">
+          <h2>Add New Project</h2>
+          <form id="projectForm">
+            <input type="hidden" id="projId">
+            <div class="input-group"><label>Project Name</label><input type="text" id="projName" required></div>
+            <div class="input-group"><label>Category (EN)</label><input type="text" id="projCatEn" required></div>
+            <div class="input-group"><label>Category (BN)</label><input type="text" id="projCatBn" required></div>
+            <div class="input-group"><label>Image File</label><input type="file" id="projImage" accept="image/*"></div>
+            <button type="submit" class="btn btn-primary">Save Project</button>
+            <button type="button" class="btn btn-ghost" onclick="document.getElementById('projectFormContainer').style.display='none'">Cancel</button>
+          </form>
+        </div>
+        <button class="btn btn-primary" id="addProjectBtn" style="margin-bottom:20px;">+ Add New Project</button>
+        <div id="projectsTable"></div>
+      </section>
+
+      <section id="reviews" class="tab-content">
+        <h1>Manage Reviews</h1>
+        <div class="form-container" id="reviewFormContainer" style="display:none;">
+          <h2>Add New Review</h2>
+          <form id="reviewForm">
+            <input type="hidden" id="revId">
+            <div class="input-group"><label>Client Name</label><input type="text" id="revName" required></div>
+            <div class="input-group"><label>Role / Org</label><input type="text" id="revRole" required></div>
+            <div class="input-group"><label>Review (EN)</label><textarea id="revTextEn" rows="3" required></textarea></div>
+            <div class="input-group"><label>Review (BN)</label><textarea id="revTextBn" rows="3" required></textarea></div>
+            <button type="submit" class="btn btn-primary">Save Review</button>
+            <button type="button" class="btn btn-ghost" onclick="document.getElementById('reviewFormContainer').style.display='none'">Cancel</button>
+          </form>
+        </div>
+        <button class="btn btn-primary" id="addReviewBtn" style="margin-bottom:20px;">+ Add New Review</button>
+        <div id="reviewsTable"></div>
+      </section>
+
+      <section id="settings" class="tab-content">
+        <h1>Site Settings</h1>
+        <div class="form-container">
+          <form id="settingsForm">
+            <div class="input-group"><label>Hero Title (EN)</label><input type="text" id="set_hero_title_en"></div>
+            <div class="input-group"><label>Hero Title (BN)</label><input type="text" id="set_hero_title_bn"></div>
+            <div class="input-group"><label>Hero Tagline (EN)</label><textarea id="set_hero_tagline_en" rows="2"></textarea></div>
+            <div class="input-group"><label>Hero Tagline (BN)</label><textarea id="set_hero_tagline_bn" rows="2"></textarea></div>
+            <div class="input-group"><label>About (EN)</label><textarea id="set_about_text_en" rows="4"></textarea></div>
+            <div class="input-group"><label>About (BN)</label><textarea id="set_about_text_bn" rows="4"></textarea></div>
+            <div class="input-group"><label>Experience</label><input type="number" id="set_stat_experience"></div>
+            <div class="input-group"><label>Total Projects</label><input type="number" id="set_stat_projects"></div>
+            <div class="input-group"><label>Happy Clients (%)</label><input type="number" id="set_stat_clients"></div>
+            <button type="submit" class="btn btn-primary">Save Settings</button>
+          </form>
+        </div>
+      </section>
+    </main>
   </div>
 
-  <!-- Supabase JS -->
+  <!-- Supabase JS CDN -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  
-  <script>
-    // ==========================================
-    // ⚠️ এখানে আপনার Supabase URL এবং Key বসান ⚠️
-    // ==========================================
-    const SUPABASE_URL = 'https://qynaqzukiwtnxjsciazk.supabase.co';
-    const SUPABASE_ANON_KEY = 'sb_publishable_dTX5xkv4svMJA9-M5QMHKA_YctCIi19';
-
-    // DOM Elements
-    const loginScreen = document.getElementById('login-screen');
-    const adminPanel = document.getElementById('admin-panel');
-    const loginBtn = document.getElementById('login-btn');
-    const loginEmail = document.getElementById('login-email');
-    const loginPassword = document.getElementById('login-password');
-    const loginError = document.getElementById('login-error');
-    const logoutBtn = document.getElementById('logout-btn');
-
-    // Check if Supabase details are added
-    if (SUPABASE_URL.includes('এখানে_বসান') || SUPABASE_ANON_KEY.includes('এখানে_বসান')) {
-      loginError.textContent = '⚠️ Error: Please add your Supabase URL and Key inside the code.';
-      loginError.style.display = 'block';
-      loginBtn.disabled = true;
-    }
-
-    // Initialize Supabase
-    let supabase = null;
-    try {
-      if (window.supabase) {
-        supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-      }
-    } catch (err) {
-      console.error("Supabase Init Error:", err);
-    }
-
-    // ------------------------------------------
-    // 1. LOGIN FUNCTION
-    // ------------------------------------------
-    loginBtn.addEventListener('click', async () => {
-      // Reset error
-      loginError.style.display = 'none';
-      loginBtn.textContent = 'Logging in...';
-      loginBtn.disabled = true;
-
-      const email = loginEmail.value.trim();
-      const password = loginPassword.value;
-
-      if (!email || !password) {
-        loginError.textContent = 'Please enter both email and password.';
-        loginError.style.display = 'block';
-        loginBtn.textContent = 'Log In';
-        loginBtn.disabled = false;
-        return;
-      }
-
-      if (!supabase) {
-        loginError.textContent = 'Database connection failed. Check console.';
-        loginError.style.display = 'block';
-        loginBtn.textContent = 'Log In';
-        loginBtn.disabled = false;
-        return;
-      }
-
-      // Try Login
-      try {
-        const { data, error } = await supabase.auth.signInWithPassword({
-          email: email,
-          password: password,
-        });
-
-        if (error) {
-          // Show exact error from Supabase
-          loginError.textContent = error.message;
-          loginError.style.display = 'block';
-        } else if (data.user) {
-          // Success
-          loginScreen.style.display = 'none';
-          adminPanel.style.display = 'block';
-        }
-      } catch (err) {
-        loginError.textContent = 'Network Error: ' + err.message;
-        loginError.style.display = 'block';
-      } finally {
-        loginBtn.textContent = 'Log In';
-        loginBtn.disabled = false;
-      }
-    });
-
-    // ------------------------------------------
-    // 2. LOGOUT FUNCTION
-    // ------------------------------------------
-    logoutBtn.addEventListener('click', async () => {
-      if (supabase) await supabase.auth.signOut();
-      location.reload();
-    });
-
-    // ------------------------------------------
-    // 3. CHECK IF ALREADY LOGGED IN
-    // ------------------------------------------
-    async function checkSession() {
-      if (!supabase) return;
-      const { data: { session } } = await supabase.auth.getSession();
-      if (session) {
-        loginScreen.style.display = 'none';
-        adminPanel.style.display = 'block';
-      }
-    }
-    
-    // Run check on load
-    document.addEventListener('DOMContentLoaded', checkSession);
-
-  </script>
+  <script src="js/admin.js"></script>
 </body>
-</html>
+                                       </html>
