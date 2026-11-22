@@ -178,6 +178,65 @@
     </main>
   </div>
 
+<script>
+// আপনার Supabase URL এবং Key এখানে বসান
+const SUPABASE_URL = 'https://qynaqzukiwtnxjsciazk.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_dTX5xkv4svMJA9-M5QMHKA_YctCIi19';
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+// DOM Elements
+const loginScreen = document.getElementById('login-screen');
+const adminLayout = document.getElementById('admin-layout');
+const loginBtn = document.getElementById('login-btn');
+const loginEmail = document.getElementById('login-email');
+const loginPassword = document.getElementById('login-password');
+const loginError = document.getElementById('login-error');
+const logoutBtn = document.getElementById('logout-btn');
+
+// ১. ইউজার চেক করা
+async function checkUser() {
+  const { data: { session } } = await supabase.auth.getSession();
+  if (session) {
+    showAdminPanel();
+  } else {
+    loginScreen.style.display = 'flex';
+    adminLayout.style.display = 'none';
+  }
+}
+
+// ২. লগইন বাটনে ক্লিক
+loginBtn.addEventListener('click', async () => {
+  const email = loginEmail.value;
+  const password = loginPassword.value;
+  
+  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+  
+  if (error) {
+    loginError.style.display = 'block';
+  } else {
+    loginError.style.display = 'none';
+    showAdminPanel();
+  }
+});
+
+// ৩. লগআউট বাটন
+logoutBtn.addEventListener('click', async () => {
+  await supabase.auth.signOut();
+  location.reload();
+});
+
+// ৪. অ্যাডমিন প্যানেল দেখানো
+function showAdminPanel() {
+  loginScreen.style.display = 'none';
+  adminLayout.style.display = 'flex';
+  loadSettings();
+  loadProjects();
+  loadReviews();
+}
+
+// বাকি সব ফাংশন (loadSettings, loadProjects, loadReviews) আগের মতোই থাকবে
+</script>
+  
   <script src="js/admin.js"></script>
 </body>
   </html>
