@@ -1,8 +1,3 @@
-/* ============================================================
-   RUBayed HASAN — PORTFOLIO
-   Language · Menu · Reveal · WhatsApp · Counters · Favicon · Carousel · Chatbot
-   ============================================================ */
-
 (function () {
   'use strict';
 
@@ -10,140 +5,67 @@
   const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
 
   /* ============================================================
-     0. ROUND FAVICON GENERATOR
+     1. UI FUNCTIONALITY (Menu, Language, Chatbot)
      ============================================================ */
+  // --- Round Favicon ---
   function generateRoundFavicon() {
     const img = new Image();
     img.src = 'images/profile.png'; 
-    img.crossOrigin = 'Anonymous';
-    
     img.onload = function() {
-      const S = 64; 
-      const canvas = document.createElement('canvas');
-      canvas.width = S;
-      canvas.height = S;
-      const ctx = canvas.getContext('2d');
-      
-      ctx.beginPath();
-      ctx.arc(S / 2, S / 2, S / 2, 0, Math.PI * 2);
-      ctx.closePath();
-      ctx.clip();
-      
-      const aspect = img.width / img.height;
-      let sx = 0, sy = 0, sw = img.width, sh = img.height;
-      if (aspect > 1) {
-        sw = img.height;
-        sx = (img.width - sw) / 2;
-      } else if (aspect < 1) {
-        sh = img.width;
-        sy = (img.height - sh) / 2;
-      }
-      
+      const S = 64; const canvas = document.createElement('canvas');
+      canvas.width = S; canvas.height = S; const ctx = canvas.getContext('2d');
+      ctx.beginPath(); ctx.arc(S/2, S/2, S/2, 0, Math.PI*2); ctx.clip();
+      const aspect = img.width / img.height; let sx = 0, sy = 0, sw = img.width, sh = img.height;
+      if (aspect > 1) { sw = img.height; sx = (img.width - sw) / 2; }
+      else if (aspect < 1) { sh = img.width; sy = (img.height - sh) / 2; }
       ctx.drawImage(img, sx, sy, sw, sh, 0, 0, S, S);
-
-      const dataUrl = canvas.toDataURL('image/png');
       let link = document.querySelector("link[rel*='icon']") || document.createElement('link');
-      link.type = 'image/png';
-      link.rel = 'icon';
-      link.href = dataUrl;
+      link.type = 'image/png'; link.rel = 'icon'; link.href = canvas.toDataURL('image/png');
       document.head.appendChild(link);
     };
   }
   generateRoundFavicon();
 
-  /* ============================================================
-     1. LANGUAGE TOGGLE
-     ============================================================ */
-  const LANG_KEY = 'rh-lang';
+  // --- Language Toggle ---
   const langButtons = $$('[data-set-lang]');
-
   function applyLanguage(lang) {
     document.documentElement.lang = lang;
-    localStorage.setItem(LANG_KEY, lang);
-
-    langButtons.forEach((btn) => {
-      const isActive = btn.dataset.setLang === lang;
-      btn.classList.toggle('active', isActive);
-    });
-
-    $$('[data-ph-en]').forEach((el) => {
-      const text = lang === 'bn' ? el.dataset.phBn : el.dataset.phEn;
-      if (text) el.setAttribute('placeholder', text);
-    });
+    localStorage.setItem('rh-lang', lang);
+    langButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.setLang === lang));
   }
+  langButtons.forEach(btn => btn.addEventListener('click', () => applyLanguage(btn.dataset.setLang)));
+  applyLanguage(document.documentElement.lang === 'bn' ? 'bn' : 'en');
 
-  langButtons.forEach((btn) => {
-    btn.addEventListener('click', () => applyLanguage(btn.dataset.setLang));
-  });
-
-  const initialLang = document.documentElement.lang === 'bn' ? 'bn' : 'en';
-  applyLanguage(initialLang);
-
-  /* ============================================================
-     2. MOBILE MENU
-     ============================================================ */
-  const menuToggle = $('#menuToggle');
-  const mobileMenu = $('#mobileMenu');
-
-  function closeMenu() {
-    if (!mobileMenu || !menuToggle) return;
-    mobileMenu.classList.remove('open');
-    menuToggle.setAttribute('aria-expanded', 'false');
-  }
-
+  // --- Mobile Menu ---
+  const menuToggle = $('#menuToggle'), mobileMenu = $('#mobileMenu');
   if (menuToggle && mobileMenu) {
     menuToggle.addEventListener('click', (e) => {
       e.stopPropagation();
       const isOpen = mobileMenu.classList.toggle('open');
       menuToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
     });
-
     document.addEventListener('click', (e) => {
       if (!mobileMenu.classList.contains('open')) return;
       if (mobileMenu.contains(e.target) || menuToggle.contains(e.target)) return;
-      closeMenu();
-    });
-
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') closeMenu();
+      mobileMenu.classList.remove('open');
+      menuToggle.setAttribute('aria-expanded', 'false');
     });
   }
 
-  /* ============================================================
-     3. HEADER SCROLL STATE
-     ============================================================ */
+  // --- Header Scroll & Reveal ---
   const header = $('#header');
-  function updateHeader() {
-    if (!header) return;
-    header.classList.toggle('scrolled', window.scrollY > 12);
-  }
-  window.addEventListener('scroll', updateHeader, { passive: true });
-  updateHeader();
-
-  /* ============================================================
-     4. SCROLL REVEAL
-     ============================================================ */
+  window.addEventListener('scroll', () => { if (header) header.classList.toggle('scrolled', window.scrollY > 12); }, { passive: true });
   const revealEls = $$('.reveal');
   if ('IntersectionObserver' in window && revealEls.length) {
-    const revealObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            revealObserver.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.12, rootMargin: '0px 0px -60px 0px' }
-    );
-    revealEls.forEach((el) => revealObserver.observe(el));
-  } else {
-    revealEls.forEach((el) => el.classList.add('visible'));
-  }
+    const revealObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) { entry.target.classList.add('visible'); revealObserver.unobserve(entry.target); }
+      });
+    }, { threshold: 0.12 });
+    revealEls.forEach(el => revealObserver.observe(el));
+  } else { revealEls.forEach(el => el.classList.add('visible')); }
 
-  /* ============================================================
-     5. STATS COUNTER ANIMATION
-     ============================================================ */
+  // --- Stats Counter ---
   const statNumbers = $$('.stat-number');
   if (statNumbers.length && 'IntersectionObserver' in window) {
     const counterObserver = new IntersectionObserver((entries, observer) => {
@@ -151,319 +73,172 @@
         if (entry.isIntersecting) {
           const el = entry.target;
           const target = parseInt(el.getAttribute('data-target'), 10);
-          const duration = 2000; 
-          const startTime = performance.now();
-
+          const duration = 2000; const startTime = performance.now();
           function updateCount(currentTime) {
-            const elapsedTime = currentTime - startTime;
-            const progress = Math.min(elapsedTime / duration, 1);
+            const progress = Math.min((currentTime - startTime) / duration, 1);
             const easeOut = progress * (2 - progress);
-            const currentVal = Math.floor(easeOut * target);
-            
-            el.textContent = currentVal;
-            
-            if (progress < 1) {
-              requestAnimationFrame(updateCount);
-            } else {
-              el.textContent = target;
-            }
+            el.textContent = Math.floor(easeOut * target);
+            if (progress < 1) requestAnimationFrame(updateCount);
+            else el.textContent = target;
           }
-          requestAnimationFrame(updateCount);
-          observer.unobserve(el);
+          requestAnimationFrame(updateCount); observer.unobserve(el);
         }
       });
     }, { threshold: 0.5 });
-
     statNumbers.forEach(num => counterObserver.observe(num));
   }
 
-  /* ============================================================
-     6. MARQUEE SCROLLING LOGIC (Home page)
-     ============================================================ */
+  // --- Marquee ---
   const track = $('#workTrack');
   if (track) {
-    let scrollPos = 0;
-    let speed = 2.0; 
-    let isPaused = false;
-    let hoverTimeout = null;
+    let scrollPos = 0, speed = 2.0, isPaused = false, hoverTimeout = null;
     let trackWidth = track.scrollWidth / 2;
-
-    window.addEventListener('resize', () => {
-      trackWidth = track.scrollWidth / 2;
-    });
-
+    window.addEventListener('resize', () => { trackWidth = track.scrollWidth / 2; });
     function animateMarquee() {
       if (!isPaused) {
         scrollPos -= speed;
-        if (Math.abs(scrollPos) >= trackWidth) {
-          scrollPos = 0;
-        }
+        if (Math.abs(scrollPos) >= trackWidth) scrollPos = 0;
         track.style.transform = `translateX(${scrollPos}px)`;
       }
       requestAnimationFrame(animateMarquee);
     }
     requestAnimationFrame(animateMarquee);
-
-    const pauseMarquee = () => {
-      isPaused = true;
-      clearTimeout(hoverTimeout);
-      hoverTimeout = setTimeout(() => { isPaused = false; }, 5000);
-    };
-    const resumeMarquee = () => {
-      clearTimeout(hoverTimeout);
-      isPaused = false;
-    };
-
+    const pauseMarquee = () => { isPaused = true; clearTimeout(hoverTimeout); hoverTimeout = setTimeout(() => { isPaused = false; }, 5000); };
+    const resumeMarquee = () => { clearTimeout(hoverTimeout); isPaused = false; };
     track.addEventListener('mouseenter', pauseMarquee, { passive: true });
     track.addEventListener('touchstart', pauseMarquee, { passive: true });
     track.addEventListener('mouseleave', resumeMarquee, { passive: true });
     track.addEventListener('touchend', resumeMarquee, { passive: true });
   }
 
-  /* ============================================================
-     7. CLIENT REVIEWS CAROUSEL (Smooth Slide + Blur)
-     ============================================================ */
+  // --- Reviews Carousel ---
   const reviews = $$('.review-card');
   if (reviews.length > 0) {
-    let currentIndex = 0;
-    
-    // Initialize first card
-    reviews[0].classList.add('active');
-
+    let currentIndex = 0; reviews[0].classList.add('active');
     setInterval(() => {
-      // Current card goes to prev (slides left, blurs out)
-      reviews[currentIndex].classList.remove('active');
-      reviews[currentIndex].classList.add('prev');
-      
-      // Move index
-      const prevIndex = currentIndex;
-      currentIndex = (currentIndex + 1) % reviews.length;
-      
-      // Next card becomes active (slides in from right, unblurs)
-      reviews[currentIndex].classList.remove('prev');
-      reviews[currentIndex].classList.add('active');
-
-      // Clean up the prev class after transition completes
-      setTimeout(() => {
-        reviews[prevIndex].classList.remove('prev');
-      }, 600); // Matches CSS transition duration
-
+      reviews[currentIndex].classList.remove('active'); reviews[currentIndex].classList.add('prev');
+      const prevIndex = currentIndex; currentIndex = (currentIndex + 1) % reviews.length;
+      reviews[currentIndex].classList.remove('prev'); reviews[currentIndex].classList.add('active');
+      setTimeout(() => { reviews[prevIndex].classList.remove('prev'); }, 600);
     }, 5000);
   }
 
-  /* ============================================================
-     8. CHATBOT WIDGET LOGIC
-     ============================================================ */
-  const waBtn = $('.floating-wa');
-  const chatWidget = $('#chatWidget');
-  const chatBody = $('#chatBody');
-  const quickReplies = $('#chatQuickReplies');
-
-  // Chat Data (Questions & Answers based on site content)
+  // --- Chatbot ---
+  const waBtn = $('.floating-wa'), chatWidget = $('#chatWidget'), chatBody = $('#chatBody'), quickReplies = $('#chatQuickReplies');
   const chatData = [
-    {
-      id: 'services',
-      q_en: 'What services do you offer?',
-      q_bn: 'আপনি কী কী সেবা দেন?',
-      a_en: 'I offer Logo Design, Brand Identity, Arabic Calligraphy, Print Design, and Social Media Design.',
-      a_bn: 'আমি লোগো ডিজাইন, ব্র্যান্ড আইডেন্টিটি, আরবি ক্যালিগ্রাফি, প্রিন্ট ডিজাইন এবং সোশ্যাল মিডিয়া ডিজাইন করি।'
-    },
-    {
-      id: 'experience',
-      q_en: 'How many years of experience do you have?',
-      q_bn: 'আপনার অভিজ্ঞতা কত বছরের?',
-      a_en: 'I have 3+ years of professional experience and completed 15+ projects for 15+ happy clients.',
-      a_bn: 'আমার ৩+ বছরের পেশাদার অভিজ্ঞতা আছে এবং আমি ১৫+ সন্তুষ্ট ক্লায়েন্টের জন্য ১৫+ প্রজেক্ট সম্পন্ন করেছি।'
-    },
-    {
-      id: 'contact',
-      q_en: 'How can I contact you?',
-      q_bn: 'আমি আপনাকে কিভাবে যোগাযোগ করব?',
-      a_en: 'You can contact me via WhatsApp (+880 1776-561371) or Email (mdrubayedhassan@gmail.com).',
-      a_bn: 'আপনি হোয়াটসঅ্যাপ (+৮৮০ ১৭৭৬-৫৬১৩৭১) বা ইমেইল (mdrubayedhassan@gmail.com) এর মাধ্যমে যোগাযোগ করতে পারেন।'
-    },
-    {
-      id: 'location',
-      q_en: 'Where are you located?',
-      q_bn: 'আপনার অবস্থান কোথায়?',
-      a_en: 'I am based in Paikgacha, Khulna, Bangladesh.',
-      a_bn: 'আমি পাইকগাছা, খুলনা, বাংলাদেশে অবস্থিত।'
-    }
+    { q_en: 'What services do you offer?', q_bn: 'আপনি কী কী সেবা দেন?', a_en: 'I offer Logo Design, Brand Identity, Arabic Calligraphy, Print Design, and Social Media Design.', a_bn: 'আমি লোগো ডিজাইন, ব্র্যান্ড আইডেন্টিটি, আরবি ক্যালিগ্রাফি, প্রিন্ট ডিজাইন এবং সোশ্যাল মিডিয়া ডিজাইন করি।' },
+    { q_en: 'How many years of experience?', q_bn: 'আপনার অভিজ্ঞতা কত বছরের?', a_en: 'I have 3+ years of professional experience.', a_bn: 'আমার ৩+ বছরের পেশাদার অভিজ্ঞতা আছে।' },
+    { q_en: 'How can I contact you?', q_bn: 'আমি আপনাকে কিভাবে যোগাযোগ করব?', a_en: 'You can contact me via WhatsApp or Email.', a_bn: 'আপনি হোয়াটসঅ্যাপ বা ইমেইল এর মাধ্যমে যোগাযোগ করতে পারেন।' }
   ];
-
   let isChatInitialized = false;
-
   function initChat() {
     if (isChatInitialized || !chatBody) return;
-    
-    // 1. Welcome Message
-    appendMessage('bot', 
-      "Hi, I am Rubayed Hasan's Virtual Assistant. How can I help you?", 
-      "হাই, আমি রুবায়েদ হাসান এর ভার্চুয়াল অ্যাসিস্ট্যান্ট। আমি আপনাকে কিভাবে সহযোগিতা করতে পারি?"
-    );
-
-    // 2. Quick Replies
+    appendMessage('bot', "Hi, I am Rubayed Hasan's Virtual Assistant. How can I help you?", "হাই, আমি রুবায়েদ হাসান এর ভার্চুয়াল অ্যাসিস্ট্যান্ট। আমি আপনাকে কিভাবে সহযোগিতা করতে পারি?");
     chatData.forEach(data => {
-      const btn = document.createElement('button');
-      btn.className = 'quick-reply-btn';
+      const btn = document.createElement('button'); btn.className = 'quick-reply-btn';
       btn.innerHTML = `<span lang="en">${data.q_en}</span><span lang="bn">${data.q_bn}</span>`;
       btn.onclick = () => handleQuickReply(data);
       if (quickReplies) quickReplies.appendChild(btn);
     });
-
     isChatInitialized = true;
   }
-
   function appendMessage(sender, textEn, textBn) {
     if (!chatBody) return;
-    const msgDiv = document.createElement('div');
-    msgDiv.className = `chat-msg ${sender}`;
-    
-    const avatarHTML = sender === 'bot' 
-      ? `<img src="images/profile.png" alt="Rubayed Hasan" class="msg-avatar">` 
-      : '';
-      
-    msgDiv.innerHTML = `
-      ${avatarHTML}
-      <div class="msg-bubble">
-        <span lang="en">${textEn}</span>
-        <span lang="bn">${textBn}</span>
-      </div>
-    `;
-    
-    chatBody.appendChild(msgDiv);
-    chatBody.scrollTop = chatBody.scrollHeight;
+    const msgDiv = document.createElement('div'); msgDiv.className = `chat-msg ${sender}`;
+    const avatarHTML = sender === 'bot' ? `<img src="images/profile.png" alt="Bot" class="msg-avatar">` : '';
+    msgDiv.innerHTML = `${avatarHTML}<div class="msg-bubble"><span lang="en">${textEn}</span><span lang="bn">${textBn}</span></div>`;
+    chatBody.appendChild(msgDiv); chatBody.scrollTop = chatBody.scrollHeight;
   }
-
   function handleQuickReply(data) {
-    // Append User Question
     appendMessage('user', data.q_en, data.q_bn);
-    
-    // Hide quick replies temporarily
     if (quickReplies) quickReplies.style.opacity = '0.5';
-    
-    // Simulate typing delay then append Bot Answer
-    setTimeout(() => {
-      appendMessage('bot', data.a_en, data.a_bn);
-      if (quickReplies) quickReplies.style.opacity = '1';
-    }, 600);
+    setTimeout(() => { appendMessage('bot', data.a_en, data.a_bn); if (quickReplies) quickReplies.style.opacity = '1'; }, 600);
   }
-
   if (waBtn && chatWidget) {
     waBtn.addEventListener('click', (e) => {
-      e.preventDefault(); // Prevent default WA redirect
+      e.preventDefault(); 
       const isActive = chatWidget.classList.toggle('active');
-      if (isActive) {
-        initChat();
-      }
+      if (isActive) initChat();
     });
   }
 
-})();
+  /* ============================================================
+     2. SUPABASE DYNAMIC DATA LOADER
+     ============================================================ */
+  const SUPABASE_URL = 'https://qynaqzukiwtnxjsciazk.supabase.co';
+  const SUPABASE_ANON_KEY = 'sb_publishable_dTX5xkv4svMJA9-M5QMHKA_YctCIi19';
 
-const SUPABASE_URL = 'https://qynaqzukiwtnxjsciazk.supabase.co';
-const SUPABASE_ANON_KEY = 'sb_publishable_dTX5xkv4svMJA9-M5QMHKA_YctCIi19';
-const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  async function loadDynamicData() {
+    if (typeof window.supabase === 'undefined') return;
+    const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-async function loadDynamicData() {
-  // সেটিংস লোড
-  const { data: settings } = await supabaseClient.from('site_settings').select('*');
-  if (settings) {
-    const dict = {};
-    settings.forEach(s => dict[s.key] = s.value);
-    // এখানে আগের মতোই DOM এ বসিয়ে দিন (hero_title_en, hero_tagline_en ইত্যাদি)
-  }
+    try {
+      // 1. Load Settings
+      const { data: settings } = await supabaseClient.from('site_settings').select('*');
+      if (settings && settings.length > 0) {
+        const dict = {};
+        settings.forEach(s => dict[s.key] = s.value);
+        
+        const setText = (selector, text) => { const el = document.querySelector(selector); if (el) el.innerHTML = text; };
+        const setAttr = (selector, attr, val) => { const el = document.querySelector(selector); if (el) el.setAttribute(attr, val); };
 
-  // প্রজেক্ট লোড
-  const { data: projects } = await supabaseClient.from('projects').select('*').order('created_at', { ascending: false });
-  if (projects && document.getElementById('workTrack')) {
-    // আগের মতোই মার্কি HTML জেনারেট করুন
-  }
+        if (dict.hero_title_en) setText('.hero-title [lang="en"]', dict.hero_title_en.replace('Rubayed Hasan', '<em>Rubayed Hasan</em>'));
+        if (dict.hero_title_bn) setText('.hero-title [lang="bn"]', dict.hero_title_bn.replace('রুবায়েদ হাসান', '<em>রুবায়েদ হাসান</em>'));
+        if (dict.hero_tagline_en) setText('.hero-tagline [lang="en"]', dict.hero_tagline_en);
+        if (dict.hero_tagline_bn) setText('.hero-tagline [lang="bn"]', dict.hero_tagline_bn);
+        if (dict.about_text_en) setText('.about-text p [lang="en"]', dict.about_text_en);
+        if (dict.about_text_bn) setText('.about-text p [lang="bn"]', dict.about_text_bn);
 
-  // রিভিউ লোড
-  const { data: reviews } = await supabaseClient.from('reviews').select('*').order('created_at', { ascending: false });
-  if (reviews && document.querySelector('.review-carousel')) {
-    // আগের মতোই রিভিউ কার্ড জেনারেট করুন
-  }
-}
-document.addEventListener('DOMContentLoaded', loadDynamicData);
+        if (dict.stat_experience) setAttr('.stat-number[data-target="3"]', 'data-target', dict.stat_experience);
+        if (dict.stat_projects) setAttr('.stat-number[data-target="15"]', 'data-target', dict.stat_projects);
+        if (dict.stat_clients) setAttr('.stat-number[data-target="99"]', 'data-target', dict.stat_clients);
+      }
 
-// ============================================================
-// SUPABASE DYNAMIC DATA LOADER
-// ============================================================
-const SUPABASE_URL = 'https://qynaqzukiwtnxjsciazk.supabase.co';
-const SUPABASE_ANON_KEY = 'sb_publishable_dTX5xkv4svMJA9-M5QMHKA_YctCIi19';
-const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      // 2. Load Projects
+      const { data: projects } = await supabaseClient.from('projects').select('*').order('created_at', { ascending: false });
+      if (projects && projects.length > 0 && document.getElementById('workTrack')) {
+        const track = document.getElementById('workTrack');
+        const projectHTML = projects.map(p => `
+          <article class="project">
+            <div class="project-visual"><img src="${p.image_url}" alt="${p.name}" loading="lazy" /></div>
+            <div class="project-info">
+              <h3>${p.name}</h3>
+              <p class="project-cat"><span lang="en">${p.category_en}</span><span lang="bn">${p.category_bn}</span></p>
+            </div>
+          </article>
+        `).join('');
+        track.innerHTML = projectHTML + projectHTML; // Duplicate for infinite scroll
+      }
 
-async function loadDynamicData() {
-  // 1. Load Settings
-  const { data: settings } = await supabaseClient.from('site_settings').select('*');
-  if (settings) {
-    const dict = {};
-    settings.forEach(s => dict[s.key] = s.value);
-    
-    const heroTitleEn = document.querySelector('.hero-title [lang="en"]');
-    const heroTitleBn = document.querySelector('.hero-title [lang="bn"]');
-    if (heroTitleEn && dict.hero_title_en) heroTitleEn.innerHTML = dict.hero_title_en.replace('Rubayed Hasan', '<em>Rubayed Hasan</em>');
-    if (heroTitleBn && dict.hero_title_bn) heroTitleBn.innerHTML = dict.hero_title_bn.replace('রুবায়েদ হাসান', '<em>রুবায়েদ হাসান</em>');
-
-    const heroTagEn = document.querySelector('.hero-tagline [lang="en"]');
-    const heroTagBn = document.querySelector('.hero-tagline [lang="bn"]');
-    if (heroTagEn && dict.hero_tagline_en) heroTagEn.textContent = dict.hero_tagline_en;
-    if (heroTagBn && dict.hero_tagline_bn) heroTagBn.textContent = dict.hero_tagline_bn;
-
-    const statExp = document.querySelector('.stat-number[data-target="3"]');
-    if (statExp && dict.stat_experience) statExp.setAttribute('data-target', dict.stat_experience);
-    const statProj = document.querySelector('.stat-number[data-target="15"]');
-    if (statProj && dict.stat_projects) statProj.setAttribute('data-target', dict.stat_projects);
-    const statClient = document.querySelector('.stat-number[data-target="99"]');
-    if (statClient && dict.stat_clients) statClient.setAttribute('data-target', dict.stat_clients);
-
-    const aboutEn = document.querySelector('.about-text p [lang="en"]');
-    const aboutBn = document.querySelector('.about-text p [lang="bn"]');
-    if (aboutEn && dict.about_text_en) aboutEn.textContent = dict.about_text_en;
-    if (aboutBn && dict.about_text_bn) aboutBn.textContent = dict.about_text_bn;
-  }
-
-  // 2. Load Projects (Update Marquee)
-  const { data: projects } = await supabaseClient.from('projects').select('*').order('created_at', { ascending: false });
-  if (projects && document.getElementById('workTrack')) {
-    const track = document.getElementById('workTrack');
-    const projectHTML = projects.map(p => `
-      <article class="project">
-        <div class="project-visual"><img src="${p.image_url}" alt="${p.name}" loading="lazy" /></div>
-        <div class="project-info">
-          <h3>${p.name}</h3>
-          <p class="project-cat"><span lang="en">${p.category_en}</span><span lang="bn">${p.category_bn}</span></p>
-        </div>
-      </article>
-    `).join('');
-    track.innerHTML = projectHTML + projectHTML; 
-  }
-
-  // 3. Load Reviews
-  const { data: reviews } = await supabaseClient.from('reviews').select('*').order('created_at', { ascending: false });
-  const reviewCarousel = document.querySelector('.review-carousel');
-  if (reviews && reviewCarousel) {
-    reviewCarousel.innerHTML = reviews.map((r, index) => `
-      <div class="review-card ${index === 0 ? 'active' : ''}">
-        <div class="review-stars">
-          <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-          <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-          <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-          <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-          <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-        </div>
-        <p class="review-text"><span lang="en">"${r.review_text_en}"</span><span lang="bn">"${r.review_text_bn}"</span></p>
-        <div class="review-author">
-          <div class="review-avatar">${r.client_name.charAt(0)}</div>
-          <div class="review-author-info">
-            <strong><span lang="en">${r.client_name}</span><span lang="bn">${r.client_name}</span></strong>
-            <span><span lang="en">${r.client_role}</span><span lang="bn">${r.client_role}</span></span>
+      // 3. Load Reviews
+      const { data: reviews } = await supabaseClient.from('reviews').select('*').order('created_at', { ascending: false });
+      const reviewCarousel = document.querySelector('.review-carousel');
+      if (reviews && reviews.length > 0 && reviewCarousel) {
+        reviewCarousel.innerHTML = reviews.map((r, index) => `
+          <div class="review-card ${index === 0 ? 'active' : ''}">
+            <div class="review-stars">
+              <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+            </div>
+            <p class="review-text"><span lang="en">"${r.review_text_en}"</span><span lang="bn">"${r.review_text_bn}"</span></p>
+            <div class="review-author">
+              <div class="review-avatar">${r.client_name.charAt(0)}</div>
+              <div class="review-author-info">
+                <strong><span lang="en">${r.client_name}</span><span lang="bn">${r.client_name}</span></strong>
+                <span><span lang="en">${r.client_role}</span><span lang="bn">${r.client_role}</span></span>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-    `).join('');
+        `).join('');
+      }
+
+    } catch (err) {
+      console.error('Supabase Data Error: ', err);
+    }
   }
-}
-document.addEventListener('DOMContentLoaded', loadDynamicData);
+  document.addEventListener('DOMContentLoaded', loadDynamicData);
+
+})();
