@@ -3,14 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rubayed Hasan - Portfolio</title>
+  <title>Rubayed Hasan - Graphic Designer</title>
   <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <!-- Header (Same as before) -->
-  <header class="site-header" id="header">
+  <!-- Header -->
+  <header class="site-header">
     <div class="container header-inner">
-      <a href="index.html" class="logo"><img src="images/profile.png" class="logo-img"><span>Rubayed Hasan</span></a>
+      <a href="index.html" class="logo"><img src="images/profile.png" class="logo-img">Rubayed Hasan</a>
       <nav class="nav-desktop">
         <a href="index.html" class="active">Home</a>
         <a href="about.html">About</a>
@@ -19,62 +20,83 @@
         <a href="blogs.html">Blogs</a>
         <a href="contact.html">Contact</a>
       </nav>
-      <div class="header-actions">
-        <div class="lang-toggle"><button data-set-lang="en" class="active">EN</button><button data-set-lang="bn">বাংলা</button></div>
-      </div>
+      <button class="lang-btn">বাংলা</button>
     </div>
   </header>
 
-  <main>
-    <!-- Hero -->
-    <section class="hero section">
-      <div class="container text-center" style="text-align: center; max-width: 800px; margin: 0 auto;">
-        <h1 class="hero-title" style="font-size: 48px; margin-bottom: 10px;">
-          <span lang="en">Hi, I am Rubayed Hasan.</span><span lang="bn">হ্যালো, আমি রুবায়েদ হাসান।</span>
-        </h1>
-        <p class="hero-tagline" style="color: var(--muted); font-size: 18px; margin-bottom: 40px;">
-          <span lang="en">I craft bold brands and visual identities that leave a lasting impression.</span>
-          <span lang="bn">আমি সাহসী ব্র্যান্ড এবং ভিজ্যুয়াল আইডেন্টিটি তৈরি করি যা স্থায়ী ছাপ রেখে যায়।</span>
-        </p>
-        
-        <div class="hero-image-wrapper" style="width: 250px; height: 250px; margin: 0 auto 40px; border-radius: 50%; position: relative; padding: 5px; background: conic-gradient(from 0deg, transparent, #d4af37, transparent); animation: rotateBorder 4s linear infinite;">
-          <img src="images/profile.png" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%; background: var(--bg); position: relative; z-index: 1;">
-        </div>
+  <!-- Hero -->
+  <section class="container hero-section">
+    <h1 class="hero-title dynamic-text" data-key="hero_title" data-lang="en">Hi, I am <span>Rubayed Hasan.</span></h1>
+    <p class="hero-tagline dynamic-text" data-key="hero_tagline" data-lang="en">I craft bold brands and visual identities that leave a lasting impression.</p>
+    
+    <!-- Rotating Light Image -->
+    <div class="hero-image-wrapper">
+      <img src="images/profile.png" alt="Rubayed Hasan">
+    </div>
 
-        <div style="display: flex; gap: 15px; justify-content: center;">
-          <a href="contact.html" class="btn btn-primary">Hire Me 🚀</a>
-          <a href="portfolio.html" class="btn btn-ghost">View Works 💼</a>
-        </div>
+    <!-- Buttons -->
+    <div style="display: flex; gap: 15px; margin-top: 30px;">
+      <a href="contact.html" class="btn btn-primary">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg> Hire Me
+      </a>
+      <a href="portfolio.html" class="btn btn-ghost">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg> View Works
+      </a>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <div class="stats-section" id="statsGrid">
+    <!-- JS will load SVG icons here -->
+  </div>
+
+  <!-- Socials -->
+  <div class="container socials-wrapper" id="heroSocials">
+    <!-- JS will load socials -->
+  </div>
+
+  <!-- About Teaser -->
+  <section class="container section">
+    <h2 class="section-title">About Me</h2>
+    <p class="dynamic-text" data-key="about" data-lang="en" style="color:var(--muted); max-width:700px;">I am a graphic designer based in Khulna.</p>
+  </section>
+
+  <!-- Featured Projects -->
+  <section class="container section" style="background:var(--surface); border-radius:24px; margin-bottom:40px; padding:40px;">
+    <h2 class="section-title text-center">Featured Case Studies</h2>
+    <div class="grid-3" id="featuredProjects" style="margin-top:30px;"></div>
+    <div class="text-center" style="margin-top:30px;">
+      <a href="portfolio.html" class="btn btn-primary">See More Projects</a>
+    </div>
+  </section>
+
+  <!-- Blogs -->
+  <section class="container section">
+    <h2 class="section-title">Latest Insights</h2>
+    <p class="section-subtitle dynamic-text" data-key="blog_desc" data-lang="en">Practical ideas, tips and lessons from my work.</p>
+    <div class="grid-3" id="latestBlogs"></div>
+    <div class="text-center" style="margin-top:40px;">
+      <a href="blogs.html" class="btn btn-ghost">View All Blogs →</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container footer-content">
+      <a href="index.html" class="logo"><img src="images/profile.png" class="logo-img">Rubayed Hasan</a>
+      <p id="footerAbout" style="color:var(--muted); max-width:400px;">Graphic Designer from Khulna, Bangladesh.</p>
+      <div class="footer-links">
+        <a href="about.html">About</a><a href="portfolio.html">Portfolio</a><a href="services.html">Services</a><a href="blogs.html">Blogs</a><a href="contact.html">Contact</a>
       </div>
-    </section>
-
-    <!-- Stats -->
-    <section class="section" style="padding-top: 0;">
-      <div class="container">
-        <div style="background: var(--surface); border-radius: 24px; padding: 40px; display: flex; justify-content: space-around; flex-wrap: wrap; gap: 20px;">
-          <div style="text-align: center;"><h3 style="color: var(--accent); font-size: 36px;" class="stat-number" data-target="100">0</h3><p>Projects</p></div>
-          <div style="text-align: center;"><h3 style="color: var(--accent); font-size: 36px;" class="stat-number" data-target="50">0</h3><p>Clients</p></div>
-          <div style="text-align: center;"><h3 style="color: var(--accent); font-size: 36px;" class="stat-number" data-target="3">0</h3><p>Years Exp.</p></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Social Icons (Hero Section) -->
-    <section class="section" style="padding-top: 0; text-align: center;">
-      <div class="container social-links-hero" id="heroSocials" style="display: flex; justify-content: center; gap: 15px;">
-        <!-- Injected via JS -->
-      </div>
-    </section>
-
-    <!-- About, Services, Projects, Blogs, Contact, Footer -> (Remaining sections from previous code, using classes for JS to target) -->
-    <!-- ... (You can keep your existing sections, just make sure they have IDs for JS to fetch: e.g., #aboutText, #servicesGrid, #projectsGrid, #blogsGrid) -->
-  </main>
-
-  <style>
-    @keyframes rotateBorder { 100% { transform: rotate(360deg); } }
-  </style>
+      <div class="socials-wrapper" id="footerSocials"></div>
+    </div>
+    <div class="container copyright">
+      <p>© 2026 <a href="index.html" style="color:var(--accent);">Rubayed Hasan</a>. All Rights Reserved.</p>
+      <a href="#" class="palestine-btn">🇵🇸 #StandWithPalestine</a>
+    </div>
+  </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/main.js"></script>
 </body>
-</html>
+    </html>
