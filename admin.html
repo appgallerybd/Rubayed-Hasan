@@ -7,11 +7,9 @@
   <link rel="stylesheet" href="css/admin.css">
 </head>
 <body>
-
-  <!-- Login Screen -->
+  <!-- Login (Profile Pic Above) -->
   <div id="loginScreen" class="login-screen">
     <div class="login-box">
-      <!-- Profile Pic on Top -->
       <img src="images/profile.png" alt="Admin" class="login-avatar">
       <h2 style="color:var(--accent); margin-bottom:20px;">Admin Login</h2>
       <input type="email" id="adminEmail" placeholder="Email">
@@ -23,31 +21,26 @@
 
   <!-- Dashboard -->
   <div class="admin-layout" id="adminPanel" style="display:none;">
-    
-    <!-- Mobile Header -->
     <div class="mobile-header">
       <span style="font-weight:700; color:var(--accent);">Admin Panel</span>
       <button onclick="document.getElementById('sidebar').classList.toggle('active')" style="background:none; border:none; color:#fff; font-size:24px; cursor:pointer;">☰</button>
     </div>
 
-    <!-- Sidebar (No Profile Pic inside) -->
+    <!-- Sidebar (No profile pic here) -->
     <div class="sidebar" id="sidebar">
       <div class="sidebar-brand">Dashboard Menu</div>
-      <a href="#" class="nav-item active" onclick="switchTab(event, 'tab-settings')">Settings (Text)</a>
-      <a href="#" class="nav-item" onclick="switchTab(event, 'tab-socials')">Social Links</a>
+      <a href="#" class="nav-item active" onclick="switchTab(event, 'tab-settings')">Settings</a>
       <a href="#" class="nav-item" onclick="switchTab(event, 'tab-projects')">Projects</a>
       <a href="#" class="nav-item" onclick="switchTab(event, 'tab-blogs')">Blogs</a>
-      <a href="#" class="nav-item" onclick="switchTab(event, 'tab-services')">Services & FAQs</a>
       <div style="margin-top:auto; padding:20px;">
         <button id="logoutBtn" class="btn btn-danger" style="width:100%;">Logout</button>
       </div>
     </div>
 
-    <!-- Content -->
     <div class="main-content">
       <!-- Settings -->
       <div id="tab-settings" class="tab-content active">
-        <h2>Site Settings (English)</h2>
+        <h2>Site Settings</h2>
         <div class="form-container grid-2">
           <div class="input-group"><label>Hero Title</label><input type="text" id="hero_title_en"></div>
           <div class="input-group"><label>Hero Tagline</label><textarea id="hero_tagline_en"></textarea></div>
@@ -70,7 +63,7 @@
           <input type="text" id="projCat" placeholder="Category" style="width:100%; margin-bottom:10px; padding:10px;">
           <textarea id="projDesc" placeholder="Description" style="width:100%; margin-bottom:10px; padding:10px;"></textarea>
           <input type="file" id="projImg" style="margin-bottom:10px;">
-          <label><input type="checkbox" id="projFeatured"> Featured</label><br><br>
+          <label><input type="checkbox" id="projFeatured"> Featured on Home</label><br><br>
           <button class="btn btn-primary" onclick="addProject()">Save</button>
         </div>
         <div id="adminProjectsList" style="margin-top:20px;"></div>
@@ -82,7 +75,7 @@
         <button class="btn btn-primary" onclick="document.getElementById('blogForm').style.display='block'">+ Add Blog</button>
         <div class="form-container" id="blogForm" style="display:none; margin-top:20px;">
           <input type="text" id="blogTitle" placeholder="Title" style="width:100%; margin-bottom:10px; padding:10px;">
-          <input type="text" id="blogReadTime" placeholder="Read Time (e.g. 5 min read)" style="width:100%; margin-bottom:10px; padding:10px;">
+          <input type="text" id="blogReadTime" placeholder="Read Time" style="width:100%; margin-bottom:10px; padding:10px;">
           <textarea id="blogContent" placeholder="Content (Use BB for Bold, HH for Highlight)" style="width:100%; height:150px; margin-bottom:10px; padding:10px;"></textarea>
           <input type="file" id="blogImg" style="margin-bottom:10px;">
           <button class="btn btn-primary" onclick="addBlog()">Save</button>
@@ -95,4 +88,4 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/admin.js"></script>
 </body>
-                                                                       </html>
+</html>
