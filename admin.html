@@ -3,17 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Full Admin Panel - Rubayed Hasan</title>
+  <title>Admin Panel - Rubayed Hasan</title>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/admin.css">
 </head>
 <body>
-  <!-- Login Screen (Same as before) -->
+  <!-- Login Screen -->
   <div id="loginScreen" class="login-screen">
     <div class="login-box">
       <img src="images/profile.png" alt="Admin" class="login-avatar">
       <h2>Admin Login</h2>
-      <input type="email" id="adminEmail" placeholder="Email">
+      <input type="email" id="adminEmail" placeholder="Email Address">
       <input type="password" id="adminPass" placeholder="Password">
       <button type="button" id="loginBtn" class="btn btn-primary btn-block">Log In</button>
       <p id="login-error" class="error-msg"></p>
@@ -28,17 +28,16 @@
     </div>
 
     <aside class="sidebar" id="sidebar">
-      <div class="sidebar-brand"><img src="images/profile.png" alt="Logo"><span>Control Panel</span></div>
+      <div class="sidebar-brand"><img src="images/profile.png" alt="Logo"><span>Admin Panel</span></div>
       <nav class="sidebar-nav">
-        <a href="#" class="nav-item active" data-target="dashboard">📊 Dashboard</a>
-        <a href="#" class="nav-item" data-target="settings">⚙️ Site Settings</a>
-        <a href="#" class="nav-item" data-target="socials">🔗 Social Links</a>
-        <a href="#" class="nav-item" data-target="stats">📈 Stats</a>
-        <a href="#" class="nav-item" data-target="services">🛠️ Services</a>
-        <a href="#" class="nav-item" data-target="projects">💼 Projects</a>
-        <a href="#" class="nav-item" data-target="blogs">📝 Blogs & Categories</a>
-        <a href="#" class="nav-item" data-target="faqs">❓ FAQs</a>
-        <a href="#" class="nav-item" data-target="toolkits">🎨 Toolkit</a>
+        <a href="#" class="nav-item active" data-target="tab-settings">⚙️ Site Settings</a>
+        <a href="#" class="nav-item" data-target="tab-socials">🔗 Social Links</a>
+        <a href="#" class="nav-item" data-target="tab-stats">📈 Stats</a>
+        <a href="#" class="nav-item" data-target="tab-services">🛠️ Services</a>
+        <a href="#" class="nav-item" data-target="tab-projects">💼 Projects</a>
+        <a href="#" class="nav-item" data-target="tab-blogs">📝 Blogs</a>
+        <a href="#" class="nav-item" data-target="tab-faqs">❓ FAQs</a>
+        <a href="#" class="nav-item" data-target="tab-toolkits">🎨 Toolkit</a>
       </nav>
       <div class="sidebar-footer">
         <a href="index.html" target="_blank" class="btn btn-outline">View Website</a>
@@ -49,57 +48,54 @@
     <main class="main-content">
       <div id="status-msg" class="status-msg"></div>
 
-      <!-- 1. Dashboard -->
-      <section id="dashboard" class="tab-content active">
-        <h1 class="page-title">Welcome Back!</h1>
-        <p>Manage all your website content from here.</p>
-      </section>
-
-      <!-- 2. Settings (Hero, About, Contact, Footer) -->
-      <section id="settings" class="tab-content">
-        <h1 class="page-title">Global Site Settings</h1>
+      <!-- Settings Tab -->
+      <section id="tab-settings" class="tab-content active">
+        <h1 class="page-title">Site Settings</h1>
         <form id="settingsForm" class="form-container">
           <h2>Hero Section</h2>
           <div class="grid-2">
             <div class="input-group"><label>Hero Title (EN)</label><input type="text" id="hero_title_en"></div>
             <div class="input-group"><label>Hero Title (BN)</label><input type="text" id="hero_title_bn"></div>
-            <div class="input-group"><label>Hero Tagline (EN)</label><textarea id="hero_tagline_en" rows="2"></textarea></div>
-            <div class="input-group"><label>Hero Tagline (BN)</label><textarea id="hero_tagline_bn" rows="2"></textarea></div>
+            <div class="input-group"><label>Hero Tagline (EN)</label><textarea id="hero_tagline_en"></textarea></div>
+            <div class="input-group"><label>Hero Tagline (BN)</label><textarea id="hero_tagline_bn"></textarea></div>
           </div>
-          
-          <h2>Contact Info</h2>
+          <h2>About Section</h2>
+          <div class="grid-2">
+            <div class="input-group"><label>About (EN)</label><textarea id="about_en"></textarea></div>
+            <div class="input-group"><label>About (BN)</label><textarea id="about_bn"></textarea></div>
+          </div>
+          <h2>Contact Section</h2>
           <div class="grid-2">
             <div class="input-group"><label>Phone</label><input type="text" id="contact_phone"></div>
             <div class="input-group"><label>Email</label><input type="text" id="contact_email"></div>
-            <div class="input-group"><label>Location</label><input type="text" id="contact_location"></div>
-            <div class="input-group"><label>Website</label><input type="text" id="contact_website"></div>
-            <div class="input-group"><label>Contact Desc (EN)</label><textarea id="contact_desc_en" rows="2"></textarea></div>
-            <div class="input-group"><label>Contact Desc (BN)</label><textarea id="contact_desc_bn" rows="2"></textarea></div>
+            <div class="input-group"><label>Location</label><input type="text" id="contact_loc"></div>
+            <div class="input-group"><label>Website</label><input type="text" id="contact_web"></div>
+            <div class="input-group"><label>Contact Desc (EN)</label><textarea id="contact_desc_en"></textarea></div>
+            <div class="input-group"><label>Contact Desc (BN)</label><textarea id="contact_desc_bn"></textarea></div>
           </div>
-
-          <h2>Footer & Blogs</h2>
+          <h2>Footer & Blog Settings</h2>
           <div class="grid-2">
-            <div class="input-group"><label>Footer About (EN)</label><textarea id="footer_about_en" rows="2"></textarea></div>
-            <div class="input-group"><label>Footer About (BN)</label><textarea id="footer_about_bn" rows="2"></textarea></div>
-            <div class="input-group"><label>Blog Description (EN)</label><textarea id="blog_desc_en" rows="2"></textarea></div>
-            <div class="input-group"><label>Blog Description (BN)</label><textarea id="blog_desc_bn" rows="2"></textarea></div>
+            <div class="input-group"><label>Footer About (EN)</label><textarea id="footer_about_en"></textarea></div>
+            <div class="input-group"><label>Footer About (BN)</label><textarea id="footer_about_bn"></textarea></div>
+            <div class="input-group"><label>Blog Desc (EN)</label><textarea id="blog_desc_en"></textarea></div>
+            <div class="input-group"><label>Blog Desc (BN)</label><textarea id="blog_desc_bn"></textarea></div>
+            <div class="input-group"><label>Highlight Color</label><input type="color" id="highlight_color" style="height: 40px;"></div>
           </div>
-          <button type="submit" class="btn btn-primary">Save All Settings</button>
+          <button type="submit" class="btn btn-primary">Save Settings</button>
         </form>
       </section>
 
-      <!-- 3. Social Links -->
-      <section id="socials" class="tab-content">
-        <div class="page-header"><h1>Social Links</h1><button class="btn btn-primary" onclick="openForm('social')">+ Add Social</button></div>
+      <!-- Socials Tab -->
+      <section id="tab-socials" class="tab-content">
+        <div class="page-header"><h1 class="page-title">Social Links</h1><button class="btn btn-primary" onclick="showForm('socialForm')">+ Add Social</button></div>
         <div class="form-container" id="socialFormContainer" style="display:none;">
           <form id="socialForm">
             <input type="hidden" id="socId">
             <div class="grid-2">
               <div class="input-group"><label>Platform Name</label><input type="text" id="socPlatform" required></div>
               <div class="input-group"><label>URL</label><input type="url" id="socUrl" required></div>
-              <div class="input-group"><label>SVG Icon Code (e.g. &lt;svg&gt;...&lt;/svg&gt;)</label><textarea id="socIcon" rows="3"></textarea></div>
-              <div class="input-group"><label>Show In</label><select id="socSection"><option value="both">Both</option><option value="hero">Hero Only</option><option value="footer">Footer Only</option></select></div>
-              <div class="input-group"><label>Status</label><select id="socActive"><option value="true">Active</option><option value="false">Hidden</option></select></div>
+              <div class="input-group"><label>SVG Icon Code</label><textarea id="socIcon" rows="2"></textarea></div>
+              <div class="input-group"><label>Show In</label><select id="socSection"><option value="both">Both (Hero & Footer)</option><option value="hero">Hero Only</option><option value="footer">Footer Only</option></select></div>
             </div>
             <button type="submit" class="btn btn-primary">Save</button>
           </form>
@@ -107,20 +103,20 @@
         <div id="socialsList" class="list-container"></div>
       </section>
 
-      <!-- 4. Projects (Portfolio) -->
-      <section id="projects" class="tab-content">
-        <div class="page-header"><h1>Manage Projects</h1><button class="btn btn-primary" onclick="openForm('project')">+ Add Project</button></div>
+      <!-- Projects Tab -->
+      <section id="tab-projects" class="tab-content">
+        <div class="page-header"><h1 class="page-title">Projects</h1><button class="btn btn-primary" onclick="showForm('projectForm')">+ Add Project</button></div>
         <div class="form-container" id="projectFormContainer" style="display:none;">
           <form id="projectForm">
             <input type="hidden" id="projId">
             <div class="grid-2">
-              <div class="input-group"><label>Project Title</label><input type="text" id="projTitle" required></div>
+              <div class="input-group"><label>Title</label><input type="text" id="projTitle" required></div>
               <div class="input-group"><label>Category (EN)</label><input type="text" id="projCatEn" required></div>
               <div class="input-group"><label>Category (BN)</label><input type="text" id="projCatBn" required></div>
               <div class="input-group"><label>Image</label><input type="file" id="projImage" accept="image/*"></div>
-              <div class="input-group" style="grid-column: span 2;"><label>Description (EN)</label><textarea id="projDescEn" rows="2"></textarea></div>
-              <div class="input-group" style="grid-column: span 2;"><label>Description (BN)</label><textarea id="projDescBn" rows="2"></textarea></div>
-              <div class="input-group"><label>Featured on Home?</label><select id="projFeatured"><option value="false">No</option><option value="true">Yes</option></select></div>
+              <div class="input-group"><label>Featured (Show on Home)</label><select id="projFeatured"><option value="true">Yes</option><option value="false">No</option></select></div>
+              <div class="input-group"><label>Desc (EN)</label><textarea id="projDescEn"></textarea></div>
+              <div class="input-group"><label>Desc (BN)</label><textarea id="projDescBn"></textarea></div>
             </div>
             <button type="submit" class="btn btn-primary">Save Project</button>
           </form>
@@ -128,34 +124,37 @@
         <div id="projectsList" class="list-container"></div>
       </section>
 
-      <!-- 5. Blogs -->
-      <section id="blogs" class="tab-content">
-        <div class="page-header"><h1>Blog Posts</h1><button class="btn btn-primary" onclick="openForm('blog')">+ Add Post</button></div>
+      <!-- Blogs Tab -->
+      <section id="tab-blogs" class="tab-content">
+        <div class="page-header"><h1 class="page-title">Blogs</h1><button class="btn btn-primary" onclick="showForm('blogForm')">+ Add Blog</button></div>
         <div class="form-container" id="blogFormContainer" style="display:none;">
           <form id="blogForm">
             <input type="hidden" id="blogId">
             <div class="grid-2">
               <div class="input-group"><label>Title (EN)</label><input type="text" id="blogTitleEn" required></div>
               <div class="input-group"><label>Title (BN)</label><input type="text" id="blogTitleBn" required></div>
-              <div class="input-group"><label>Category</label><select id="blogCategory"></select></div>
+              <div class="input-group"><label>Category</label><input type="text" id="blogCat" required placeholder="e.g. Design"></div>
               <div class="input-group"><label>Image</label><input type="file" id="blogImage" accept="image/*"></div>
-              <div class="input-group"><label>Read Time (e.g. 5 min read)</label><input type="text" id="blogReadTime" required></div>
-              <div class="input-group"><label>Featured on Home?</label><select id="blogFeatured"><option value="false">No</option><option value="true">Yes</option></select></div>
-              <div class="input-group" style="grid-column: span 2;"><label>Content (EN) - Use B**text**B, I**text**I, U**text**U, H**text**H</label><textarea id="blogContentEn" rows="6" required></textarea></div>
-              <div class="input-group" style="grid-column: span 2;"><label>Content (BN)</label><textarea id="blogContentBn" rows="6" required></textarea></div>
+              <div class="input-group"><label>Read Time</label><input type="text" id="blogReadTime" required placeholder="5 min read"></div>
+              <div class="input-group"><label>Featured</label><select id="blogFeatured"><option value="true">Yes</option><option value="false">No</option></select></div>
+              <div class="input-group" style="grid-column: span 2;"><label>Content (EN) - Use B**bold**B, I**italic**I, U**underline**U, H**highlight**H</label><textarea id="blogContentEn" rows="5" required></textarea></div>
+              <div class="input-group" style="grid-column: span 2;"><label>Content (BN)</label><textarea id="blogContentBn" rows="5" required></textarea></div>
             </div>
-            <button type="submit" class="btn btn-primary">Save Post</button>
+            <button type="submit" class="btn btn-primary">Save Blog</button>
           </form>
         </div>
         <div id="blogsList" class="list-container"></div>
       </section>
 
-      <!-- Add other sections (Stats, Services, FAQs, Toolkits) similarly with simple forms -->
-      <!-- (Keep reading, I'll provide the complete JS to handle these) -->
+      <!-- Placeholders for other tabs (Stats, Services, FAQs, Toolkits) -->
+      <section id="tab-stats" class="tab-content"><h1 class="page-title">Stats Management</h1><p>Coming soon...</p></section>
+      <section id="tab-services" class="tab-content"><h1 class="page-title">Services Management</h1><p>Coming soon...</p></section>
+      <section id="tab-faqs" class="tab-content"><h1 class="page-title">FAQs Management</h1><p>Coming soon...</p></section>
+      <section id="tab-toolkits" class="tab-content"><h1 class="page-title">Toolkit Management</h1><p>Coming soon...</p></section>
     </main>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/admin.js"></script>
 </body>
-</html>
+  </html>
