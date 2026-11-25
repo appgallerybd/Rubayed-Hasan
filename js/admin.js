@@ -113,12 +113,16 @@
 
   // Auth state is rechecked on refresh, token refresh, and sign-out.
   supabase.auth.onAuthStateChange((event, session) => {
-    window.setTimeout(() => {
-      if (event === 'SIGNED_OUT') showLogin();
-      else if (session) verifyAndOpen(session).catch(error => {
-        console.error(error); showLogin('সেশন যাচাই করা যায়নি। আবার লগইন করুন।');
-      });
-    }, 0);
+    // SIGNED_IN is handled by the login flow; avoid loading the dashboard twice.
+    // Re-check permissions after token refresh and always react to sign-out.
+    if (event === 'SIGNED_OUT') {
+      showLogin();
+    } else if (event === 'TOKEN_REFRESHED' && session) {
+      window.setTimeout(() => verifyAndOpen(session).catch(error => {
+        console.error('Refreshed session verification failed:', error);
+        showLogin('Admin অনুমতি যাচাই করা যায়নি। আবার লগইন করুন।');
+      }), 0);
+    }
   });
 
   window.switchTab = function (event, tabId) {
