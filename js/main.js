@@ -50,7 +50,7 @@ footer:{about:'Thoughtful graphic design, meaningful brand identities and visual
 chatbot:{welcome:'Hello! Thanks for visiting. What would you like to know?',questions:[{question:'What services do you offer?',answer:'I offer brand identity, social media design, print design, packaging and digital graphics.',enabled:true},{question:'How can I start a project?',answer:'Use the contact form and share a few details about your project. I will get back to you.',enabled:true},{question:'How can I contact you?',answer:'Please use the contact page to send your project details.',enabled:true}]},
 highlight:{textColor:'#12304a',background:'#c9edff'}
 };
-function applyDemo(stored){const out={...demoContent,...(stored||{})};['brand','hero','about','blogIntro','contact','footer','chatbot','highlight','copy'].forEach(k=>out[k]={...(demoContent[k]||{}),...((stored||{})[k]||{})});['stats','services','workflow','tools','projects','blogs','faqs'].forEach(k=>{if(!Array.isArray(out[k])||out[k].length===0)out[k]=demoContent[k]});['socialTop','socialFooter'].forEach(k=>{if(!Array.isArray(out[k]))out[k]=[]});return out}
+function applyDemo(stored){const out={...demoContent,...(stored||{})};['brand','hero','about','blogIntro','contact','footer','chatbot','highlight','copy'].forEach(k=>out[k]={...(demoContent[k]||{}),...((stored||{})[k]||{})});['stats','services','workflow','tools','projects','blogs','faqs'].forEach(k=>{if((stored||{}).demoSeeded!==false&&(!Array.isArray(out[k])||out[k].length===0))out[k]=demoContent[k]});['socialTop','socialFooter'].forEach(k=>{if(!Array.isArray(out[k]))out[k]=[]});return out}
 
 const $=id=>document.getElementById(id);
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
