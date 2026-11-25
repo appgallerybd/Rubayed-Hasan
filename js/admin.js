@@ -91,3 +91,21 @@ window.del = async (table, id) => { if(confirm('Delete?')) { await supabase.from
 supabase.auth.getSession().then(({data}) => {
   if(data.session) { document.getElementById('loginScreen').style.display = 'none'; document.getElementById('adminPanel').style.display = 'flex'; loadAdminData(); }
 });
+document.getElementById('loginBtn').addEventListener('click', async () => {
+  const email = document.getElementById('adminEmail').value.trim(); // .trim() যোগ করা জরুরি
+  const password = document.getElementById('adminPass').value;
+  
+  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+  
+  if (error) {
+    // ব্রাউজারের কনসোলে আসল এরর দেখাবে
+    console.error("Login Error Details:", error.status, error.code, error.message);
+    // স্ক্রিনে এরর মেসেজ দেখাবে
+    document.getElementById('login-error').textContent = error.message;
+    document.getElementById('login-error').style.display = 'block';
+  } else {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('adminPanel').style.display = 'flex';
+    loadAdminData();
+  }
+});
