@@ -6,6 +6,8 @@ create table if not exists public.portfolio_content (
   updated_at timestamptz not null default now()
 );
 alter table public.portfolio_content enable row level security;
+grant select on public.portfolio_content to anon, authenticated;
+grant insert, update, delete on public.portfolio_content to authenticated;
 drop policy if exists "portfolio content public read" on public.portfolio_content;
 create policy "portfolio content public read" on public.portfolio_content
   for select to anon, authenticated using (true);
@@ -25,6 +27,9 @@ create table if not exists public.contact_messages (
   is_read boolean not null default false
 );
 alter table public.contact_messages enable row level security;
+grant insert on public.contact_messages to anon, authenticated;
+grant select, update, delete on public.contact_messages to authenticated;
+grant usage, select on sequence public.contact_messages_id_seq to authenticated;
 drop policy if exists "visitors submit contact messages" on public.contact_messages;
 create policy "visitors submit contact messages" on public.contact_messages
   for insert to anon, authenticated
@@ -67,3 +72,35 @@ values (1, '{
   "highlight":{"textColor":"#17110d","background":"#d4af37"}
 }'::jsonb)
 on conflict (id) do nothing;
+
+
+-- Public portfolio images bucket. Uploads and mutations are Admin-only.
+insert into storage.buckets (id, name, public)
+values ('site-assets', 'site-assets', true)
+on conflict (id) do update set public = true;
+
+drop policy if exists "portfolio media public read" on storage.objects;
+create policy "portfolio media public read" on storage.objects
+for select to anon, authenticated using (bucket_id = 'site-assets');
+
+drop policy if exists "portfolio media admin insert" on storage.objects;
+create policy "portfolio media admin insert" on storage.objects
+for insert to authenticated with check (
+  bucket_id = 'site-assets'
+  and (auth.jwt() -> 'app_metadata' ->> 'role') = 'admin'
+);
+drop policy if exists "portfolio media admin update" on storage.objects;
+create policy "portfolio media admin update" on storage.objects
+for update to authenticated using (
+  bucket_id = 'site-assets'
+  and (auth.jwt() -> 'app_metadata' ->> 'role') = 'admin'
+) with check (
+  bucket_id = 'site-assets'
+  and (auth.jwt() -> 'app_metadata' ->> 'role') = 'admin'
+);
+drop policy if exists "portfolio media admin delete" on storage.objects;
+create policy "portfolio media admin delete" on storage.objects
+for delete to authenticated using (
+  bucket_id = 'site-assets'
+  and (auth.jwt() -> 'app_metadata' ->> 'role') = 'admin'
+);
