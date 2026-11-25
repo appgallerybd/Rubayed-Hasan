@@ -7,8 +7,6 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <!-- Header injected by JS -->
-
   <main class="container section" style="max-width: 800px; margin: 0 auto;">
     <h1 id="postTitle" class="section-title">Loading...</h1>
     <p id="postMeta" style="color:var(--accent); font-size: 14px; margin-bottom:20px;"></p>
@@ -16,7 +14,6 @@
     <div id="postContent" class="blog-content"></div>
   </main>
 
-  <!-- Scroll Buttons -->
   <div class="progress-circle" id="progressBar">
     <div class="progress-inner" onclick="window.scrollBy({top: 500, behavior: 'smooth'})">↓</div>
   </div>
@@ -34,17 +31,14 @@
       const id = urlParams.get('id');
       if(!id) return;
 
-      // Get Highlight Color
       const { data: sets } = await supabase.from('site_settings').select('value').eq('key', 'highlight_color').single();
       const hlColor = sets ? sets.value : '#d4af37';
-      document.documentElement.style.setProperty('--highlight', hlColor);
 
       const { data } = await supabase.from('blog_posts').select('*').eq('id', id).single();
       if(data) {
         document.getElementById('postTitle').textContent = data.title_en;
         document.getElementById('postMeta').textContent = `Category: Design • ${data.read_time}`;
         document.getElementById('postImage').src = data.image_url;
-        // formatText function is global in main.js
         document.getElementById('postContent').innerHTML = window.formatText(data.content_en, hlColor);
       }
     }
