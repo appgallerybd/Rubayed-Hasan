@@ -1,230 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Portfolio — Rubayed Hasan</title>
-  
-  <link rel="manifest" href="manifest.json">
-  <link rel="apple-touch-icon" href="images/profile.png">
-  <link rel="preload" as="image" href="images/profile.png">
-  <link rel="icon" href="data:,">
-  
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/style.css" />
-  
-  <script>
-    (function () {
-      var saved = localStorage.getItem('rh-lang');
-      document.documentElement.lang = saved === 'bn' ? 'bn' : 'en';
-    })();
-  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio - Rubayed Hasan</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-
-  <header class="site-header" id="header">
-    <div class="container header-inner">
-      <a href="index.html" class="logo">
-        <img src="images/profile.png" alt="Rubayed Hasan" class="logo-img" />
-        <span class="logo-text"><span lang="en">Rubayed Hasan</span><span lang="bn">রুবায়েদ হাসান</span></span>
-      </a>
-      <nav class="nav-desktop">
-        <a href="index.html"><span lang="en">Home</span><span lang="bn">হোম</span></a>
-        <a href="about.html"><span lang="en">About</span><span lang="bn">সম্পর্কে</span></a>
-        <a href="portfolio.html" class="active"><span lang="en">Portfolio</span><span lang="bn">পোর্টফোলিও</span></a>
-        <a href="contact.html"><span lang="en">Contact</span><span lang="bn">যোগাযোগ</span></a>
-      </nav>
-      <div class="header-actions">
-        <div class="lang-toggle">
-          <button type="button" data-set-lang="en" class="active">EN</button>
-          <button type="button" data-set-lang="bn">বাংলা</button>
-        </div>
-        <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
-          <span></span><span></span><span></span>
-        </button>
-      </div>
-    </div>
-    <div class="mobile-menu" id="mobileMenu">
-      <nav>
-        <a href="index.html"><span lang="en">Home</span><span lang="bn">হোম</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></a>
-        <a href="about.html"><span lang="en">About</span><span lang="bn">সম্পর্কে</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></a>
-        <a href="portfolio.html"><span lang="en">Portfolio</span><span lang="bn">পোর্টফোলিও</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></a>
-        <a href="contact.html"><span lang="en">Contact</span><span lang="bn">যোগাযোগ</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></a>
-      </nav>
-    </div>
-  </header>
-
   <main>
-    <section class="section" style="padding-top: 60px;">
-      <div class="container">
-        <div class="section-head reveal">
-          <span class="section-label"><span lang="en">My Works</span><span lang="bn">আমার কাজ</span></span>
-          <h2 class="section-title"><span lang="en">All Projects</span><span lang="bn">সব প্রজেক্ট</span></h2>
-          <p class="section-sub"><span lang="en">Explore my complete portfolio of design projects.</span><span lang="bn">আমার ডিজাইন প্রজেক্টের সম্পূর্ণ পোর্টফোলিও দেখুন।</span></p>
-        </div>
-
-        <div class="portfolio-page-grid">
-          <!-- 1 -->
-          <article class="portfolio-item reveal">
-            <div class="project-visual"><img src="images/project-1.png" alt="Shikder Enterprise" loading="lazy" /></div>
-            <div class="project-info">
-              <h3>Shikder Enterprise</h3>
-              <p class="project-cat"><span lang="en">Automotive Brand Identity</span><span lang="bn">অটোমোটিভ ব্র্যান্ড আইডেন্টিটি</span></p>
-              <a href="https://wa.me/8801776561371?text=Hello%20Rubayed,%20I%20am%20interested%20in%20a%20project%20similar%20to%20Shikder%20Enterprise." target="_blank" class="btn btn-wa">
-                <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                <span lang="en">Contact with Designer</span><span lang="bn">ডিজাইনার সাথে যোগাযোগ</span>
-              </a>
-            </div>
-          </article>
-          <!-- 2 -->
-          <article class="portfolio-item reveal" data-delay="1">
-            <div class="project-visual"><img src="images/project-2.png" alt="Al Wafa Shop" loading="lazy" /></div>
-            <div class="project-info">
-              <h3>Al Wafa Shop</h3>
-              <p class="project-cat"><span lang="en">Retail Brand Identity</span><span lang="bn">রিটেইল ব্র্যান্ড আইডেন্টিটি</span></p>
-              <a href="https://wa.me/8801776561371?text=Hello%20Rubayed,%20I%20am%20interested%20in%20a%20project%20similar%20to%20Al%20Wafa%20Shop." target="_blank" class="btn btn-wa">
-                <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                <span lang="en">Contact with Designer</span><span lang="bn">ডিজাইনার সাথে যোগাযোগ</span>
-              </a>
-            </div>
-          </article>
-          <!-- 3 -->
-          <article class="portfolio-item reveal" data-delay="2">
-            <div class="project-visual"><img src="images/project-3.png" alt="HL Fashion House" loading="lazy" /></div>
-            <div class="project-info">
-              <h3>HL Fashion House</h3>
-              <p class="project-cat"><span lang="en">Luxury Fashion Branding</span><span lang="bn">লাক্সারি ফ্যাশন ব্র্যান্ডিং</span></p>
-              <a href="https://wa.me/8801776561371?text=Hello%20Rubayed,%20I%20am%20interested%20in%20a%20project%20similar%20to%20HL%20Fashion%20House." target="_blank" class="btn btn-wa">
-                <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                <span lang="en">Contact with Designer</span><span lang="bn">ডিজাইনার সাথে যোগাযোগ</span>
-              </a>
-            </div>
-          </article>
-          <!-- 4 -->
-          <article class="portfolio-item reveal">
-            <div class="project-visual"><img src="images/project-4.png" alt="Takmil Certificate" loading="lazy" /></div>
-            <div class="project-info">
-              <h3>Takmil Certificate</h3>
-              <p class="project-cat"><span lang="en">Islamic Certificate Design</span><span lang="bn">ইসলামিক সার্টিফিকেট ডিজাইন</span></p>
-              <a href="https://wa.me/8801776561371?text=Hello%20Rubayed,%20I%20am%20interested%20in%20a%20project%20similar%20to%20Takmil%20Certificate." target="_blank" class="btn btn-wa">
-                <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                <span lang="en">Contact with Designer</span><span lang="bn">ডিজাইনার সাথে যোগাযোগ</span>
-              </a>
-            </div>
-          </article>
-          <!-- 5 -->
-          <article class="portfolio-item reveal" data-delay="1">
-            <div class="project-visual"><img src="images/project-5.png" alt="Kaldanga Rawjul Ulum" loading="lazy" /></div>
-            <div class="project-info">
-              <h3>Kaldanga Rawjul Ulum</h3>
-              <p class="project-cat"><span lang="en">Institutional Logo Design</span><span lang="bn">প্রাতিষ্ঠানিক লোগো ডিজাইন</span></p>
-              <a href="https://wa.me/8801776561371?text=Hello%20Rubayed,%20I%20am%20interested%20in%20a%20project%20similar%20to%20Kaldanga%20Rawjul%20Ulum." target="_blank" class="btn btn-wa">
-                <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                <span lang="en">Contact with Designer</span><span lang="bn">ডিজাইনার সাথে যোগাযোগ</span>
-              </a>
-            </div>
-          </article>
-          <!-- 6 -->
-          <article class="portfolio-item reveal" data-delay="2">
-            <div class="project-visual"><img src="images/project-6.png" alt="Creative Designer" loading="lazy" /></div>
-            <div class="project-info">
-              <h3>Creative Designer</h3>
-              <p class="project-cat"><span lang="en">Personal Brand Identity</span><span lang="bn">পার্সোনাল ব্র্যান্ড আইডেন্টিটি</span></p>
-              <a href="https://wa.me/8801776561371?text=Hello%20Rubayed,%20I%20am%20interested%20in%20a%20project%20similar%20to%20Creative%20Designer." target="_blank" class="btn btn-wa">
-                <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                <span lang="en">Contact with Designer</span><span lang="bn">ডিজাইনার সাথে যোগাযোগ</span>
-              </a>
-            </div>
-          </article>
-          <!-- 7 -->
-          <article class="portfolio-item reveal">
-            <div class="project-visual"><img src="images/project-7.png" alt="Allah Calligraphy" loading="lazy" /></div>
-            <div class="project-info">
-              <h3>Allah Calligraphy</h3>
-              <p class="project-cat"><span lang="en">Arabic Typography Design</span><span lang="bn">আরবি টাইপোগ্রাফি ডিজাইন</span></p>
-              <a href="https://wa.me/8801776561371?text=Hello%20Rubayed,%20I%20am%20interested%20in%20a%20project%20similar%20to%20Allah%20Calligraphy." target="_blank" class="btn btn-wa">
-                <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                <span lang="en">Contact with Designer</span><span lang="bn">ডিজাইনার সাথে যোগাযোগ</span>
-              </a>
-            </div>
-          </article>
-          <!-- 8 -->
-          <article class="portfolio-item reveal" data-delay="1">
-            <div class="project-visual"><img src="images/project-8.png" alt="Creative Pen" loading="lazy" /></div>
-            <div class="project-info">
-              <h3>Creative Pen</h3>
-              <p class="project-cat"><span lang="en">Conceptual Logo Design</span><span lang="bn">কনসেপচুয়াল লোগো ডিজাইন</span></p>
-              <a href="https://wa.me/8801776561371?text=Hello%20Rubayed,%20I%20am%20interested%20in%20a%20project%20similar%20to%20Creative%20Pen." target="_blank" class="btn btn-wa">
-                <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                <span lang="en">Contact with Designer</span><span lang="bn">ডিজাইনার সাথে যোগাযোগ</span>
-              </a>
-            </div>
-          </article>
-          <!-- 9 -->
-          <article class="portfolio-item reveal" data-delay="2">
-            <div class="project-visual"><img src="images/project-9.png" alt="Raghunathpur Hasania Madrasha" loading="lazy" /></div>
-            <div class="project-info">
-              <h3>Raghunathpur Hasania Madrasha</h3>
-              <p class="project-cat"><span lang="en">Visiting Card Design</span><span lang="bn">ভিজিটিং কার্ড ডিজাইন</span></p>
-              <a href="https://wa.me/8801776561371?text=Hello%20Rubayed,%20I%20am%20interested%20in%20a%20project%20similar%20to%20Raghunathpur%20Hasania%20Madrasha." target="_blank" class="btn btn-wa">
-                <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                <span lang="en">Contact with Designer</span><span lang="bn">ডিজাইনার সাথে যোগাযোগ</span>
-              </a>
-            </div>
-          </article>
-          <!-- 10 -->
-          <article class="portfolio-item reveal">
-            <div class="project-visual"><img src="images/project-10.png" alt="Alhamdulillah Calligraphy" loading="lazy" /></div>
-            <div class="project-info">
-              <h3>Alhamdulillah</h3>
-              <p class="project-cat"><span lang="en">Arabic Calligraphy Logo</span><span lang="bn">আরবি ক্যালিগ্রাফি লোগো</span></p>
-              <a href="https://wa.me/8801776561371?text=Hello%20Rubayed,%20I%20am%20interested%20in%20a%20project%20similar%20to%20Alhamdulillah%20Calligraphy." target="_blank" class="btn btn-wa">
-                <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                <span lang="en">Contact with Designer</span><span lang="bn">ডিজাইনার সাথে যোগাযোগ</span>
-              </a>
-            </div>
-          </article>
-        </div>
+    <section class="container section">
+      <h2 class="section-title text-center">My Portfolio</h2>
+      <div class="grid-3" id="portfolioGrid" style="margin-top: 40px;">
+        <!-- JS loads projects -->
       </div>
     </section>
   </main>
 
-  <footer class="site-footer">
-    <div class="container footer-inner">
-      <div class="footer-favicon-preview"><img src="images/profile.png" alt="Rubayed Hasan brand mark" width="72" height="72" /></div>
-      <div class="footer-brand">
-        <strong><span lang="en">Rubayed Hasan</span><span lang="bn">রুবায়েদ হাসান</span></strong>
-        <span class="footer-tagline"><span lang="en">Graphic Designer</span><span lang="bn">গ্রাফিক ডিজাইনার</span></span>
-        <span class="footer-tagline"><span lang="en">Paikgacha, Khulna, Bangladesh.</span><span lang="bn">পাইকগাছা, খুলনা, বাংলাদেশ।</span></span>
-      </div>
-      <p class="footer-copy">© 2026 Rubayed Hasan. <span lang="en">All rights reserved.</span><span lang="bn">সর্বস্বত্ব সংরক্ষিত।</span></p>
-    </div>
-  </footer>
-
-  <!-- ================= CHATBOT WIDGET ================= -->
-  <div class="chat-widget" id="chatWidget">
+  <div id="chatWidget" class="chat-widget">
     <div class="chat-header">
-      <div class="chat-profile">
-        <img src="images/profile.png" alt="Rubayed Hasan">
-        <div class="chat-name-wrap">
-          <strong><span lang="en">Rubayed Hasan</span><span lang="bn">রুবায়েদ হাসান</span></strong>
-          <span><span lang="en">Virtual Assistant</span><span lang="bn">ভার্চুয়াল অ্যাসিস্ট্যান্ট</span></span>
-        </div>
-      </div>
-      <a href="https://wa.me/8801776561371" target="_blank" class="direct-contact-btn">
-        <span lang="en">Direct Contact</span><span lang="bn">সরাসরি যোগাযোগ</span>
-      </a>
+      <img src="images/profile.png">
+      <div><b>Rubayed Hasan</b><br><small style="color:var(--accent);">Virtual Assistant</small></div>
     </div>
     <div class="chat-body" id="chatBody"></div>
-    <div class="chat-quick-replies" id="chatQuickReplies"></div>
+    <div class="chat-input-area">
+      <input type="text" id="chatInput" placeholder="Type a message...">
+      <button id="chatSendBtn">Send</button>
+    </div>
   </div>
-
-  <button class="floating-wa" aria-label="Chat with Virtual Assistant">
-    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  <button class="floating-chat-btn" id="floatingChatBtn">
+    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.54.36 3.04 1.04 4.35L2 22l5.65-1.04A9.95 9.95 0 0012 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
   </button>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/main.js"></script>
 </body>
-                                                                         </html>
+</html>
