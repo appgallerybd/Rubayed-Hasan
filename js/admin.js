@@ -30,15 +30,17 @@ function switchTab(e, tabId) {
 async function loadAdminData() {
   const { data: sets } = await supabase.from('site_settings').select('*');
   if(sets) sets.forEach(s => { const el = document.getElementById(s.key); if(el) el.value = s.value; });
-  loadAdminProjects(); loadAdminBlogs();
+  loadAdminProjects(); loadAdminBlogs(); loadAdminChatbot();
 }
 
+// --- SETTINGS ---
 async function saveSettings() {
-  const keys = ['hero_title_en', 'hero_tagline_en', 'about_en', 'blog_desc_en', 'footer_about_en', 'contact_phone', 'contact_email', 'contact_loc'];
+  const keys = ['hero_title_en', 'hero_tagline_en', 'about_en', 'blog_desc_en', 'footer_about_en', 'contact_phone', 'contact_email', 'contact_loc', 'highlight_color'];
   for(let k of keys) await supabase.from('site_settings').upsert({ key: k, value: document.getElementById(k).value });
   alert('Settings Saved!');
 }
 
+// --- PROJECTS ---
 async function uploadImage(file) {
   const fileName = `${Date.now()}_${file.name}`;
   await supabase.storage.from('site-assets').upload(fileName, file);
@@ -58,6 +60,7 @@ async function addProject() {
   location.reload();
 }
 
+// --- BLOGS ---
 async function loadAdminBlogs() {
   const { data } = await supabase.from('blog_posts').select('*');
   if(data) document.getElementById('adminBlogsList').innerHTML = data.map(b => `
@@ -68,6 +71,18 @@ async function addBlog() {
   let img = ''; const file = document.getElementById('blogImg').files[0];
   if(file) img = await uploadImage(file);
   await supabase.from('blog_posts').insert([{ title_en: document.getElementById('blogTitle').value, title_bn: document.getElementById('blogTitle').value, read_time: document.getElementById('blogReadTime').value, content_en: document.getElementById('blogContent').value, content_bn: document.getElementById('blogContent').value, image_url: img }]);
+  location.reload();
+}
+
+// --- CHATBOT ---
+async function loadAdminChatbot() {
+  const { data } = await supabase.from('chatbot_qa').select('*');
+  if(data) document.getElementById('adminChatbotList').innerHTML = data.map(c => `
+    <div class="list-item"><div><b>Q: ${c.question_en}</b><br><small>A: ${c.answer_en}</small></div><button class="btn btn-danger" onclick="del('chatbot_qa', ${c.id})">Delete</button></div>
+  `).join('');
+}
+async function addChatbot() {
+  await supabase.from('chatbot_qa').insert([{ question_en: document.getElementById('chatQ').value, question_bn: document.getElementById('chatQ').value, answer_en: document.getElementById('chatA').value, answer_bn: document.getElementById('chatA').value }]);
   location.reload();
 }
 
