@@ -5,6 +5,7 @@ const db=window.supabase.createClient(URL,KEY);const $=id=>document.getElementBy
 let content={},active='brand';
 const groups={
 brand:{title:'Brand & Hero',heading:'Identity, profile and homepage introduction',keys:['brand','hero']},
+siteText:{title:'Site Text & Labels',heading:'Navigation labels, section headings and button copy',keys:['copy']},
 stats:{title:'Stats & Social',heading:'Numbers and independent social link controls',keys:['stats','socialTop','socialFooter']},
 about:{title:'About & Workflow',heading:'About copy, design process and toolkit',keys:['about','workflow','tools']},
 services:{title:'Services',heading:'Service cards shown on Home, About and Services pages',keys:['services']},
@@ -14,7 +15,7 @@ faqs:{title:'FAQs',heading:'Frequently asked questions',keys:['faqs']},
 contact:{title:'Contact & Footer',heading:'Contact details, map embed and footer copy',keys:['contact','footer']},
 chatbot:{title:'WhatsApp Assistant',heading:'Quick questions and automatic answers in the chat assistant',keys:['chatbot']}
 };
-const labels={brand:'Brand identity',hero:'Home hero content',stats:'Stats (3 items)',socialTop:'Homepage social links (independent)',socialFooter:'Footer social links (independent)',about:'About page content',workflow:'Design workflow steps',tools:'Design toolkit',services:'Service cards',projects:'Portfolio projects',blogIntro:'Blog section introduction',blogs:'Blog posts',highlight:'Blog highlight colours',faqs:'Frequently asked questions',contact:'Contact details and map',footer:'Footer content',chatbot:'Assistant welcome and Q&A'};
+const labels={copy:'Site-wide text and navigation labels',brand:'Brand identity',hero:'Home hero content',stats:'Stats (3 items)',socialTop:'Homepage social links (independent)',socialFooter:'Footer social links (independent)',copy:'Navigation, section headings and button labels',about:'About page content',workflow:'Design workflow steps',tools:'Design toolkit',services:'Service cards',projects:'Portfolio projects',blogIntro:'Blog section introduction',blogs:'Blog posts',highlight:'Blog highlight colours',faqs:'Frequently asked questions',contact:'Contact details and map',footer:'Footer content',chatbot:'Assistant welcome and Q&A'};
 function notice(msg,type='ok'){const n=$('notice');n.textContent=msg;n.className=type;n.hidden=false}
 function safe(v){return JSON.stringify(v??(Array.isArray(content[v])?[]:{}),null,2)}
 function renderEditor(){const g=groups[active];$('panelTitle').textContent=g.title;$('editorHeading').textContent=g.heading;$('editorFields').innerHTML=g.keys.map(k=>'<label class="field-label">'+labels[k]+'<textarea class="json-editor" data-json-key="'+k+'" spellcheck="false"></textarea><small>Valid JSON required. Arrays support unlimited items. For blog formatting use [B]bold[/B], [I]italic[/I], [U]underline[/U], [H]highlight[/H].</small></label>').join('');g.keys.forEach(k=>{document.querySelector('[data-json-key="'+k+'"]').value=JSON.stringify(content[k]??(k==='stats'||['socialTop','socialFooter','workflow','tools','services','projects','blogs','faqs'].includes(k)?[]:{}),null,2)});$('editorPanel').hidden=false;$('inboxPanel').hidden=true}
