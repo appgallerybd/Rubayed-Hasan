@@ -366,8 +366,8 @@ h1,h2,h3,h4,.eyebrow,.availability-pill,.hero-tagline,.btn,.social-link,.stats-p
 }
 @media(max-width:800px){
  .hero-reference{grid-template-columns:1fr;gap:30px;padding-block:52px 45px}
- .hero-copy{order:1}
- .hero-visual{order:2;width:100%;padding:12px 18px 30px}
+ .hero-visual{order:1;width:100%;padding:12px 18px 30px}
+ .hero-copy{order:2}
  .hero-reference .portrait-frame{width:min(350px,82vw)}
  .hero-floating-note{left:max(0px,calc(50% - 185px));bottom:45px}
  .hero-reference .hero-social{justify-content:flex-start}
