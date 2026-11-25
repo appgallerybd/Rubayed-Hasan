@@ -1,353 +1,43 @@
-(function () {
-  const SUPABASE_URL = 'https://qynaqzukiwtnxjsciazk.supabase.co';
-  const SUPABASE_ANON_KEY = 'sb_publishable_dTX5xkv4svMJA9-M5QMHKA_YctCIi19';
-  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-  const path = window.location.pathname;
-
-  // ==========================================
-  // 1. LANGUAGE TOGGLE SYSTEM
-  // ==========================================
-  function setLanguage(lang) {
-    document.documentElement.lang = lang;
-    localStorage.setItem('site_lang', lang);
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-      btn.classList.toggle('active', btn.dataset.lang === lang);
-    });
-  }
-  const savedLang = localStorage.getItem('site_lang') || 'en';
-  setLanguage(savedLang);
-
-  // ==========================================
-  // 2. INJECT PREMIUM HEADER & FOOTER
-  // ==========================================
-  const headerHTML = `
-    <header class="site-header">
-      <div class="container header-inner">
-        <a href="index.html" class="logo">
-          <img src="images/profile.png" class="logo-img" alt="Logo">
-          <div>
-            <span class="lang-en">Rubayed Hasan</span>
-            <span class="lang-bn">রুবায়েদ হাসান</span>
-          </div>
-        </a>
-        <nav class="nav-desktop">
-          <a href="index.html" class="${path.includes('index') ? 'active' : ''}">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
-            <span class="lang-en">Home</span><span class="lang-bn">হোম</span>
-          </a>
-          <a href="about.html" class="${path.includes('about') ? 'active' : ''}">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-            <span class="lang-en">About</span><span class="lang-bn">সম্পর্কে</span>
-          </a>
-          <a href="portfolio.html" class="${path.includes('portfolio') ? 'active' : ''}">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
-            <span class="lang-en">Portfolio</span><span class="lang-bn">পোর্টফোলিও</span>
-          </a>
-          <a href="services.html" class="${path.includes('services') ? 'active' : ''}">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-            <span class="lang-en">Services</span><span class="lang-bn">সেবা</span>
-          </a>
-          <a href="blogs.html" class="${path.includes('blogs') || path.includes('blog-detail') ? 'active' : ''}">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-            <span class="lang-en">Blogs</span><span class="lang-bn">ব্লগস</span>
-          </a>
-          <a href="contact.html" class="${path.includes('contact') ? 'active' : ''}">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-            <span class="lang-en">Contact</span><span class="lang-bn">যোগাযোগ</span>
-          </a>
-        </nav>
-        <div class="header-actions">
-          <div class="lang-toggle">
-            <button class="lang-btn" data-lang="en" onclick="setLanguage('en')">EN</button>
-            <button class="lang-btn" data-lang="bn" onclick="setLanguage('bn')">বাংলা</button>
-          </div>
-          <button class="mobile-menu-btn" id="mobileMenuBtn">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-          </button>
-        </div>
-      </div>
-      <div class="mobile-nav" id="mobileNav">
-        <a href="index.html"><span class="lang-en">Home</span><span class="lang-bn">হোম</span></a>
-        <a href="about.html"><span class="lang-en">About</span><span class="lang-bn">সম্পর্কে</span></a>
-        <a href="portfolio.html"><span class="lang-en">Portfolio</span><span class="lang-bn">পোর্টফোলিও</span></a>
-        <a href="services.html"><span class="lang-en">Services</span><span class="lang-bn">সেবা</span></a>
-        <a href="blogs.html"><span class="lang-en">Blogs</span><span class="lang-bn">ব্লগস</span></a>
-        <a href="contact.html"><span class="lang-en">Contact</span><span class="lang-bn">যোগাযোগ</span></a>
-      </div>
-    </header>
-  `;
-
-  const footerHTML = `
-    <footer>
-      <div class="container footer-content">
-        <a href="index.html" class="logo">
-          <img src="images/profile.png" class="logo-img">
-          <div><span class="lang-en">Rubayed Hasan</span><span class="lang-bn">রুবায়েদ হাসান</span></div>
-        </a>
-        <p id="footerAbout" style="color:var(--muted); max-width:400px; text-align:center;"></p>
-        <div class="footer-links">
-          <a href="about.html"><span class="lang-en">About</span><span class="lang-bn">সম্পর্কে</span></a>
-          <a href="portfolio.html"><span class="lang-en">Portfolio</span><span class="lang-bn">পোর্টফোলিও</span></a>
-          <a href="services.html"><span class="lang-en">Services</span><span class="lang-bn">সেবা</span></a>
-          <a href="blogs.html"><span class="lang-en">Blogs</span><span class="lang-bn">ব্লগস</span></a>
-          <a href="contact.html"><span class="lang-en">Contact</span><span class="lang-bn">যোগাযোগ</span></a>
-        </div>
-        <div class="socials-wrapper" id="footerSocials"></div>
-      </div>
-      <div class="container copyright">
-        <p>© 2026 <a href="index.html" style="color:var(--accent);">Rubayed Hasan</a>. <span class="lang-en">All Rights Reserved.</span><span class="lang-bn">সর্বস্বত্ব সংরক্ষিত।</span></p>
-        <a href="#" class="palestine-btn">🇵🇸 #StandWithPalestine</a>
-      </div>
-    </footer>
-  `;
-
-  if (!path.includes('admin.html')) {
-    document.body.insertAdjacentHTML('afterbegin', headerHTML);
-    document.body.insertAdjacentHTML('beforeend', footerHTML);
-    document.getElementById('mobileMenuBtn').addEventListener('click', () => {
-      document.getElementById('mobileNav').classList.toggle('active');
-    });
-    // Ensure buttons reflect saved language
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-      btn.classList.toggle('active', btn.dataset.lang === savedLang);
-    });
-  }
-
-  // ==========================================
-  // 3. GLOBAL DATA LOADER
-  // ==========================================
-  async function loadGlobal() {
-    const { data: sets } = await supabase.from('site_settings').select('*');
-    if(sets) {
-      const dict = {}; sets.forEach(s => dict[s.key] = s.value);
-      
-      if(document.getElementById('footerAbout')) {
-        document.getElementById('footerAbout').innerHTML = `
-          <span class="lang-en">${dict.footer_about_en || ''}</span>
-          <span class="lang-bn">${dict.footer_about_bn || dict.footer_about_en || ''}</span>
-        `;
-      }
-      
-      if(document.getElementById('heroTitle')) {
-        document.getElementById('heroTitle').innerHTML = `
-          <span class="lang-en">${dict.hero_title_en}</span>
-          <span class="lang-bn">${dict.hero_title_bn}</span>
-        `;
-        document.getElementById('heroTagline').innerHTML = `
-          <span class="lang-en">${dict.hero_tagline_en}</span>
-          <span class="lang-bn">${dict.hero_tagline_bn}</span>
-        `;
-        document.getElementById('aboutTeaser').innerHTML = `
-          <span class="lang-en">${dict.about_en}</span>
-          <span class="lang-bn">${dict.about_bn || dict.about_en}</span>
-        `;
-      }
-      
-      if(document.getElementById('cPhone')) {
-        document.getElementById('cPhone').textContent = dict.contact_phone;
-        document.getElementById('cEmail').textContent = dict.contact_email;
-        document.getElementById('cLoc').textContent = dict.contact_loc;
-        document.getElementById('cWeb').textContent = dict.contact_web;
-      }
-      
-      if(dict.highlight_color) document.documentElement.style.setProperty('--highlight', dict.highlight_color);
-    }
-
-    const { data: socs } = await supabase.from('social_links').select('*').eq('is_active', true);
-    if(socs) {
-      const renderSoc = (section) => socs.filter(s => s.section === section || s.section === 'both').map(s => 
-        `<a href="${s.url}" target="_blank" class="social-icon">${s.icon_svg}</a>`
-      ).join('');
-      if(document.getElementById('heroSocials')) document.getElementById('heroSocials').innerHTML = renderSoc('hero');
-      if(document.getElementById('footerSocials')) document.getElementById('footerSocials').innerHTML = renderSoc('footer');
-    }
-  }
-
-  // ==========================================
-  // 4. PAGE SPECIFIC LOADERS
-  // ==========================================
-  let allProjects = [];
-  async function loadPageData() {
-    if(path.includes('index') || path === '/') {
-      const { data: stats } = await supabase.from('stats').select('*');
-      if(stats && document.getElementById('statsGrid')) {
-        const icons = [
-          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>',
-          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
-          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>'
-        ];
-        document.getElementById('statsGrid').innerHTML = stats.map((s, i) => `
-          <div class="stat-item">
-            <div class="stat-icon">${icons[i % 3]}</div>
-            <div class="stat-number">${s.value}${s.suffix}</div>
-            <div class="stat-label">
-              <span class="lang-en">${s.label_en}</span>
-              <span class="lang-bn">${s.label_bn || s.label_en}</span>
-            </div>
-          </div>
-        `).join('');
-      }
-
-      const { data: projs } = await supabase.from('projects').select('*').eq('is_featured', true);
-      allProjects = projs || [];
-      renderFeaturedProjects(6);
-
-      const { data: blogs } = await supabase.from('blog_posts').select('*').order('created_at', {ascending:false}).limit(3);
-      if(blogs && document.getElementById('latestBlogs')) {
-        document.getElementById('latestBlogs').innerHTML = blogs.map((b, i) => `
-          <a href="blog-detail.html?id=${b.id}" class="card" style="${i===0 ? 'grid-column: 1 / -1; flex-direction:row; gap:24px; align-items:center;' : ''}">
-            <img src="${b.image_url}" style="${i===0 ? 'width:50%; height:300px; margin-bottom:0;' : ''}">
-            <div>
-               <h3 class="lang-en">${b.title_en}</h3>
-               <h3 class="lang-bn">${b.title_bn || b.title_en}</h3>
-               <p style="margin-top:12px; font-size:13px; color:var(--accent); font-weight:600;">${b.read_time}</p>
-            </div>
-          </a>
-        `).join('');
-      }
-    }
-
-    if(path.includes('portfolio.html') && document.getElementById('portfolioGrid')) {
-      const { data: projs } = await supabase.from('projects').select('*');
-      document.getElementById('portfolioGrid').innerHTML = projs.map(p => `
-        <div class="portfolio-card" onclick="this.classList.toggle('active')">
-          <img src="${p.image_url}" alt="${p.title}">
-          <div class="portfolio-info">
-            <h3>${p.title}</h3>
-            <p style="color:var(--accent); font-size:13px; font-weight:600; text-transform:uppercase; letter-spacing:1px;">${p.category_en}</p>
-            <div class="portfolio-desc">${p.desc_en}</div>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    if(path.includes('services.html') && document.getElementById('servicesList')) {
-      const { data: servs } = await supabase.from('services').select('*');
-      document.getElementById('servicesList').innerHTML = servs.map(s => `
-        <div class="card text-center">
-           <div style="width:70px; height:70px; margin:0 auto 20px; background:rgba(212,175,55,0.1); border-radius:20px; display:flex; justify-content:center; align-items:center; color:var(--accent); font-size:28px;">${s.icon_svg || '★'}</div>
-           <h3 class="lang-en">${s.title_en}</h3>
-           <h3 class="lang-bn">${s.title_bn || s.title_en}</h3>
-           <p class="lang-en" style="margin-top:10px;">${s.desc_en}</p>
-           <p class="lang-bn" style="margin-top:10px;">${s.desc_bn || s.desc_en}</p>
-        </div>
-      `).join('');
-
-      const { data: faqs } = await supabase.from('faqs').select('*');
-      document.getElementById('faqList').innerHTML = faqs.map(f => `
-        <div class="faq-item">
-          <div class="faq-question" onclick="this.parentElement.classList.toggle('active')">
-            <span class="lang-en">${f.question_en}</span>
-            <span class="lang-bn">${f.question_bn || f.question_en}</span>
-            <span>+</span>
-          </div>
-          <div class="faq-answer">
-            <span class="lang-en">${f.answer_en}</span>
-            <span class="lang-bn">${f.answer_bn || f.answer_en}</span>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    if(path.includes('blogs.html') && document.getElementById('allBlogsList')) {
-      const { data: blogs } = await supabase.from('blog_posts').select('*').order('created_at', {ascending:false});
-      document.getElementById('allBlogsList').innerHTML = blogs.map(b => `
-        <a href="blog-detail.html?id=${b.id}" class="card">
-          <img src="${b.image_url}">
-          <h3 class="lang-en">${b.title_en}</h3>
-          <h3 class="lang-bn">${b.title_bn || b.title_en}</h3>
-          <p style="margin-top:12px; font-size:13px; color:var(--accent); font-weight:600;">${b.read_time}</p>
-        </a>
-      `).join('');
-    }
-  }
-
-  window.renderFeaturedProjects = function(limit) {
-    const grid = document.getElementById('featuredProjects');
-    if(!grid) return;
-    const toRender = allProjects.slice(0, limit);
-    grid.innerHTML = toRender.map(p => `
-      <div class="card">
-        <img src="${p.image_url}" alt="${p.title}">
-        <h3>${p.title}</h3>
-        <p style="color:var(--accent); font-size:12px; font-weight:600; text-transform:uppercase; margin-bottom:8px;">${p.category_en}</p>
-      </div>
-    `).join('');
-    
-    const loadMoreBtn = document.getElementById('loadMoreBtn');
-    if(loadMoreBtn) {
-      if(limit >= allProjects.length) loadMoreBtn.style.display = 'none';
-      else loadMoreBtn.style.display = 'inline-flex';
-    }
-  };
-
-  // ==========================================
-  // 5. CHATBOT
-  // ==========================================
-  async function initChatbot() {
-    const widget = document.getElementById('chatWidget');
-    const btn = document.getElementById('floatingChatBtn');
-    const body = document.getElementById('chatBody');
-    const input = document.getElementById('chatInput');
-    const sendBtn = document.getElementById('chatSendBtn');
-    if(!widget || !btn) return;
-
-    btn.addEventListener('click', () => { widget.classList.toggle('active'); });
-
-    const { data: qas } = await supabase.from('chatbot_qa').select('*');
-    body.innerHTML = `<div class="chat-msg bot"><span class="lang-en">Hi, I am Rubayed's Assistant. How can I help you?</span><span class="lang-bn">হ্যালো, আমি রুবায়েদের অ্যাসিস্ট্যান্ট। আপনাকে কিভাবে সাহায্য করতে পারি?</span></div>`;
-    
-    if(qas && qas.length > 0) {
-      const quickReplies = document.createElement('div');
-      quickReplies.style.cssText = 'display:flex; flex-direction:column; gap:8px; margin-top:12px;';
-      qas.forEach(qa => {
-        const qBtn = document.createElement('button');
-        qBtn.innerHTML = `<span class="lang-en">${qa.question_en}</span><span class="lang-bn">${qa.question_bn || qa.question_en}</span>`;
-        qBtn.style.cssText = 'background:rgba(255,255,255,0.05); border:1px solid var(--border); color:#fff; padding:10px; border-radius:8px; text-align:left; font-size:13px; cursor:pointer; transition:0.2s;';
-        qBtn.onclick = () => {
-          body.innerHTML += `<div class="chat-msg user"><span class="lang-en">${qa.question_en}</span><span class="lang-bn">${qa.question_bn || qa.question_en}</span></div>`;
-          setTimeout(() => {
-            body.innerHTML += `<div class="chat-msg bot"><span class="lang-en">${qa.answer_en}</span><span class="lang-bn">${qa.answer_bn || qa.answer_en}</span></div>`;
-            body.scrollTop = body.scrollHeight;
-          }, 500);
-          body.scrollTop = body.scrollHeight;
-        };
-        quickReplies.appendChild(qBtn);
-      });
-      body.appendChild(quickReplies);
-    }
-
-    sendBtn.addEventListener('click', () => {
-      if(!input.value.trim()) return;
-      body.innerHTML += `<div class="chat-msg user">${input.value}</div>`;
-      input.value = '';
-      setTimeout(() => {
-        body.innerHTML += `<div class="chat-msg bot">Please use the quick buttons or contact directly.</div>`;
-        body.scrollTop = body.scrollHeight;
-      }, 500);
-    });
-  }
-
-  // ==========================================
-  // 6. INIT
-  // ==========================================
-  document.addEventListener('DOMContentLoaded', () => {
-    loadGlobal();
-    loadPageData();
-    initChatbot();
-
-    if (document.getElementById('progressBar')) {
-      window.addEventListener('scroll', () => {
-        const scrollTop = window.scrollY;
-        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-        const progress = (scrollTop / docHeight) * 100;
-        document.getElementById('progressBar').style.background = `conic-gradient(var(--accent) ${progress}%, #333 ${progress}%)`;
-        const upBtn = document.getElementById('scrollUpBtn');
-        if (scrollTop > 300) upBtn.style.display = 'flex'; else upBtn.style.display = 'none';
-      });
-    }
-  });
-
-  // Expose setLanguage globally so inline onclick works
-  window.setLanguage = setLanguage;
+(() => {
+'use strict';
+const URL='https://qynaqzukiwtnxjsciazk.supabase.co';
+const KEY='sb_publishable_dTX5xkv4svMJA9-M5QMHKA_YctCIi19';
+const db=window.supabase.createClient(URL,KEY);
+const path=location.pathname.split('/').pop()||'index.html';
+let data={};
+const $=id=>document.getElementById(id);
+const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const safeUrl=v=>{try{const u=new URL(v,location.href);return ['http:','https:','mailto:','tel:'].includes(u.protocol)?u.href:'#'}catch{return '#'}};
+const active=a=>a!==false;
+function rich(v){let s=esc(v);s=s.replace(/\[B\]([\s\S]*?)\[\/B\]/gi,'<strong>$1</strong>').replace(/\[I\]([\s\S]*?)\[\/I\]/gi,'<em>$1</em>').replace(/\[U\]([\s\S]*?)\[\/U\]/gi,'<u>$1</u>').replace(/\[H\]([\s\S]*?)\[\/H\]/gi,'<mark style="color:'+esc(data.highlight?.textColor||'#17110d')+';background:'+esc(data.highlight?.background||'#d4af37')+'">$1</mark>');
+return s.replace(/\n/g,'<br>');}
+function nav(){const items=[['Home','index.html'],['About','about.html'],['Portfolio','portfolio.html'],['Service','services.html'],['Blogs','blogs.html'],['Contact','contact.html']];
+return '<header class="site-header"><div class="container header-inner"><a class="brand" href="index.html"><img src="'+esc(data.brand?.logo||'images/profile.png')+'" alt=""><span>'+esc(data.brand?.name||'Rubayed Hasan')+'</span></a><button class="menu-toggle" id="menuToggle" aria-label="Open menu">☰</button><nav id="mainNav">'+items.map(([n,u])=>'<a '+(path===u?'class="active"':'')+' href="'+u+'">'+n+'</a>').join('')+'</nav></div></header>'}
+function socials(list){return (list||[]).filter(x=>x.enabled&&x.url).map(x=>'<a class="social-link" href="'+esc(safeUrl(x.url))+'" target="_blank" rel="noopener noreferrer" aria-label="'+esc(x.name)+'">'+icon(x.icon,x.name)+'</a>').join('')}
+function icon(key,label){const map={whatsapp:'◉',facebook:'f',mail:'✉',linkedin:'in',instagram:'◎',behance:'Bē',dribbble:'◉',github:'⌘',youtube:'▶',x:'𝕏',telegram:'➤'};return '<span aria-hidden="true">'+(map[key]||esc(label?.slice(0,1)||'↗'))+'</span>'}
+function footer(){const f=data.footer||{};return '<footer class="site-footer"><div class="container footer-main"><div><a class="brand" href="index.html"><img src="'+esc(data.brand?.logo||'images/profile.png')+'" alt=""><span>'+esc(data.brand?.name||'Rubayed Hasan')+'</span></a><p>'+esc(f.about||'')+'</p></div><nav class="footer-nav">'+[['Home','index.html'],['About','about.html'],['Portfolio','portfolio.html'],['Service','services.html'],['Blogs','blogs.html'],['Contact','contact.html']].map(([n,u])=>'<a href="'+u+'">'+n+'</a>').join('')+'</nav><div class="social-row">'+socials(data.socialFooter)+'</div></div><div class="container copyright"><p><a href="index.html">© '+esc(data.brand?.copyrightYear||new Date().getFullYear())+' '+esc(data.brand?.name||'Rubayed Hasan')+'</a>. All Rights Reserved.</p>'+(f.palestine!==false?'<span class="palestine">🇵🇸 #StandWithPalestine</span>':'')+'</div></footer>'}
+function stats(){return '<div class="stats-panel">'+(data.stats||[]).slice(0,3).map(x=>'<div><strong>'+esc(x.value)+'</strong><span>'+esc(x.label)+'</span></div>').join('')+'</div>'}
+function projectCards(list){return '<div class="project-grid">'+(list||[]).filter(x=>x.enabled!==false).map(p=>'<details class="project-card"><summary><img src="'+esc(p.image||'images/profile.png')+'" alt="'+esc(p.title)+'"><span class="project-meta"><b>'+esc(p.title)+'</b><small>'+esc(p.category||'')+'</small></span></summary><div class="project-detail"><p>'+esc(p.description||'')+'</p>'+(p.url?'<a href="'+esc(safeUrl(p.url))+'" target="_blank" rel="noopener">View project ↗</a>':'')+'</div></details>').join('')+'</div>'}
+function serviceCards(){return '<div class="service-grid">'+(data.services||[]).filter(active).map(s=>'<article class="surface service-card"><span class="service-icon">'+esc(s.icon||'✦')+'</span><h3>'+esc(s.title)+'</h3><p>'+esc(s.description)+'</p></article>').join('')+'</div>'}
+function blogCard(b,featured=false){return '<a class="blog-card '+(featured?'blog-featured':'')+'" href="blog-detail.html?id='+encodeURIComponent(b.id||'')+'"><img src="'+esc(b.image||'images/profile.png')+'" alt="'+esc(b.title)+'"><div><small>'+esc(b.category||'Insights')+' · '+esc(b.readTime||'')+'</small><h3>'+esc(b.title)+'</h3><p>'+esc(b.excerpt||'')+'</p></div></a>'}
+function faq(){return '<div class="faq-list">'+(data.faqs||[]).filter(x=>x.enabled!==false).map(f=>'<details class="faq-item"><summary>'+esc(f.question)+' <span>＋</span></summary><p>'+esc(f.answer)+'</p></details>').join('')+'</div>'}
+function home(){const h=data.hero||{},a=data.about||{},bi=data.blogIntro||{},blogs=(data.blogs||[]).filter(x=>x.published!==false).slice().reverse();
+return '<section class="container hero"><div class="hero-copy"><p class="eyebrow">AVAILABLE FOR SELECT PROJECTS</p><h1>'+esc(h.title||'Hi, I am Rubayed Hasan.')+'</h1><p class="lead">'+esc(h.description||'')+'</p><div class="button-row"><a class="btn btn-primary" href="contact.html">↗ '+esc(h.hireLabel||'Hire Me')+'</a><a class="btn btn-secondary" href="portfolio.html">▧ '+esc(h.worksLabel||'View Works')+'</a></div></div><div class="portrait-frame"><img src="'+esc(data.brand?.profileImage||'images/profile.png')+'" alt="'+esc(data.brand?.name||'Rubayed Hasan')+'"></div></section><section class="container">'+stats()+'</section><div class="container social-row hero-social">'+socials(data.socialTop)+'</div><section class="container section"><div class="section-heading"><p class="eyebrow">A LITTLE INTRODUCTION</p><h2>'+esc(a.title||'About Me')+'</h2></div><p class="section-copy">'+esc(a.teaser||a.body||'')+'</p><a class="text-link" href="about.html">More About Me ↗</a></section><section class="section section-tint"><div class="container"><div class="section-heading"><p class="eyebrow">WHAT I DO</p><h2>Services</h2></div>'+serviceCards()+'</div></section><section class="container section"><div class="section-heading"><p class="eyebrow">SELECTED WORK</p><h2>Featured Projects</h2><p>Featured Case Studies</p></div>'+projectCards((data.projects||[]).filter(x=>x.featured).slice(0,10))+'<div class="center"><a class="btn btn-secondary" href="portfolio.html">See More Projects ↗</a></div></section><section class="section section-tint"><div class="container"><div class="section-heading"><p class="eyebrow">THOUGHTS & IDEAS</p><h2>'+esc(bi.title||'Latest Insights')+'</h2><p>'+esc(bi.description||'')+'</p></div><div class="blog-grid">'+blogs.slice(0,3).map((b,i)=>blogCard(b,i===0)).join('')+'</div><div class="center"><a class="btn btn-secondary" href="blogs.html">View All Blogs →</a></div></div></section>'+contactCta()}
+function contactCta(){return '<section class="container section"><div class="contact-cta"><p class="eyebrow">HAVE A PROJECT IN MIND?</p><h2>Let’s Build Something Great</h2><p>Have a project in mind? Drop a message. I usually reply within a few hours.</p><a class="btn btn-primary" href="contact.html">Start a Conversation ↗</a></div></section>'}
+function about(){const a=data.about||{};return '<section class="container page-hero about-hero"><div class="portrait-frame portrait-alt"><img src="'+esc(data.brand?.profileImage||'images/profile.png')+'" alt=""></div><p class="eyebrow">THE PERSON BEHIND THE WORK</p><h1>'+esc(a.title||'About Me')+'</h1><p class="lead">'+esc(a.teaser||'')+'</p><div class="button-row"><a class="btn btn-primary" href="contact.html">Contact for Your Design</a><a class="btn btn-secondary" href="portfolio.html">Featured Case Studies</a></div><div class="about-body">'+rich(a.body||'')+'</div></section><section class="section section-tint"><div class="container"><div class="section-heading"><h2>Services</h2></div>'+serviceCards()+'</div></section><section class="container section"><div class="section-heading"><h2>Design Workflow</h2></div><div class="workflow">'+(data.workflow||[]).map((x,i)=>'<article><b>0'+(i+1)+'</b><h3>'+esc(x.title)+'</h3><p>'+esc(x.description)+'</p></article>').join('')+'</div></section><section class="section section-tint"><div class="container"><div class="section-heading"><h2>Toolkit</h2></div><div class="tool-grid">'+(data.tools||[]).map(x=>'<div class="tool surface">'+(x.logo?'<img src="'+esc(x.logo)+'" alt="">':'<span>✦</span>')+'<b>'+esc(x.name)+'</b></div>').join('')+'</div></div></section>'}
+function portfolio(){return '<section class="container page-hero"><p class="eyebrow">A SELECTION OF MY WORK</p><h1>Portfolio</h1><p class="lead">Selected projects, crafted with purpose.</p>'+stats()+projectCards(data.projects||[])+'</section>'}
+function services(){return '<section class="container page-hero"><p class="eyebrow">HOW I CAN HELP</p><h1>Services</h1><p class="lead">Creative solutions built around your goals.</p>'+serviceCards()+'</section><section class="section section-tint"><div class="container"><div class="section-heading"><h2>Frequently Asked Questions</h2></div>'+faq()+'</div></section>'}
+function blogs(){const list=(data.blogs||[]).filter(x=>x.published!==false).slice().reverse();const cats=[...new Set(list.map(x=>x.category||'Insights'))];return '<section class="container page-hero"><p class="eyebrow">NOTES FROM THE STUDIO</p><h1>Blogs</h1><p class="lead">'+esc(data.blogIntro?.description||'Latest thoughts, ideas and lessons.')+'</p><div class="category-row"><button class="chip active" data-category="all">All ('+list.length+')</button>'+cats.map(c=>'<button class="chip" data-category="'+esc(c)+'">'+esc(c)+' ('+list.filter(x=>(x.category||'Insights')===c).length+')</button>').join('')+'</div><div class="blog-grid" id="allBlogCards">'+list.map((b,i)=>blogCard(b,i===0)).join('')+'</div></section>'}
+function blogDetail(){const id=new URLSearchParams(location.search).get('id');const b=(data.blogs||[]).find(x=>String(x.id)===String(id));if(!b)return '<section class="container section"><h1>Blog not found</h1><a href="blogs.html">Back to Blogs</a></section>';const words=(b.content||'').trim().split(/\s+/).length;const mins=Math.max(1,Math.ceil(words/200));return '<article class="container article"><a class="text-link" href="blogs.html">← All Blogs</a><p class="eyebrow">'+esc(b.category||'Insights')+' · '+(esc(b.readTime)||mins+' min read')+'</p><h1>'+esc(b.title)+'</h1><p class="lead">'+esc(b.excerpt||'')+'</p><img class="article-cover" src="'+esc(b.image||'images/profile.png')+'" alt=""><div class="article-tools"><span>'+mins+' min read</span><button id="shareBlog">Share ↗</button><button id="copyBlog">Copy Link</button></div><div class="article-content">'+rich(b.content||'')+'</div></article><div class="reading-progress" id="readingProgress"><button id="scrollDirection" aria-label="Scroll">↓</button></div>'}
+function contact(){const c=data.contact||{};return '<section class="container page-hero"><p class="eyebrow">LET’S TALK</p><h1>'+esc(c.title||'Let’s Build Something Great')+'</h1><p class="lead">'+esc(c.description||'Have a project in mind? Drop a message. I usually reply within a few hours.')+'</p><div class="contact-grid"><div class="surface contact-details"><h2>Contact Information</h2><p><b>Phone</b><br>'+esc(c.phone||'')+'</p><p><b>Email</b><br>'+esc(c.email||'')+'</p><p><b>Location</b><br>'+esc(c.location||'')+'</p><p><b>Website</b><br>'+esc(c.website||'')+'</p>'+(c.mapUrl?'<iframe title="Map location" src="'+esc(safeUrl(c.mapUrl))+'" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>':'')+'</div><form class="surface contact-form" id="contactForm"><h2>Send a Message</h2><label>Your Name<input name="name" required minlength="2" maxlength="120"></label><label>Your Email<input name="email" type="email" required maxlength="254"></label><label>Subject<input name="subject" maxlength="200"></label><label>Your Message<textarea name="message" required minlength="5" maxlength="10000" rows="6"></textarea></label><button class="btn btn-primary" type="submit">Send Message ↗</button><p id="formStatus" role="status"></p></form></div></section>'}
+function init(){const root=$('app');if(!root)return;const pages={'index.html':home,'about.html':about,'portfolio.html':portfolio,'services.html':services,'blogs.html':blogs,'blog-detail.html':blogDetail,'contact.html':contact};root.innerHTML=(pages[path]||home)()+footer();$('menuToggle')?.addEventListener('click',()=>$('mainNav').classList.toggle('open'));
+$('shareBlog')?.addEventListener('click',async()=>{const url=location.href;if(navigator.share)await navigator.share({url,title:document.title});else await navigator.clipboard.writeText(url)});
+$('copyBlog')?.addEventListener('click',async()=>{await navigator.clipboard.writeText(location.href);$('copyBlog').textContent='Copied ✓'});
+$('scrollDirection')?.addEventListener('click',()=>window.scrollBy({top:window.scrollY>100? -window.innerHeight:window.innerHeight,behavior:'smooth'}));
+if(path==='blogs.html')document.querySelectorAll('[data-category]').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('[data-category]').forEach(x=>x.classList.remove('active'));btn.classList.add('active');document.querySelectorAll('#allBlogCards .blog-card').forEach(card=>{const category=card.querySelector('small')?.textContent.split(' · ')[0];card.hidden=btn.dataset.category!=='all'&&category!==btn.dataset.category})}));
+$('contactForm')?.addEventListener('submit',async e=>{e.preventDefault();const form=e.currentTarget,status=$('formStatus'),button=form.querySelector('button');button.disabled=true;status.textContent='Sending…';const payload=Object.fromEntries(new FormData(form));const {error}=await db.from('contact_messages').insert(payload);button.disabled=false;if(error){status.textContent='Message পাঠানো যায়নি। পরে আবার চেষ্টা করুন।';console.error(error)}else{status.textContent='ধন্যবাদ! আপনার বার্তা পাঠানো হয়েছে।';form.reset()}});
+if($('readingProgress')){const update=()=>{const max=document.documentElement.scrollHeight-innerHeight,p=max>0?scrollY/max*100:0;$('readingProgress').style.setProperty('--progress',p+'%');$('scrollDirection').textContent=scrollY>120?'↑':'↓'};addEventListener('scroll',update,{passive:true});update()}
+}
+async function start(){try{const {data:row,error}=await db.from('portfolio_content').select('content').eq('id',1).single();if(error)throw error;data=row.content||{};}catch(e){console.warn('CMS content unavailable; using safe defaults',e);data={brand:{name:'Rubayed Hasan',logo:'images/profile.png',profileImage:'images/profile.png'},hero:{title:'Hi, I am Rubayed Hasan.',description:'Graphic Designer & Creative Visual Storyteller'},stats:[{value:'100+',label:'Projects'},{value:'50+',label:'Clients'},{value:'3+',label:'Years Exp.'}],socialTop:[],socialFooter:[],about:{title:'About Me',teaser:'Graphic Designer based in Khulna.',body:''},services:[],projects:[],blogs:[],faqs:[],contact:{},footer:{}}}init()}
+document.addEventListener('DOMContentLoaded',start);
 })();
