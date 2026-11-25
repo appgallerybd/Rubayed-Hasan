@@ -3,89 +3,52 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Blog Post</title>
+  <title>Blog Post - Rubayed Hasan</title>
   <link rel="stylesheet" href="css/style.css">
-  <style>
-    .progress-circle {
-      position: fixed; bottom: 30px; right: 30px;
-      width: 50px; height: 50px; border-radius: 50%;
-      background: conic-gradient(#d4af37 0%, #333 0%);
-      display: flex; align-items: center; justify-content: center;
-      cursor: pointer; z-index: 99;
-    }
-    .progress-inner {
-      width: 42px; height: 42px; border-radius: 50%;
-      background: var(--bg); display: flex; align-items: center; justify-content: center;
-      color: #d4af37; font-size: 20px;
-    }
-    .up-btn { display: none; } /* Initially hidden */
-  </style>
 </head>
 <body>
-  <div class="container" style="max-width: 800px; padding: 100px 20px;">
-    <h1 id="postTitle" style="font-size: 36px; margin-bottom: 10px;">Loading...</h1>
-    <p id="postMeta" style="color: var(--muted); margin-bottom: 30px;"></p>
-    <img id="postImage" style="width: 100%; border-radius: 16px; margin-bottom: 30px;">
-    <div id="postContent" style="line-height: 1.8; font-size: 18px;"></div>
-  </div>
+  <!-- Header injected by JS -->
 
-  <!-- Scroll to Top Button -->
-  <div class="progress-circle" id="scrollUpBtn" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+  <main class="container section" style="max-width: 800px; margin: 0 auto;">
+    <h1 id="postTitle" class="section-title">Loading...</h1>
+    <p id="postMeta" style="color:var(--accent); font-size: 14px; margin-bottom:20px;"></p>
+    <img id="postImage" style="width:100%; border-radius:16px; margin-bottom:30px;">
+    <div id="postContent" class="blog-content"></div>
+  </main>
+
+  <!-- Scroll Buttons -->
+  <div class="progress-circle" id="progressBar">
+    <div class="progress-inner" onclick="window.scrollBy({top: 500, behavior: 'smooth'})">↓</div>
+  </div>
+  <div class="progress-circle up-btn" id="scrollUpBtn" style="bottom: 90px;" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
     <div class="progress-inner">↑</div>
   </div>
 
-  <!-- Reading Progress Button -->
-  <div class="progress-circle" id="progressBtn">
-    <div class="progress-inner" id="progressInner">↓</div>
-  </div>
-
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/main.js"></script>
   <script>
     const supabase = window.supabase.createClient('https://qynaqzukiwtnxjsciazk.supabase.co', 'sb_publishable_dTX5xkv4svMJA9-M5QMHKA_YctCIi19');
-
-    function formatText(text, color) {
-      if (!text) return '';
-      return text
-        .replace(/B([^B]+)B/g, '<strong>$1</strong>')
-        .replace(/I([^I]+)I/g, '<em>$1</em>')
-        .replace(/U([^U]+)U/g, '<u>$1</u>')
-        .replace(/H([^H]+)H/g, `<mark style="background-color:${color || '#d4af37'}; color:#000; padding: 2px 4px; border-radius: 3px;">$1</mark>`);
-    }
-
+    
     async function loadPost() {
       const urlParams = new URLSearchParams(window.location.search);
       const id = urlParams.get('id');
       if(!id) return;
 
-      // Fetch Settings for Highlight Color
+      // Get Highlight Color
       const { data: sets } = await supabase.from('site_settings').select('value').eq('key', 'highlight_color').single();
       const hlColor = sets ? sets.value : '#d4af37';
+      document.documentElement.style.setProperty('--highlight', hlColor);
 
       const { data } = await supabase.from('blog_posts').select('*').eq('id', id).single();
       if(data) {
         document.getElementById('postTitle').textContent = data.title_en;
-        document.getElementById('postMeta').textContent = `Category: ${data.category_id || 'General'} • ${data.read_time}`;
+        document.getElementById('postMeta').textContent = `Category: Design • ${data.read_time}`;
         document.getElementById('postImage').src = data.image_url;
-        document.getElementById('postContent').innerHTML = formatText(data.content_en, hlColor);
+        // formatText function is global in main.js
+        document.getElementById('postContent').innerHTML = window.formatText(data.content_en, hlColor);
       }
     }
-
-    // Reading Progress Logic
-    window.addEventListener('scroll', () => {
-      const scrollTop = window.scrollY;
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = (scrollTop / docHeight) * 100;
-      
-      const progressBtn = document.getElementById('progressBtn');
-      if(progressBtn) {
-        progressBtn.style.background = `conic-gradient(#d4af37 ${progress}%, #333 ${progress}%)`;
-      }
-
-      const upBtn = document.getElementById('scrollUpBtn');
-      if (scrollTop > 300) { upBtn.style.display = 'flex'; } else { upBtn.style.display = 'none'; }
-    });
-
     loadPost();
   </script>
 </body>
-  </html>
+</html>
