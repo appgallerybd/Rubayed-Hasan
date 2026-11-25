@@ -2,6 +2,12 @@
 
 Premium static portfolio built with HTML, CSS, vanilla JavaScript and Supabase. The public pages are rendered from one CMS document; the Admin Panel manages all editable content without changing website source files.
 
+## Demo content and visual theme
+
+The public site now has a built-in illustrative demo content set, so the pages remain populated even if the Supabase table is empty or temporarily unavailable. It includes sample services, ten project cards using the repository's existing `images/project-1.png` through `project-10.png` assets, three sample articles, FAQs, workflow steps, toolkit items and social icon placeholders. The sample project/article names and descriptions are examples, not claims about completed client work. Replace them with verified portfolio information in Admin before treating them as real case studies. Social URLs, phone number and email are intentionally left blank until the owner adds the correct details.
+
+Visual system: white and sky-blue palette, Hind Siliguri typography, Font Awesome social icons, responsive cards and buttons. The portrait border is static; no rotating light or glow animation is used.
+
 ## Pages
 - `index.html` — Home, hero, profile, statistics, social links, services, featured projects, latest blogs and contact CTA.
 - `about.html` — Profile, biography, services, workflow and toolkit.
@@ -25,7 +31,7 @@ Premium static portfolio built with HTML, CSS, vanilla JavaScript and Supabase. 
 ## Using the CMS
 
 1. Visit `admin.html` and sign in with the Admin account.
-2. Choose a section from the left navigation.
+2. Choose a section from the left navigation. Use **Site Text & Labels** to edit the navigation names, section headings and button copy.
 3. Edit the JSON content in that section. Text values are ordinary strings; repeatable sections (projects, services, blogs, social links, workflow, tools and FAQs) are JSON arrays. Add, edit, reorder or remove array items as needed.
 4. Click **Save Changes**. Public pages read the saved CMS document from Supabase.
 5. For images, use **Media Library · Upload Image**. The uploader validates image MIME type and a 5 MB size limit, uploads to Supabase Storage, and copies the public URL. Paste that URL into the appropriate `image`, `profileImage`, `logo` or `mapUrl` field.
