@@ -2,8 +2,67 @@
   const SUPABASE_URL = 'https://qynaqzukiwtnxjsciazk.supabase.co';
   const SUPABASE_ANON_KEY = 'sb_publishable_dTX5xkv4svMJA9-M5QMHKA_YctCIi19';
   const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  const path = window.location.pathname;
 
-  // 1. Custom Text Formatter (B, I, U, H)
+  // ==========================================
+  // 1. INJECT HEADER & FOOTER DYNAMICALLY
+  // ==========================================
+  const headerHTML = `
+    <header class="site-header">
+      <div class="container header-inner">
+        <a href="index.html" class="logo"><img src="images/profile.png" class="logo-img">Rubayed Hasan</a>
+        <nav class="nav-desktop">
+          <a href="index.html" class="${path.includes('index') ? 'active' : ''}">Home</a>
+          <a href="about.html" class="${path.includes('about') ? 'active' : ''}">About</a>
+          <a href="portfolio.html" class="${path.includes('portfolio') ? 'active' : ''}">Portfolio</a>
+          <a href="services.html" class="${path.includes('services') ? 'active' : ''}">Services</a>
+          <a href="blogs.html" class="${path.includes('blogs') || path.includes('blog-detail') ? 'active' : ''}">Blogs</a>
+          <a href="contact.html" class="${path.includes('contact') ? 'active' : ''}">Contact</a>
+        </nav>
+        <div class="header-actions">
+          <button class="lang-btn" onclick="document.documentElement.lang = document.documentElement.lang === 'en' ? 'bn' : 'en';">বাংলা / EN</button>
+          <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+        </div>
+      </div>
+      <div class="mobile-nav" id="mobileNav">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="portfolio.html">Portfolio</a>
+        <a href="services.html">Services</a>
+        <a href="blogs.html">Blogs</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </header>
+  `;
+
+  const footerHTML = `
+    <footer>
+      <div class="container footer-content">
+        <a href="index.html" class="logo"><img src="images/profile.png" class="logo-img">Rubayed Hasan</a>
+        <p id="footerAbout" style="color:var(--muted); max-width:400px;">Graphic Designer from Khulna, Bangladesh.</p>
+        <div class="footer-links">
+          <a href="about.html">About</a><a href="portfolio.html">Portfolio</a><a href="services.html">Services</a><a href="blogs.html">Blogs</a><a href="contact.html">Contact</a>
+        </div>
+        <div class="socials-wrapper" id="footerSocials"></div>
+      </div>
+      <div class="container copyright">
+        <p>© 2026 <a href="index.html" style="color:var(--accent);">Rubayed Hasan</a>. All Rights Reserved.</p>
+        <a href="#" class="palestine-btn">🇵🇸 #StandWithPalestine</a>
+      </div>
+    </footer>
+  `;
+
+  if (!path.includes('admin.html')) {
+    document.body.insertAdjacentHTML('afterbegin', headerHTML);
+    document.body.insertAdjacentHTML('beforeend', footerHTML);
+    document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+      document.getElementById('mobileNav').classList.toggle('active');
+    });
+  }
+
+  // ==========================================
+  // 2. TEXT FORMATTER (B, I, U, H)
+  // ==========================================
   window.formatText = function(text, color) {
     if (!text) return '';
     return text
@@ -13,54 +72,46 @@
       .replace(/H([^H]+)H/g, `<mark style="background-color:${color || '#d4af37'}; color:#000; padding:2px 6px; border-radius:4px;">$1</mark>`);
   };
 
-  // 2. FAQ Accordion
-  document.addEventListener('click', (e) => {
-    if (e.target.closest('.faq-question')) {
-      const item = e.target.closest('.faq-item');
-      item.classList.toggle('active');
-    }
-  });
-
-  // 3. Mobile Menu
-  const menuBtn = document.getElementById('mobileMenuBtn');
-  if (menuBtn) menuBtn.addEventListener('click', () => document.getElementById('mobileNav').classList.toggle('active'));
-
-  // 4. Load Global Data (Settings, Socials, Footer)
-  async function loadGlobalData() {
-    const { data: settings } = await supabase.from('site_settings').select('*');
-    if(settings) {
-      const dict = {}; settings.forEach(s => dict[s.key] = s.value);
-      document.querySelectorAll('.dynamic-text').forEach(el => {
-        const key = el.getAttribute('data-key');
-        const lang = el.getAttribute('data-lang') || 'en';
-        if(dict[`${key}_${lang}`]) el.innerHTML = dict[`${key}_${lang}`];
-      });
-
-      // Set Footer & Contact details
+  // ==========================================
+  // 3. LOAD GLOBAL DATA (Header/Footer/Contact)
+  // ==========================================
+  async function loadGlobal() {
+    const { data: sets } = await supabase.from('site_settings').select('*');
+    if(sets) {
+      const dict = {}; sets.forEach(s => dict[s.key] = s.value);
       if(document.getElementById('footerAbout')) document.getElementById('footerAbout').textContent = dict.footer_about_en;
-      if(document.getElementById('contactPhone')) document.getElementById('contactPhone').textContent = dict.contact_phone;
-      if(document.getElementById('contactEmail')) document.getElementById('contactEmail').textContent = dict.contact_email;
-      if(document.getElementById('contactLoc')) document.getElementById('contactLoc').textContent = dict.contact_loc;
+      
+      if(document.getElementById('heroTitle')) {
+        document.getElementById('heroTitle').innerHTML = dict.hero_title_en;
+        document.getElementById('heroTagline').textContent = dict.hero_tagline_en;
+        document.getElementById('aboutTeaser').textContent = dict.about_en;
+        document.getElementById('blogSubtitle').textContent = dict.blog_desc_en;
+      }
+      if(document.getElementById('cPhone')) document.getElementById('cPhone').textContent = dict.contact_phone;
+      if(document.getElementById('cEmail')) document.getElementById('cEmail').textContent = dict.contact_email;
+      if(document.getElementById('cLoc')) document.getElementById('cLoc').textContent = dict.contact_loc;
+      if(document.getElementById('cWeb')) document.getElementById('cWeb').textContent = dict.contact_web;
+      
+      if(dict.highlight_color) document.documentElement.style.setProperty('--highlight', dict.highlight_color);
     }
 
-    // Load Socials
     const { data: socs } = await supabase.from('social_links').select('*').eq('is_active', true);
     if(socs) {
       const renderSoc = (section) => socs.filter(s => s.section === section || s.section === 'both').map(s => 
-        `<a href="${s.url}" target="_blank" class="social-icon" title="${s.platform}">${s.icon_svg}</a>`
+        `<a href="${s.url}" target="_blank" class="social-icon">${s.icon_svg}</a>`
       ).join('');
       if(document.getElementById('heroSocials')) document.getElementById('heroSocials').innerHTML = renderSoc('hero');
       if(document.getElementById('footerSocials')) document.getElementById('footerSocials').innerHTML = renderSoc('footer');
     }
   }
 
-  // 5. Load Page-Specific Data
+  // ==========================================
+  // 4. PAGE SPECIFIC LOADERS
+  // ==========================================
+  let allProjects = [];
   async function loadPageData() {
-    const path = window.location.pathname;
-
-    // Homepage Data
-    if(path.includes('index.html') || path === '/') {
-      // Stats
+    // --- HOME PAGE ---
+    if(path.includes('index') || path === '/') {
       const { data: stats } = await supabase.from('stats').select('*');
       if(stats && document.getElementById('statsGrid')) {
         const icons = [
@@ -77,23 +128,14 @@
         `).join('');
       }
 
-      // Featured Projects
-      const { data: projs } = await supabase.from('projects').select('*').eq('is_featured', true).limit(6);
-      if(projs && document.getElementById('featuredProjects')) {
-        document.getElementById('featuredProjects').innerHTML = projs.map(p => `
-          <div class="card">
-            <img src="${p.image_url || 'images/placeholder.png'}" alt="${p.title}">
-            <h3>${p.title}</h3>
-            <p>${p.category_en}</p>
-          </div>
-        `).join('');
-      }
+      const { data: projs } = await supabase.from('projects').select('*').eq('is_featured', true);
+      allProjects = projs || [];
+      renderFeaturedProjects(6);
 
-      // Featured Blogs
       const { data: blogs } = await supabase.from('blog_posts').select('*').order('created_at', {ascending:false}).limit(3);
       if(blogs && document.getElementById('latestBlogs')) {
         document.getElementById('latestBlogs').innerHTML = blogs.map((b, i) => `
-          <a href="blog-detail.html?id=${b.id}" class="card" style="${i===0 ? 'grid-column: 1 / -1; display:flex; gap:20px; align-items:center;' : ''}">
+          <a href="blog-detail.html?id=${b.id}" class="card" style="${i===0 ? 'grid-column: 1 / -1; flex-direction:row; gap:20px; align-items:center;' : ''}">
             <img src="${b.image_url}" style="${i===0 ? 'width:50%; height:300px; margin-bottom:0;' : ''}">
             <div>
                <h3>${b.title_en}</h3>
@@ -104,42 +146,139 @@
       }
     }
 
-    // Portfolio Page
+    // --- PORTFOLIO PAGE ---
     if(path.includes('portfolio.html') && document.getElementById('portfolioGrid')) {
       const { data: projs } = await supabase.from('projects').select('*');
       document.getElementById('portfolioGrid').innerHTML = projs.map(p => `
-        <div class="card">
+        <div class="portfolio-card" onclick="this.classList.toggle('active')">
           <img src="${p.image_url}" alt="${p.title}">
-          <h3>${p.title}</h3>
-          <p style="color:var(--accent); font-size:12px; margin-bottom:10px;">${p.category_en}</p>
-          <p>${p.desc_en}</p>
+          <div class="portfolio-info">
+            <h3>${p.title}</h3>
+            <p style="color:var(--accent); font-size:12px;">${p.category_en}</p>
+            <div class="portfolio-desc">${p.desc_en}</div>
+          </div>
         </div>
       `).join('');
     }
 
-    // Services Page
+    // --- SERVICES PAGE ---
     if(path.includes('services.html') && document.getElementById('servicesList')) {
       const { data: servs } = await supabase.from('services').select('*');
       document.getElementById('servicesList').innerHTML = servs.map(s => `
         <div class="card text-center">
            <div style="width:60px; height:60px; margin:0 auto 15px; background:rgba(212,175,55,0.1); border-radius:50%; display:flex; justify-content:center; align-items:center; color:var(--accent);">${s.icon_svg || '★'}</div>
-           <h3>${s.title_en}</h3>
-           <p>${s.desc_en}</p>
+           <h3>${s.title_en}</h3><p>${s.desc_en}</p>
         </div>
       `).join('');
 
       const { data: faqs } = await supabase.from('faqs').select('*');
       document.getElementById('faqList').innerHTML = faqs.map(f => `
         <div class="faq-item">
-          <div class="faq-question">${f.question_en} <span>+</span></div>
+          <div class="faq-question" onclick="this.parentElement.classList.toggle('active')">${f.question_en} <span>+</span></div>
           <div class="faq-answer">${f.answer_en}</div>
         </div>
       `).join('');
     }
+
+    // --- BLOGS PAGE ---
+    if(path.includes('blogs.html') && document.getElementById('allBlogsList')) {
+      const { data: blogs } = await supabase.from('blog_posts').select('*').order('created_at', {ascending:false});
+      document.getElementById('allBlogsList').innerHTML = blogs.map(b => `
+        <a href="blog-detail.html?id=${b.id}" class="card">
+          <img src="${b.image_url}">
+          <h3>${b.title_en}</h3>
+          <p style="margin-top:10px; font-size:12px; color:var(--accent);">${b.read_time}</p>
+        </a>
+      `).join('');
+    }
   }
 
+  window.renderFeaturedProjects = function(limit) {
+    const grid = document.getElementById('featuredProjects');
+    if(!grid) return;
+    const toRender = allProjects.slice(0, limit);
+    grid.innerHTML = toRender.map(p => `
+      <div class="card">
+        <img src="${p.image_url}" alt="${p.title}">
+        <h3>${p.title}</h3><p>${p.category_en}</p>
+      </div>
+    `).join('');
+    
+    const loadMoreBtn = document.getElementById('loadMoreBtn');
+    if(loadMoreBtn) {
+      if(limit >= allProjects.length) loadMoreBtn.style.display = 'none';
+      else loadMoreBtn.style.display = 'inline-flex';
+    }
+  };
+
+  // ==========================================
+  // 5. CHATBOT LOGIC
+  // ==========================================
+  async function initChatbot() {
+    const widget = document.getElementById('chatWidget');
+    const btn = document.getElementById('floatingChatBtn');
+    const body = document.getElementById('chatBody');
+    const input = document.getElementById('chatInput');
+    const sendBtn = document.getElementById('chatSendBtn');
+    if(!widget || !btn) return;
+
+    btn.addEventListener('click', () => { widget.classList.toggle('active'); });
+
+    const { data: qas } = await supabase.from('chatbot_qa').select('*');
+    
+    // Initial message
+    body.innerHTML = `<div class="chat-msg bot">Hi, I am Rubayed's Virtual Assistant. How can I help you?</div>`;
+    
+    if(qas && qas.length > 0) {
+      const quickReplies = document.createElement('div');
+      quickReplies.style.cssText = 'display:flex; flex-direction:column; gap:5px; margin-top:10px;';
+      qas.forEach(qa => {
+        const qBtn = document.createElement('button');
+        qBtn.textContent = qa.question_en;
+        qBtn.style.cssText = 'background:var(--surface-2); border:1px solid var(--border); color:#fff; padding:8px; border-radius:5px; text-align:left; font-size:12px; cursor:pointer;';
+        qBtn.onclick = () => {
+          body.innerHTML += `<div class="chat-msg user">${qa.question_en}</div>`;
+          setTimeout(() => {
+            body.innerHTML += `<div class="chat-msg bot">${qa.answer_en}</div>`;
+            body.scrollTop = body.scrollHeight;
+          }, 500);
+          body.scrollTop = body.scrollHeight;
+        };
+        quickReplies.appendChild(qBtn);
+      });
+      body.appendChild(quickReplies);
+    }
+
+    sendBtn.addEventListener('click', () => {
+      if(!input.value.trim()) return;
+      body.innerHTML += `<div class="chat-msg user">${input.value}</div>`;
+      input.value = '';
+      setTimeout(() => {
+        body.innerHTML += `<div class="chat-msg bot">I am a simple assistant. Please use the quick reply buttons above or contact directly.</div>`;
+        body.scrollTop = body.scrollHeight;
+      }, 500);
+    });
+  }
+
+  // ==========================================
+  // 6. INIT
+  // ==========================================
   document.addEventListener('DOMContentLoaded', () => {
-    loadGlobalData();
+    loadGlobal();
     loadPageData();
+    initChatbot();
+
+    // Blog Scroll Progress
+    if (document.getElementById('progressBar')) {
+      window.addEventListener('scroll', () => {
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = (scrollTop / docHeight) * 100;
+        document.getElementById('progressBar').style.background = `conic-gradient(var(--accent) ${progress}%, #333 ${progress}%)`;
+        
+        const upBtn = document.getElementById('scrollUpBtn');
+        if (scrollTop > 300) upBtn.style.display = 'flex'; else upBtn.style.display = 'none';
+      });
+    }
   });
 })();
