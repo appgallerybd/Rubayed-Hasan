@@ -5,6 +5,52 @@ const KEY='sb_publishable_dTX5xkv4svMJA9-M5QMHKA_YctCIi19';
 const db=window.supabase.createClient(URL,KEY);
 const path=location.pathname.split('/').pop()||'index.html';
 let data={};
+const demoContent={
+brand:{name:'Rubayed Hasan',logo:'images/profile.png',profileImage:'images/profile.png',copyrightYear:'2026'},
+hero:{title:'Hi, I am Rubayed Hasan.',description:'I am a graphic designer and visual storyteller. I create meaningful brand identities, digital experiences and visuals that help businesses stand out.',shortDescription:'Graphic Designer · Brand Identity Specialist',hireLabel:'Hire Me',worksLabel:'View Works'},
+stats:[{value:'100+',label:'Projects'},{value:'50+',label:'Happy Clients'},{value:'3+',label:'Years Experience'}],socialTop:[],socialFooter:[],
+about:{title:'Designing ideas into meaningful visuals',teaser:'I help people and businesses turn their ideas into clear, memorable and purposeful visual identities.',body:'I am Rubayed Hasan, a graphic designer focused on brand identity, digital design and visual communication. My approach combines thoughtful research, creative direction and careful execution.\n\nFrom a simple social media creative to a complete brand identity system, I believe every design should have a purpose, a clear message and a consistent visual language. I work closely with clients to understand their goals and translate them into visuals that connect with the right audience.'},
+services:[
+{title:'Brand Identity Design',description:'Logo design, colour systems, typography and complete brand guidelines for a consistent identity.',icon:'✳',enabled:true},
+{title:'Social Media Design',description:'Scroll-stopping social media posts, campaign creatives and branded templates.',icon:'▧',enabled:true},
+{title:'Print & Marketing Design',description:'Professional flyers, brochures, business cards, banners and print-ready artwork.',icon:'▤',enabled:true},
+{title:'UI & Web Graphics',description:'Clean website visuals, landing page graphics and interface design assets.',icon:'◫',enabled:true},
+{title:'Packaging Design',description:'Thoughtful packaging and product label concepts that stand out on the shelf.',icon:'◇',enabled:true},
+{title:'Presentation Design',description:'Polished pitch decks, reports and presentation layouts with a clear visual story.',icon:'▥',enabled:true}],
+workflow:[
+{title:'Discovery',description:'We discuss your goals, audience, references and project requirements.'},
+{title:'Creative Direction',description:'I define the visual approach, mood, colour and design direction.'},
+{title:'Design & Refine',description:'I develop concepts, collect feedback and refine the selected direction.'},
+{title:'Final Delivery',description:'You receive polished, organised files ready for real-world use.'}],
+tools:[{name:'Adobe Photoshop',logo:''},{name:'Adobe Illustrator',logo:''},{name:'CorelDRAW',logo:''},{name:'Canva',logo:''},{name:'Figma',logo:''}],
+projects:[
+{id:'demo-01',title:'Noor — Brand Identity Concept',category:'Brand Identity',description:'A calm, contemporary identity concept built around a refined wordmark, a confident colour palette and a flexible visual system.',image:'images/project-1.png',featured:true,enabled:true},
+{id:'demo-02',title:'Luma — Social Campaign',category:'Social Media Design',description:'A vibrant social media campaign concept with a consistent layout system and strong visual hierarchy.',image:'images/project-2.png',featured:true,enabled:true},
+{id:'demo-03',title:'Aurelia — Product Packaging',category:'Packaging Design',description:'A premium packaging direction exploring typography, colour balance and shelf presence.',image:'images/project-3.png',featured:true,enabled:true},
+{id:'demo-04',title:'Nexa — Digital Experience',category:'Digital Design',description:'A clean digital visual direction for a modern service brand, designed for clarity and ease of use.',image:'images/project-4.png',featured:true,enabled:true},
+{id:'demo-05',title:'Bloom — Promotional Artwork',category:'Campaign Design',description:'A bright promotional design system created to bring campaign messages to life across formats.',image:'images/project-5.png',featured:true,enabled:true},
+{id:'demo-06',title:'Monogram — Logo Exploration',category:'Logo Design',description:'A minimal monogram concept exploring geometry, balance and recognisable brand forms.',image:'images/project-6.png',featured:true,enabled:true},
+{id:'demo-07',title:'Studio Grid — Editorial Layout',category:'Print Design',description:'An editorial layout concept focused on typography, whitespace and a clear reading flow.',image:'images/project-7.png',featured:false,enabled:true},
+{id:'demo-08',title:'Serein — Brand Collateral',category:'Brand Identity',description:'A coordinated stationery and collateral concept for a refined boutique brand.',image:'images/project-8.png',featured:false,enabled:true},
+{id:'demo-09',title:'Pulse — Event Campaign',category:'Campaign Design',description:'A flexible event campaign direction with bold type and adaptable social assets.',image:'images/project-9.png',featured:false,enabled:true},
+{id:'demo-10',title:'Forma — Visual System',category:'Digital Design',description:'A modular visual system concept for consistent communication across digital touchpoints.',image:'images/project-10.png',featured:false,enabled:true}],
+blogs:[
+{id:'demo-blog-01',title:'What Makes a Brand Identity Memorable?',category:'Branding',excerpt:'A memorable brand is more than a logo. Discover the role of consistency, clarity and a recognisable visual language.',content:'A memorable brand identity starts with a clear idea. [B]Consistency is what makes that idea recognisable.[/B]\n\nFrom typography and colour to imagery and tone, every element should work together. A thoughtful system helps people recognise a brand wherever they meet it.\n\n[H]Great design makes a message easier to understand and remember.[/H]',image:'images/project-1.png',readTime:'4 min read',published:true},
+{id:'demo-blog-02',title:'My Simple Design Workflow, From Brief to Delivery',category:'Design Process',excerpt:'A practical look at how research, creative direction and feedback shape a smoother design process.',content:'Good design rarely happens by accident. I begin by understanding the brief, the audience and the outcome the client wants.\n\nThen I explore visual directions, build the first concepts and refine the strongest route through feedback. [B]A clear process saves time and improves the final result.[/B]',image:'images/project-4.png',readTime:'3 min read',published:true},
+{id:'demo-blog-03',title:'Choosing Colours That Work for Your Brand',category:'Branding',excerpt:'Learn how colour can support brand personality, improve recognition and create a consistent experience.',content:'Colour is one of the first things people notice. The right palette should reflect the brand personality while remaining practical across print and digital use.\n\nStart with the feeling you want to communicate, then test contrast, accessibility and consistency before finalising the palette.',image:'images/project-3.png',readTime:'3 min read',published:true}],
+blogIntro:{title:'Latest Insights',description:'Practical ideas, creative tips and lessons from my design process, branding projects and everyday work.'},
+faqs:[
+{question:'How do I start a design project?',answer:'Send me a message through the contact form with a short description of your project, goals and timeline. I will get back to you to discuss the next steps.',enabled:true},
+{question:'How many revisions are included?',answer:'The revision scope depends on the selected service and will be agreed before the project begins.',enabled:true},
+{question:'Which file formats will I receive?',answer:'Final delivery formats are agreed for each project. Common formats include PNG, JPG, PDF, SVG and editable source files where included in the scope.',enabled:true},
+{question:'Do you work with clients remotely?',answer:'Yes. Project discussions, feedback and delivery can be handled online.',enabled:true}],
+contact:{title:'Let’s Build Something Great',description:'Have a project in mind? Drop a message. I usually reply within a few hours.',phone:'',email:'',location:'Bangladesh',website:'',mapUrl:'https://www.google.com/maps?q=Bangladesh&output=embed',formEnabled:true},
+footer:{about:'Thoughtful graphic design, meaningful brand identities and visual stories made with purpose.',palestine:true},
+chatbot:{welcome:'Hello! Thanks for visiting. What would you like to know?',questions:[{question:'What services do you offer?',answer:'I offer brand identity, social media design, print design, packaging and digital graphics.',enabled:true},{question:'How can I start a project?',answer:'Use the contact form and share a few details about your project. I will get back to you.',enabled:true},{question:'How can I contact you?',answer:'Please use the contact page to send your project details.',enabled:true}]},
+highlight:{textColor:'#12304a',background:'#c9edff'}
+};
+function applyDemo(stored){const out={...demoContent,...(stored||{})};['brand','hero','about','blogIntro','contact','footer','chatbot','highlight'].forEach(k=>out[k]={...(demoContent[k]||{}),...((stored||{})[k]||{})});['stats','services','workflow','tools','projects','blogs','faqs'].forEach(k=>{if(!Array.isArray(out[k])||out[k].length===0)out[k]=demoContent[k]});['socialTop','socialFooter'].forEach(k=>{if(!Array.isArray(out[k]))out[k]=[]});return out}
+
 const $=id=>document.getElementById(id);
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const safeUrl=v=>{try{const u=new URL(v,location.href);return ['http:','https:','mailto:','tel:'].includes(u.protocol)?u.href:'#'}catch{return '#'}};
@@ -39,6 +85,6 @@ if(path==='blogs.html')document.querySelectorAll('[data-category]').forEach(btn=
 $('contactForm')?.addEventListener('submit',async e=>{e.preventDefault();const form=e.currentTarget,status=$('formStatus'),button=form.querySelector('button');button.disabled=true;status.textContent='Sending…';const payload=Object.fromEntries(new FormData(form));const {error}=await db.from('contact_messages').insert(payload);button.disabled=false;if(error){status.textContent='Message পাঠানো যায়নি। পরে আবার চেষ্টা করুন।';console.error(error)}else{status.textContent='ধন্যবাদ! আপনার বার্তা পাঠানো হয়েছে।';form.reset()}});
 if($('readingProgress')){const update=()=>{const max=document.documentElement.scrollHeight-innerHeight,p=max>0?scrollY/max*100:0;$('readingProgress').style.setProperty('--progress',p+'%');$('scrollDirection').textContent=scrollY>120?'↑':'↓'};addEventListener('scroll',update,{passive:true});update()}
 }
-async function start(){try{const {data:row,error}=await db.from('portfolio_content').select('content').eq('id',1).single();if(error)throw error;data=row.content||{};}catch(e){console.warn('CMS content unavailable; using safe defaults',e);data={brand:{name:'Rubayed Hasan',logo:'images/profile.png',profileImage:'images/profile.png'},hero:{title:'Hi, I am Rubayed Hasan.',description:'Graphic Designer & Creative Visual Storyteller'},stats:[{value:'100+',label:'Projects'},{value:'50+',label:'Clients'},{value:'3+',label:'Years Exp.'}],socialTop:[],socialFooter:[],about:{title:'About Me',teaser:'Graphic Designer based in Khulna.',body:''},services:[],projects:[],blogs:[],faqs:[],contact:{},footer:{}}}init()}
+async function start(){try{const {data:row,error}=await db.from('portfolio_content').select('content').eq('id',1).single();if(error)throw error;data=applyDemo(row.content||{});}catch(e){console.warn('CMS content unavailable; using safe defaults',e);data=applyDemo({})}init()}
 document.addEventListener('DOMContentLoaded',start);
 })();
