@@ -85,3 +85,5 @@ FAQ:
 - Test each page on a phone and desktop.
 - Verify the correct Google Maps **embed URL** is used for `contact.mapUrl`.
 - Merge the CMS branch into `main` only after the Supabase migration and manual smoke tests are complete.
+
+<!-- deployment trigger: no visible website content changed -->
