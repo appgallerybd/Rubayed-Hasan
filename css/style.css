@@ -1265,3 +1265,43 @@ h1,h2,h3,h4,.eyebrow,.availability-pill,.hero-tagline,.btn,.social-link,.stats-p
   .hero-profile-first .stat-badge-copy strong{font-size:11px!important}
   .hero-profile-first .stat-badge-copy small{font-size:6.5px!important}
 }
+
+
+/* Clean portrait-only hero: no statistic pills over or around the photo */
+.hero-profile-first{padding-top:6px!important}
+.hero-profile-first .hero-visual{padding:0!important;margin:0 auto!important}
+.hero-profile-first .portrait-stats-wrap{
+  width:100%!important;max-width:100%!important;
+  padding:0!important;margin:0 auto!important;
+  display:flex!important;justify-content:center!important;
+}
+.hero-profile-first .portrait-frame{
+  display:block!important;
+  width:min(320px,78vw)!important;
+  max-width:320px!important;
+  aspect-ratio:1/1!important;
+  margin:0 auto!important;
+  padding:6px!important;
+  overflow:hidden!important;
+  position:relative!important;
+  z-index:1!important;
+}
+.hero-profile-first .portrait-frame img{
+  display:block!important;width:100%!important;height:100%!important;
+  object-fit:cover!important;object-position:center center!important;
+}
+.hero-profile-first .portrait-stats,
+.hero-profile-first .portrait-stat-badge,
+.hero-profile-first .stat-badge-icon,
+.hero-profile-first .stat-badge-copy{display:none!important}
+@media(max-width:700px){
+  .hero-profile-first{padding-top:4px!important}
+  .hero-profile-first .portrait-frame{
+    width:min(285px,76vw)!important;max-width:285px!important;
+  }
+}
+@media(max-width:360px){
+  .hero-profile-first .portrait-frame{
+    width:min(260px,74vw)!important;max-width:260px!important;
+  }
+}
