@@ -1,291 +1,50 @@
-/* Admin dashboard — Supabase Auth + database-backed authorization.
-   Admin access requires app_metadata.role === "admin" (set only by a trusted project admin). */
 (() => {
-  'use strict';
-
-  const SUPABASE_URL = 'https://qynaqzukiwtnxjsciazk.supabase.co';
-  const SUPABASE_KEY = 'sb_publishable_dTX5xkv4svMJA9-M5QMHKA_YctCIi19';
-  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
-    auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }
-  });
-
-  const $ = (id) => document.getElementById(id);
-  const escapeHTML = (value) => String(value ?? '').replace(/[&<>"']/g, ch => ({
-    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
-  })[ch]);
-
-  function showMessage(message, type = 'error') {
-    const el = $('adminNotice');
-    if (!el) return;
-    el.textContent = message;
-    el.dataset.type = type;
-    el.hidden = false;
-    el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  }
-  function clearMessage() {
-    const el = $('adminNotice');
-    if (el) { el.hidden = true; el.textContent = ''; }
-  }
-  function setBusy(button, busy, label = 'Please wait…') {
-    if (!button) return;
-    if (busy) {
-      button.dataset.originalText = button.textContent;
-      button.textContent = label;
-      button.disabled = true;
-      button.setAttribute('aria-busy', 'true');
-    } else {
-      button.textContent = button.dataset.originalText || button.textContent;
-      button.disabled = false;
-      button.removeAttribute('aria-busy');
-    }
-  }
-  function showLogin(message = '') {
-    $('loginScreen').style.display = 'flex';
-    $('adminPanel').style.display = 'none';
-    if (message) {
-      $('login-error').textContent = message;
-      $('login-error').style.display = 'block';
-    }
-  }
-  function showPanel() {
-    $('loginScreen').style.display = 'none';
-    $('adminPanel').style.display = 'flex';
-    $('login-error').style.display = 'none';
-  }
-  function isAdmin(user) {
-    const meta = user && user.app_metadata ? user.app_metadata : {};
-    return meta.role === 'admin' || meta.is_admin === true;
-  }
-
-  async function verifyAndOpen(session) {
-    if (!session || !session.user) { showLogin(); return; }
-    if (!isAdmin(session.user)) {
-      await supabase.auth.signOut();
-      showLogin('এই অ্যাকাউন্টে Admin অনুমতি নেই। প্রজেক্ট অ্যাডমিনের সঙ্গে যোগাযোগ করুন।');
-      return;
-    }
-    showPanel();
-    await loadAdminData();
-  }
-
-  $('loginBtn').addEventListener('click', async () => {
-    clearMessage();
-    const email = $('adminEmail').value.trim().toLowerCase();
-    const password = $('adminPass').value;
-    const button = $('loginBtn');
-    $('login-error').style.display = 'none';
-
-    if (!email || !password) {
-      $('login-error').textContent = 'ইমেইল ও পাসওয়ার্ড দুটোই দিন।';
-      $('login-error').style.display = 'block';
-      return;
-    }
-    setBusy(button, true, 'Signing in…');
-    try {
-      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-      if (error) throw error;
-      if (!data.session || !isAdmin(data.user)) {
-        await supabase.auth.signOut();
-        throw new Error('লগইন হয়েছে, কিন্তু এই অ্যাকাউন্টে Admin অনুমতি নেই।');
-      }
-      await verifyAndOpen(data.session);
-    } catch (error) {
-      console.error('Admin login failed:', error);
-      $('login-error').textContent = error.message || 'লগইন করা যায়নি। আবার চেষ্টা করুন।';
-      $('login-error').style.display = 'block';
-    } finally {
-      setBusy(button, false);
-    }
-  });
-
-  $('adminPass').addEventListener('keydown', (event) => {
-    if (event.key === 'Enter') $('loginBtn').click();
-  });
-  $('adminEmail').addEventListener('keydown', (event) => {
-    if (event.key === 'Enter') $('loginBtn').click();
-  });
-
-  $('logoutBtn').addEventListener('click', async () => {
-    const { error } = await supabase.auth.signOut();
-    if (error) showMessage(error.message);
-    else showLogin('আপনি সফলভাবে লগআউট করেছেন।');
-  });
-
-  // Auth state is rechecked on refresh, token refresh, and sign-out.
-  supabase.auth.onAuthStateChange((event, session) => {
-    // SIGNED_IN is handled by the login flow; avoid loading the dashboard twice.
-    // Re-check permissions after token refresh and always react to sign-out.
-    if (event === 'SIGNED_OUT') {
-      showLogin();
-    } else if (event === 'TOKEN_REFRESHED' && session) {
-      window.setTimeout(() => verifyAndOpen(session).catch(error => {
-        console.error('Refreshed session verification failed:', error);
-        showLogin('Admin অনুমতি যাচাই করা যায়নি। আবার লগইন করুন।');
-      }), 0);
-    }
-  });
-
-  window.switchTab = function (event, tabId) {
-    event.preventDefault();
-    document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
-    document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-    event.currentTarget.classList.add('active');
-    const tab = $(tabId);
-    if (tab) tab.classList.add('active');
-    if (window.innerWidth < 768) $('sidebar').classList.remove('active');
-    clearMessage();
-  };
-
-  async function loadAdminData() {
-    clearMessage();
-    const { data: sets, error } = await supabase.from('site_settings').select('*');
-    if (error) { showMessage('Settings লোড হয়নি: ' + error.message); return; }
-    (sets || []).forEach(setting => {
-      const field = $(setting.key);
-      if (field) field.value = setting.value ?? '';
-    });
-    await Promise.all([loadAdminProjects(), loadAdminBlogs(), loadAdminChatbot()]);
-  }
-
-  window.saveSettings = async function () {
-    const keys = ['hero_title_en', 'hero_tagline_en', 'about_en', 'blog_desc_en', 'footer_about_en', 'contact_phone', 'contact_email', 'contact_loc', 'highlight_color'];
-    const rows = keys.map(key => ({ key, value: $(key).value.trim() }));
-    try {
-      const { error } = await supabase.from('site_settings').upsert(rows, { onConflict: 'key' });
-      if (error) throw error;
-      showMessage('Settings সফলভাবে সংরক্ষণ হয়েছে।', 'success');
-    } catch (error) { showMessage('Settings সংরক্ষণ হয়নি: ' + error.message); }
-  };
-
-  async function uploadImage(file) {
-    if (!file) return '';
-    if (!['image/jpeg', 'image/png', 'image/webp', 'image/gif'].includes(file.type)) {
-      throw new Error('শুধু JPG, PNG, WEBP বা GIF ছবি আপলোড করা যাবে।');
-    }
-    if (file.size > 5 * 1024 * 1024) throw new Error('ছবির সাইজ সর্বোচ্চ 5 MB হতে পারবে।');
-    const ext = ({ 'image/jpeg': 'jpg', 'image/png': 'png', 'image/webp': 'webp', 'image/gif': 'gif' })[file.type];
-    const fileName = 'admin/' + crypto.randomUUID() + '.' + ext;
-    const { error } = await supabase.storage.from('site-assets').upload(fileName, file, {
-      cacheControl: '3600', upsert: false, contentType: file.type
-    });
-    if (error) throw error;
-    const { data } = supabase.storage.from('site-assets').getPublicUrl(fileName);
-    return data.publicUrl;
-  }
-
-  window.loadAdminProjects = async function () {
-    const { data, error } = await supabase.from('projects').select('*').order('id', { ascending: false });
-    if (error) { showMessage('Projects লোড হয়নি: ' + error.message); return; }
-    $('adminProjectsList').innerHTML = (data || []).map(project => `
-      <div class="list-item">
-        <div><b>${escapeHTML(project.title)}</b><br><small>${escapeHTML(project.category_en || '')}</small></div>
-        <button class="btn btn-danger" type="button" onclick="del('projects', '${escapeHTML(project.id)}')">Delete</button>
-      </div>`).join('') || '<p class="empty-state">এখনো কোনো Project যোগ করা হয়নি।</p>';
-  };
-
-  window.addProject = async function () {
-    const title = $('projTitle').value.trim();
-    if (!title) { showMessage('Project-এর Title লিখুন।'); return; }
-    const button = $('projForm').querySelector('button.btn-primary');
-    setBusy(button, true, 'Saving…');
-    try {
-      const image = await uploadImage($('projImg').files[0]);
-      const { error } = await supabase.from('projects').insert([{
-        title, category_en: $('projCat').value.trim(), category_bn: $('projCat').value.trim(),
-        desc_en: $('projDesc').value.trim(), desc_bn: $('projDesc').value.trim(),
-        image_url: image, is_featured: $('projFeatured').checked
-      }]);
-      if (error) throw error;
-      $('projForm').style.display = 'none';
-      $('projTitle').value = $('projCat').value = $('projDesc').value = '';
-      $('projImg').value = ''; $('projFeatured').checked = false;
-      await loadAdminProjects();
-      showMessage('Project যোগ হয়েছে।', 'success');
-    } catch (error) { showMessage('Project যোগ করা যায়নি: ' + error.message); }
-    finally { setBusy(button, false); }
-  };
-
-  window.loadAdminBlogs = async function () {
-    const { data, error } = await supabase.from('blog_posts').select('*').order('id', { ascending: false });
-    if (error) { showMessage('Blogs লোড হয়নি: ' + error.message); return; }
-    $('adminBlogsList').innerHTML = (data || []).map(blog => `
-      <div class="list-item">
-        <div><b>${escapeHTML(blog.title_en)}</b></div>
-        <button class="btn btn-danger" type="button" onclick="del('blog_posts', '${escapeHTML(blog.id)}')">Delete</button>
-      </div>`).join('') || '<p class="empty-state">এখনো কোনো Blog যোগ করা হয়নি।</p>';
-  };
-
-  window.addBlog = async function () {
-    const title = $('blogTitle').value.trim();
-    const content = $('blogContent').value.trim();
-    if (!title || !content) { showMessage('Blog-এর Title ও Content লিখুন।'); return; }
-    const button = $('blogForm').querySelector('button.btn-primary');
-    setBusy(button, true, 'Saving…');
-    try {
-      const image = await uploadImage($('blogImg').files[0]);
-      const { error } = await supabase.from('blog_posts').insert([{
-        title_en: title, title_bn: title, read_time: $('blogReadTime').value.trim(),
-        content_en: content, content_bn: content, image_url: image
-      }]);
-      if (error) throw error;
-      $('blogForm').style.display = 'none';
-      $('blogTitle').value = $('blogReadTime').value = $('blogContent').value = '';
-      $('blogImg').value = '';
-      await loadAdminBlogs();
-      showMessage('Blog প্রকাশের জন্য সংরক্ষণ হয়েছে।', 'success');
-    } catch (error) { showMessage('Blog যোগ করা যায়নি: ' + error.message); }
-    finally { setBusy(button, false); }
-  };
-
-  window.loadAdminChatbot = async function () {
-    const { data, error } = await supabase.from('chatbot_qa').select('*').order('id', { ascending: false });
-    if (error) { showMessage('Chatbot Q&A লোড হয়নি: ' + error.message); return; }
-    $('adminChatbotList').innerHTML = (data || []).map(item => `
-      <div class="list-item">
-        <div><b>Q: ${escapeHTML(item.question_en)}</b><br><small>A: ${escapeHTML(item.answer_en)}</small></div>
-        <button class="btn btn-danger" type="button" onclick="del('chatbot_qa', '${escapeHTML(item.id)}')">Delete</button>
-      </div>`).join('') || '<p class="empty-state">এখনো কোনো Q&A যোগ করা হয়নি।</p>';
-  };
-
-  window.addChatbot = async function () {
-    const question = $('chatQ').value.trim();
-    const answer = $('chatA').value.trim();
-    if (!question || !answer) { showMessage('Question ও Answer দুটোই লিখুন।'); return; }
-    const button = $('chatForm').querySelector('button.btn-primary');
-    setBusy(button, true, 'Saving…');
-    try {
-      const { error } = await supabase.from('chatbot_qa').insert([{
-        question_en: question, question_bn: question, answer_en: answer, answer_bn: answer
-      }]);
-      if (error) throw error;
-      $('chatForm').style.display = 'none';
-      $('chatQ').value = $('chatA').value = '';
-      await loadAdminChatbot();
-      showMessage('Q&A যোগ হয়েছে।', 'success');
-    } catch (error) { showMessage('Q&A যোগ করা যায়নি: ' + error.message); }
-    finally { setBusy(button, false); }
-  };
-
-  window.del = async function (table, id) {
-    const allowed = ['projects', 'blog_posts', 'chatbot_qa'];
-    if (!allowed.includes(table)) return;
-    if (!window.confirm('আপনি কি নিশ্চিতভাবে এটি Delete করতে চান?')) return;
-    try {
-      const { error } = await supabase.from(table).delete().eq('id', id);
-      if (error) throw error;
-      if (table === 'projects') await loadAdminProjects();
-      if (table === 'blog_posts') await loadAdminBlogs();
-      if (table === 'chatbot_qa') await loadAdminChatbot();
-      showMessage('আইটেমটি Delete হয়েছে।', 'success');
-    } catch (error) { showMessage('Delete করা যায়নি: ' + error.message); }
-  };
-
-  // Initial session check. Auth listener handles subsequent changes.
-  supabase.auth.getSession().then(({ data, error }) => {
-    if (error) { showLogin('সেশন যাচাই করা যায়নি। আবার লগইন করুন।'); return; }
-    verifyAndOpen(data.session).catch(err => {
-      console.error('Session verification failed:', err);
-      showLogin('Admin অনুমতি যাচাই করা যায়নি।');
-    });
-  });
+'use strict';
+const URL='https://qynaqzukiwtnxjsciazk.supabase.co',KEY='sb_publishable_dTX5xkv4svMJA9-M5QMHKA_YctCIi19';
+const db=window.supabase.createClient(URL,KEY);const $=id=>document.getElementById(id);
+let content={},active='brand';
+const groups={
+brand:{title:'Brand & Hero',heading:'Identity, profile and homepage introduction',keys:['brand','hero']},
+siteText:{title:'Site Text & Labels',heading:'Navigation labels, section headings and button copy',keys:['copy']},
+stats:{title:'Stats & Social',heading:'Numbers and independent social link controls',keys:['stats','socialTop','socialFooter']},
+about:{title:'About & Workflow',heading:'About copy, design process and toolkit',keys:['about','workflow','tools']},
+services:{title:'Services',heading:'Service cards shown on Home, About and Services pages',keys:['services']},
+projects:{title:'Projects',heading:'Project gallery, featured projects and descriptions',keys:['projects']},
+blogs:{title:'Blogs',heading:'Publish, unpublish, edit and delete blog posts',keys:['blogIntro','blogs','highlight']},
+faqs:{title:'FAQs',heading:'Frequently asked questions',keys:['faqs']},
+contact:{title:'Contact & Footer',heading:'Contact details, map embed and footer copy',keys:['contact','footer']},
+chatbot:{title:'WhatsApp Assistant',heading:'Quick questions and automatic answers in the chat assistant',keys:['chatbot']}
+};
+const labels={copy:'Site-wide text and navigation labels',brand:'Brand identity',hero:'Home hero content',stats:'Stats (3 items)',socialTop:'Homepage social links (independent)',socialFooter:'Footer social links (independent)',copy:'Navigation, section headings and button labels',about:'About page content',workflow:'Design workflow steps',tools:'Design toolkit',services:'Service cards',projects:'Portfolio projects',blogIntro:'Blog section introduction',blogs:'Blog posts',highlight:'Blog highlight colours',faqs:'Frequently asked questions',contact:'Contact details and map',footer:'Footer content',chatbot:'Assistant welcome and Q&A'};
+function notice(msg,type='ok'){const n=$('notice');n.textContent=msg;n.className=type;n.hidden=false}
+function safe(v){return JSON.stringify(v??(Array.isArray(content[v])?[]:{}),null,2)}
+function renderEditor(){const g=groups[active];$('panelTitle').textContent=g.title;$('editorHeading').textContent=g.heading;$('editorFields').innerHTML=g.keys.map(k=>'<label class="field-label">'+labels[k]+'<textarea class="json-editor" data-json-key="'+k+'" spellcheck="false"></textarea><small>Valid JSON required. Arrays support unlimited items. For blog formatting use [B]bold[/B], [I]italic[/I], [U]underline[/U], [H]highlight[/H].</small></label>').join('');g.keys.forEach(k=>{document.querySelector('[data-json-key="'+k+'"]').value=JSON.stringify(content[k]??(k==='stats'||['socialTop','socialFooter','workflow','tools','services','projects','blogs','faqs'].includes(k)?[]:{}),null,2)});$('editorPanel').hidden=false;$('inboxPanel').hidden=true}
+const sampleProjects=[
+{id:'demo-01',title:'Noor — Brand Identity Concept',category:'Brand Identity',description:'A refined brand identity concept with a confident colour palette and flexible visual system.',image:'images/project-1.png',featured:true,enabled:true},
+{id:'demo-02',title:'Luma — Social Campaign',category:'Social Media Design',description:'A vibrant social campaign with a consistent layout system and strong visual hierarchy.',image:'images/project-2.png',featured:true,enabled:true},
+{id:'demo-03',title:'Aurelia — Product Packaging',category:'Packaging Design',description:'A premium packaging direction exploring typography, colour balance and shelf presence.',image:'images/project-3.png',featured:true,enabled:true},
+{id:'demo-04',title:'Nexa — Digital Experience',category:'Digital Design',description:'A clean digital visual direction for a modern service brand.',image:'images/project-4.png',featured:true,enabled:true},
+{id:'demo-05',title:'Bloom — Promotional Artwork',category:'Campaign Design',description:'A bright promotional design system for multi-format campaigns.',image:'images/project-5.png',featured:true,enabled:true},
+{id:'demo-06',title:'Monogram — Logo Exploration',category:'Logo Design',description:'A minimal monogram concept exploring geometry and recognisable forms.',image:'images/project-6.png',featured:true,enabled:true},
+{id:'demo-07',title:'Studio Grid — Editorial Layout',category:'Print Design',description:'An editorial layout focused on typography and whitespace.',image:'images/project-7.png',featured:false,enabled:true},
+{id:'demo-08',title:'Serein — Brand Collateral',category:'Brand Identity',description:'A coordinated stationery and collateral concept.',image:'images/project-8.png',featured:false,enabled:true},
+{id:'demo-09',title:'Pulse — Event Campaign',category:'Campaign Design',description:'A flexible event campaign direction with bold typography.',image:'images/project-9.png',featured:false,enabled:true},
+{id:'demo-10',title:'Forma — Visual System',category:'Digital Design',description:'A modular visual system for consistent digital communication.',image:'images/project-10.png',featured:false,enabled:true}];
+const sampleBlogs=[
+{id:'demo-blog-01',title:'What Makes a Brand Identity Memorable?',category:'Branding',excerpt:'A memorable brand is more than a logo. Discover the role of consistency, clarity and a recognisable visual language.',content:'A memorable brand identity starts with a clear idea. [B]Consistency is what makes that idea recognisable.[/B] From typography and colour to imagery and tone, every element should work together. [H]Great design makes a message easier to understand and remember.[/H]',image:'images/project-1.png',readTime:'4 min read',published:true},
+{id:'demo-blog-02',title:'My Simple Design Workflow, From Brief to Delivery',category:'Design Process',excerpt:'A practical look at how research, creative direction and feedback shape a smoother design process.',content:'Good design rarely happens by accident. I begin by understanding the brief, the audience and the outcome the client wants. [B]A clear process saves time and improves the final result.[/B]',image:'images/project-4.png',readTime:'3 min read',published:true},
+{id:'demo-blog-03',title:'Choosing Colours That Work for Your Brand',category:'Branding',excerpt:'Learn how colour can support brand personality, improve recognition and create a consistent experience.',content:'Colour is one of the first things people notice. The right palette should reflect the brand personality while remaining practical across print and digital use.',image:'images/project-3.png',readTime:'3 min read',published:true}];
+const sampleSocialTop=[{name:'Instagram',url:'https://www.facebook.com/',icon:'instagram',enabled:true},{name:'LinkedIn',url:'https://www.facebook.com/',icon:'linkedin',enabled:true},{name:'Dribbble',url:'https://www.facebook.com/',icon:'dribbble',enabled:true},{name:'Behance',url:'https://www.facebook.com/',icon:'behance',enabled:true}];
+const sampleSocialFooter=[...sampleSocialTop,{name:'LinkedIn',url:'',icon:'linkedin',enabled:false},{name:'Instagram',url:'',icon:'instagram',enabled:false},{name:'Behance',url:'',icon:'behance',enabled:false},{name:'Dribbble',url:'',icon:'dribbble',enabled:false},{name:'GitHub',url:'',icon:'github',enabled:false},{name:'YouTube',url:'',icon:'youtube',enabled:false},{name:'X',url:'',icon:'x',enabled:false},{name:'Telegram',url:'',icon:'telegram',enabled:false}];
+const sampleCopy={navHome:'Home',navAbout:'About',navPortfolio:'Portfolio',navServices:'Services',navBlogs:'Blogs',navContact:'Contact',homeServices:'Services',featuredTitle:'Featured Projects',featuredSubtitle:'Featured Case Studies',loadMore:'Load More',seeMoreProjects:'See More Projects',aboutLink:'More About Me',viewAllBlogs:'View All Blogs',contactCtaTitle:'Let’s Build Something Great',contactCtaDescription:'Have a project in mind? Drop a message. I usually reply within a few hours.',contactButton:'Start a Conversation',faqTitle:'Frequently Asked Questions',workflowTitle:'Design Workflow',toolkitTitle:'Toolkit'};
+async function loadContent(){const {data,error}=await db.from('portfolio_content').select('content').eq('id',1).single();if(error)throw error;content=data.content||{};if(!Array.isArray(content.projects)||content.projects.length===0)content.projects=sampleProjects;if(!Array.isArray(content.blogs)||content.blogs.length===0)content.blogs=sampleBlogs;content.copy={...sampleCopy,...(content.copy||{})};const savedTop=Array.isArray(content.socialTop)?content.socialTop:[];content.socialTop=sampleSocialTop.map(d=>{const old=savedTop.find(x=>x.icon===d.icon)||{};return {...d,...old,url:old.url||d.url}});if(!Array.isArray(content.socialFooter)||content.socialFooter.length===0)content.socialFooter=sampleSocialFooter;renderEditor()}
+function parseEditor(){const next={...content};for(const el of document.querySelectorAll('[data-json-key]')){try{next[el.dataset.jsonKey]=JSON.parse(el.value)}catch(e){throw new Error(labels[el.dataset.jsonKey]+' JSON-এ ভুল আছে: '+e.message)}}return next}
+async function save(){const b=$('saveBtn');b.disabled=true;try{const next=parseEditor();next.demoSeeded=false;const {error}=await db.from('portfolio_content').upsert({id:1,content:next,updated_at:new Date().toISOString()},{onConflict:'id'});if(error)throw error;content=next;notice('Changes successfully saved. Website refresh করলে নতুন কনটেন্ট দেখা যাবে।');$('saveState').textContent='Saved';}catch(e){notice(e.message,'error')}finally{b.disabled=false}}
+async function inbox(){active='inbox';$('panelTitle').textContent='Contact Inbox';$('editorPanel').hidden=true;$('inboxPanel').hidden=false;const {data,error}=await db.from('contact_messages').select('*').order('created_at',{ascending:false});if(error){notice(error.message,'error');return}const rows=data||[];$('inboxList').innerHTML=rows.map(m=>'<article class="inbox-card"><div><b>'+escapeHtml(m.name)+'</b><small>'+escapeHtml(m.email)+' · '+new Date(m.created_at).toLocaleString()+'</small></div><h3>'+escapeHtml(m.subject||'No subject')+'</h3><p>'+escapeHtml(m.message)+'</p><button data-delete-message="'+m.id+'" class="danger">Delete Message</button></article>').join('')||'<p class="empty">No messages yet.</p>';document.querySelectorAll('[data-delete-message]').forEach(b=>b.onclick=async()=>{if(!confirm('Delete this message?'))return;const {error}=await db.from('contact_messages').delete().eq('id',b.dataset.deleteMessage);if(error)notice(error.message,'error');else inbox()})}
+function escapeHtml(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+$('loginForm').addEventListener('submit',async e=>{e.preventDefault();const b=$('loginBtn');b.disabled=true;$('loginError').textContent='';const {data,error}=await db.auth.signInWithPassword({email:$('adminEmail').value.trim(),password:$('adminPass').value});b.disabled=false;if(error){$('loginError').textContent=error.message;return}if(data.user?.app_metadata?.role!=='admin'){await db.auth.signOut();$('loginError').textContent='This account does not have administrator access.';return}await openDashboard()});
+async function openDashboard(){const {data,error}=await db.auth.getUser();if(error||data.user?.app_metadata?.role!=='admin'){await db.auth.signOut();return} $('loginScreen').hidden=true;$('dashboard').hidden=false;try{await loadContent()}catch(e){notice('CMS data could not load. Run supabase/portfolio-cms-v2.sql first. '+e.message,'error')}}
+$('sideNav').addEventListener('click',e=>{const b=e.target.closest('[data-key]');if(!b)return;document.querySelectorAll('#sideNav button').forEach(x=>x.classList.toggle('active',x===b));active=b.dataset.key;if(active==='inbox')inbox();else renderEditor()});
+$('uploadMedia').addEventListener('click',async()=>{const file=$('mediaFile').files[0],status=$('mediaStatus'),button=$('uploadMedia');if(!file){status.textContent='আগে একটি ছবি নির্বাচন করো।';return}if(!['image/jpeg','image/png','image/webp','image/gif'].includes(file.type)||file.size>5*1024*1024){status.textContent='JPG, PNG, WEBP বা GIF; সর্বোচ্চ 5 MB।';return}button.disabled=true;status.textContent='Uploading…';try{const ext=({ 'image/jpeg':'jpg','image/png':'png','image/webp':'webp','image/gif':'gif'})[file.type];const name='cms/'+crypto.randomUUID()+'.'+ext;const {error}=await db.storage.from('site-assets').upload(name,file,{upsert:false,contentType:file.type,cacheControl:'3600'});if(error)throw error;const {data}=db.storage.from('site-assets').getPublicUrl(name);await navigator.clipboard.writeText(data.publicUrl);status.textContent='Upload সফল। Public URL clipboard-এ কপি হয়েছে। JSON-এ Paste করো।'}catch(e){status.textContent='Upload failed: '+e.message}finally{button.disabled=false}});$('saveBtn').addEventListener('click',save);$('reloadBtn').addEventListener('click',()=>renderEditor());$('logoutBtn').addEventListener('click',async()=>{await db.auth.signOut();location.reload()});
+db.auth.getSession().then(({data})=>{if(data.session)openDashboard()});
 })();

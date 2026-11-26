@@ -1,353 +1,91 @@
-(function () {
-  const SUPABASE_URL = 'https://qynaqzukiwtnxjsciazk.supabase.co';
-  const SUPABASE_ANON_KEY = 'sb_publishable_dTX5xkv4svMJA9-M5QMHKA_YctCIi19';
-  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-  const path = window.location.pathname;
+(() => {
+'use strict';
+const URL='https://qynaqzukiwtnxjsciazk.supabase.co';
+const KEY='sb_publishable_dTX5xkv4svMJA9-M5QMHKA_YctCIi19';
+const db=window.supabase?.createClient?window.supabase.createClient(URL,KEY):null;
+const path=location.pathname.split('/').pop()||'index.html';
+let data={};
+const demoContent={
+brand:{name:'Rubayed Hasan',logo:'images/profile.png',profileImage:'images/profile.png',copyrightYear:'2026'},
+hero:{greeting:'Assalamu Alaikum Wa Rahmatullah',title:'Hi, I am',name:'Rubayed Hasan',tagline:'Graphic Designer',description:'I’m a Graphic Designer with 5+ years of experience specializing in Brand Identity, Social Media Design, Arabic & Custom Logos, and Arabic Calligraphy. I help businesses stand out with unique, functional, and meaningful designs.',shortDescription:'Graphic Designer',hireLabel:'Hire Me',worksLabel:'Explore Portfolio',contactLabel:'Get in Touch'},
+stats:[{value:'100+',label:'Projects'},{value:'50+',label:'Happy Clients'},{value:'3+',label:'Years Experience'}],socialTop:[{name:'Instagram',url:'https://www.facebook.com/',icon:'instagram',enabled:true},{name:'LinkedIn',url:'https://www.facebook.com/',icon:'linkedin',enabled:true},{name:'Dribbble',url:'https://www.facebook.com/',icon:'dribbble',enabled:true},{name:'Behance',url:'https://www.facebook.com/',icon:'behance',enabled:true}],socialFooter:[{name:'WhatsApp',url:'',icon:'whatsapp',enabled:true},{name:'Facebook',url:'',icon:'facebook',enabled:true},{name:'Email',url:'',icon:'mail',enabled:true},{name:'LinkedIn',url:'',icon:'linkedin',enabled:false},{name:'Instagram',url:'',icon:'instagram',enabled:false},{name:'Behance',url:'',icon:'behance',enabled:false},{name:'Dribbble',url:'',icon:'dribbble',enabled:false},{name:'GitHub',url:'',icon:'github',enabled:false},{name:'YouTube',url:'',icon:'youtube',enabled:false},{name:'X',url:'',icon:'x',enabled:false},{name:'Telegram',url:'',icon:'telegram',enabled:false}],
+copy:{navHome:'Home',navAbout:'About',navPortfolio:'Portfolio',navServices:'Services',navBlogs:'Blogs',navContact:'Contact',homeServices:'Services',featuredTitle:'Featured Projects',featuredSubtitle:'Featured Case Studies',loadMore:'Load More',seeMoreProjects:'See More Projects',aboutLink:'More About Me',viewAllBlogs:'View All Blogs',contactCtaTitle:'Let’s Build Something Great',contactCtaDescription:'Have a project in mind? Drop a message. I usually reply within a few hours.',contactButton:'Start a Conversation',faqTitle:'Frequently Asked Questions',workflowTitle:'Design Workflow',toolkitTitle:'Toolkit'},
+about:{title:'Designing ideas into meaningful visuals',teaser:'I help people and businesses turn their ideas into clear, memorable and purposeful visual identities.',body:'I am Rubayed Hasan, a graphic designer focused on brand identity, digital design and visual communication. My approach combines thoughtful research, creative direction and careful execution.\n\nFrom a simple social media creative to a complete brand identity system, I believe every design should have a purpose, a clear message and a consistent visual language. I work closely with clients to understand their goals and translate them into visuals that connect with the right audience.'},
+services:[
+{title:'Brand Identity Design',description:'Logo design, colour systems, typography and complete brand guidelines for a consistent identity.',icon:'✳',enabled:true},
+{title:'Social Media Design',description:'Scroll-stopping social media posts, campaign creatives and branded templates.',icon:'▧',enabled:true},
+{title:'Print & Marketing Design',description:'Professional flyers, brochures, business cards, banners and print-ready artwork.',icon:'▤',enabled:true},
+{title:'UI & Web Graphics',description:'Clean website visuals, landing page graphics and interface design assets.',icon:'◫',enabled:true},
+{title:'Packaging Design',description:'Thoughtful packaging and product label concepts that stand out on the shelf.',icon:'◇',enabled:true},
+{title:'Presentation Design',description:'Polished pitch decks, reports and presentation layouts with a clear visual story.',icon:'▥',enabled:true}],
+workflow:[
+{title:'Discovery',description:'We discuss your goals, audience, references and project requirements.'},
+{title:'Creative Direction',description:'I define the visual approach, mood, colour and design direction.'},
+{title:'Design & Refine',description:'I develop concepts, collect feedback and refine the selected direction.'},
+{title:'Final Delivery',description:'You receive polished, organised files ready for real-world use.'}],
+tools:[{name:'Adobe Photoshop',logo:''},{name:'Adobe Illustrator',logo:''},{name:'CorelDRAW',logo:''},{name:'Canva',logo:''},{name:'Figma',logo:''}],
+projects:[
+{id:'demo-01',title:'Noor — Brand Identity Concept',category:'Brand Identity',description:'A calm, contemporary identity concept built around a refined wordmark, a confident colour palette and a flexible visual system.',image:'images/project-1.png',featured:true,enabled:true},
+{id:'demo-02',title:'Luma — Social Campaign',category:'Social Media Design',description:'A vibrant social media campaign concept with a consistent layout system and strong visual hierarchy.',image:'images/project-2.png',featured:true,enabled:true},
+{id:'demo-03',title:'Aurelia — Product Packaging',category:'Packaging Design',description:'A premium packaging direction exploring typography, colour balance and shelf presence.',image:'images/project-3.png',featured:true,enabled:true},
+{id:'demo-04',title:'Nexa — Digital Experience',category:'Digital Design',description:'A clean digital visual direction for a modern service brand, designed for clarity and ease of use.',image:'images/project-4.png',featured:true,enabled:true},
+{id:'demo-05',title:'Bloom — Promotional Artwork',category:'Campaign Design',description:'A bright promotional design system created to bring campaign messages to life across formats.',image:'images/project-5.png',featured:true,enabled:true},
+{id:'demo-06',title:'Monogram — Logo Exploration',category:'Logo Design',description:'A minimal monogram concept exploring geometry, balance and recognisable brand forms.',image:'images/project-6.png',featured:true,enabled:true},
+{id:'demo-07',title:'Studio Grid — Editorial Layout',category:'Print Design',description:'An editorial layout concept focused on typography, whitespace and a clear reading flow.',image:'images/project-7.png',featured:false,enabled:true},
+{id:'demo-08',title:'Serein — Brand Collateral',category:'Brand Identity',description:'A coordinated stationery and collateral concept for a refined boutique brand.',image:'images/project-8.png',featured:false,enabled:true},
+{id:'demo-09',title:'Pulse — Event Campaign',category:'Campaign Design',description:'A flexible event campaign direction with bold type and adaptable social assets.',image:'images/project-9.png',featured:false,enabled:true},
+{id:'demo-10',title:'Forma — Visual System',category:'Digital Design',description:'A modular visual system concept for consistent communication across digital touchpoints.',image:'images/project-10.png',featured:false,enabled:true}],
+blogs:[
+{id:'demo-blog-01',title:'What Makes a Brand Identity Memorable?',category:'Branding',excerpt:'A memorable brand is more than a logo. Discover the role of consistency, clarity and a recognisable visual language.',content:'A memorable brand identity starts with a clear idea. [B]Consistency is what makes that idea recognisable.[/B]\n\nFrom typography and colour to imagery and tone, every element should work together. A thoughtful system helps people recognise a brand wherever they meet it.\n\n[H]Great design makes a message easier to understand and remember.[/H]',image:'images/project-1.png',readTime:'4 min read',published:true},
+{id:'demo-blog-02',title:'My Simple Design Workflow, From Brief to Delivery',category:'Design Process',excerpt:'A practical look at how research, creative direction and feedback shape a smoother design process.',content:'Good design rarely happens by accident. I begin by understanding the brief, the audience and the outcome the client wants.\n\nThen I explore visual directions, build the first concepts and refine the strongest route through feedback. [B]A clear process saves time and improves the final result.[/B]',image:'images/project-4.png',readTime:'3 min read',published:true},
+{id:'demo-blog-03',title:'Choosing Colours That Work for Your Brand',category:'Branding',excerpt:'Learn how colour can support brand personality, improve recognition and create a consistent experience.',content:'Colour is one of the first things people notice. The right palette should reflect the brand personality while remaining practical across print and digital use.\n\nStart with the feeling you want to communicate, then test contrast, accessibility and consistency before finalising the palette.',image:'images/project-3.png',readTime:'3 min read',published:true}],
+blogIntro:{title:'Latest Insights',description:'Practical ideas, creative tips and lessons from my design process, branding projects and everyday work.'},
+faqs:[
+{question:'How do I start a design project?',answer:'Send me a message through the contact form with a short description of your project, goals and timeline. I will get back to you to discuss the next steps.',enabled:true},
+{question:'How many revisions are included?',answer:'The revision scope depends on the selected service and will be agreed before the project begins.',enabled:true},
+{question:'Which file formats will I receive?',answer:'Final delivery formats are agreed for each project. Common formats include PNG, JPG, PDF, SVG and editable source files where included in the scope.',enabled:true},
+{question:'Do you work with clients remotely?',answer:'Yes. Project discussions, feedback and delivery can be handled online.',enabled:true}],
+contact:{title:'Let’s Build Something Great',description:'Have a project in mind? Drop a message. I usually reply within a few hours.',phone:'',email:'',location:'Bangladesh',website:'',mapUrl:'https://www.google.com/maps?q=Bangladesh&output=embed',formEnabled:true},
+footer:{about:'Thoughtful graphic design, meaningful brand identities and visual stories made with purpose.',palestine:true},
+chatbot:{welcome:'Hello! Thanks for visiting. What would you like to know?',questions:[{question:'What services do you offer?',answer:'I offer brand identity, social media design, print design, packaging and digital graphics.',enabled:true},{question:'How can I start a project?',answer:'Use the contact form and share a few details about your project. I will get back to you.',enabled:true},{question:'How can I contact you?',answer:'Please use the contact page to send your project details.',enabled:true}]},
+highlight:{textColor:'#12304a',background:'#c9edff'}
+};
+function applyDemo(stored){const out={...demoContent,...(stored||{})};['brand','hero','about','blogIntro','contact','footer','chatbot','highlight','copy'].forEach(k=>out[k]={...(demoContent[k]||{}),...((stored||{})[k]||{})});['stats','services','workflow','tools','projects','blogs','faqs'].forEach(k=>{if((stored||{}).demoSeeded!==false&&(!Array.isArray(out[k])||out[k].length===0))out[k]=demoContent[k]});['socialTop','socialFooter'].forEach(k=>{if(!Array.isArray(out[k])||out[k].length===0)out[k]=demoContent[k]});const oldTop=Array.isArray(out.socialTop)?out.socialTop:[];out.socialTop=demoContent.socialTop.map(d=>{const old=oldTop.find(x=>x.icon===d.icon)||{};return {...d,...old,url:old.url||d.url}});if(!(stored||{}).hero?.greeting)out.hero={...out.hero,greeting:demoContent.hero.greeting,title:demoContent.hero.title,name:demoContent.hero.name,tagline:demoContent.hero.tagline};return out}
 
-  // ==========================================
-  // 1. LANGUAGE TOGGLE SYSTEM
-  // ==========================================
-  function setLanguage(lang) {
-    document.documentElement.lang = lang;
-    localStorage.setItem('site_lang', lang);
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-      btn.classList.toggle('active', btn.dataset.lang === lang);
-    });
-  }
-  const savedLang = localStorage.getItem('site_lang') || 'en';
-  setLanguage(savedLang);
-
-  // ==========================================
-  // 2. INJECT PREMIUM HEADER & FOOTER
-  // ==========================================
-  const headerHTML = `
-    <header class="site-header">
-      <div class="container header-inner">
-        <a href="index.html" class="logo">
-          <img src="images/profile.png" class="logo-img" alt="Logo">
-          <div>
-            <span class="lang-en">Rubayed Hasan</span>
-            <span class="lang-bn">রুবায়েদ হাসান</span>
-          </div>
-        </a>
-        <nav class="nav-desktop">
-          <a href="index.html" class="${path.includes('index') ? 'active' : ''}">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
-            <span class="lang-en">Home</span><span class="lang-bn">হোম</span>
-          </a>
-          <a href="about.html" class="${path.includes('about') ? 'active' : ''}">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-            <span class="lang-en">About</span><span class="lang-bn">সম্পর্কে</span>
-          </a>
-          <a href="portfolio.html" class="${path.includes('portfolio') ? 'active' : ''}">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
-            <span class="lang-en">Portfolio</span><span class="lang-bn">পোর্টফোলিও</span>
-          </a>
-          <a href="services.html" class="${path.includes('services') ? 'active' : ''}">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-            <span class="lang-en">Services</span><span class="lang-bn">সেবা</span>
-          </a>
-          <a href="blogs.html" class="${path.includes('blogs') || path.includes('blog-detail') ? 'active' : ''}">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-            <span class="lang-en">Blogs</span><span class="lang-bn">ব্লগস</span>
-          </a>
-          <a href="contact.html" class="${path.includes('contact') ? 'active' : ''}">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-            <span class="lang-en">Contact</span><span class="lang-bn">যোগাযোগ</span>
-          </a>
-        </nav>
-        <div class="header-actions">
-          <div class="lang-toggle">
-            <button class="lang-btn" data-lang="en" onclick="setLanguage('en')">EN</button>
-            <button class="lang-btn" data-lang="bn" onclick="setLanguage('bn')">বাংলা</button>
-          </div>
-          <button class="mobile-menu-btn" id="mobileMenuBtn">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-          </button>
-        </div>
-      </div>
-      <div class="mobile-nav" id="mobileNav">
-        <a href="index.html"><span class="lang-en">Home</span><span class="lang-bn">হোম</span></a>
-        <a href="about.html"><span class="lang-en">About</span><span class="lang-bn">সম্পর্কে</span></a>
-        <a href="portfolio.html"><span class="lang-en">Portfolio</span><span class="lang-bn">পোর্টফোলিও</span></a>
-        <a href="services.html"><span class="lang-en">Services</span><span class="lang-bn">সেবা</span></a>
-        <a href="blogs.html"><span class="lang-en">Blogs</span><span class="lang-bn">ব্লগস</span></a>
-        <a href="contact.html"><span class="lang-en">Contact</span><span class="lang-bn">যোগাযোগ</span></a>
-      </div>
-    </header>
-  `;
-
-  const footerHTML = `
-    <footer>
-      <div class="container footer-content">
-        <a href="index.html" class="logo">
-          <img src="images/profile.png" class="logo-img">
-          <div><span class="lang-en">Rubayed Hasan</span><span class="lang-bn">রুবায়েদ হাসান</span></div>
-        </a>
-        <p id="footerAbout" style="color:var(--muted); max-width:400px; text-align:center;"></p>
-        <div class="footer-links">
-          <a href="about.html"><span class="lang-en">About</span><span class="lang-bn">সম্পর্কে</span></a>
-          <a href="portfolio.html"><span class="lang-en">Portfolio</span><span class="lang-bn">পোর্টফোলিও</span></a>
-          <a href="services.html"><span class="lang-en">Services</span><span class="lang-bn">সেবা</span></a>
-          <a href="blogs.html"><span class="lang-en">Blogs</span><span class="lang-bn">ব্লগস</span></a>
-          <a href="contact.html"><span class="lang-en">Contact</span><span class="lang-bn">যোগাযোগ</span></a>
-        </div>
-        <div class="socials-wrapper" id="footerSocials"></div>
-      </div>
-      <div class="container copyright">
-        <p>© 2026 <a href="index.html" style="color:var(--accent);">Rubayed Hasan</a>. <span class="lang-en">All Rights Reserved.</span><span class="lang-bn">সর্বস্বত্ব সংরক্ষিত।</span></p>
-        <a href="#" class="palestine-btn">🇵🇸 #StandWithPalestine</a>
-      </div>
-    </footer>
-  `;
-
-  if (!path.includes('admin.html')) {
-    document.body.insertAdjacentHTML('afterbegin', headerHTML);
-    document.body.insertAdjacentHTML('beforeend', footerHTML);
-    document.getElementById('mobileMenuBtn').addEventListener('click', () => {
-      document.getElementById('mobileNav').classList.toggle('active');
-    });
-    // Ensure buttons reflect saved language
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-      btn.classList.toggle('active', btn.dataset.lang === savedLang);
-    });
-  }
-
-  // ==========================================
-  // 3. GLOBAL DATA LOADER
-  // ==========================================
-  async function loadGlobal() {
-    const { data: sets } = await supabase.from('site_settings').select('*');
-    if(sets) {
-      const dict = {}; sets.forEach(s => dict[s.key] = s.value);
-      
-      if(document.getElementById('footerAbout')) {
-        document.getElementById('footerAbout').innerHTML = `
-          <span class="lang-en">${dict.footer_about_en || ''}</span>
-          <span class="lang-bn">${dict.footer_about_bn || dict.footer_about_en || ''}</span>
-        `;
-      }
-      
-      if(document.getElementById('heroTitle')) {
-        document.getElementById('heroTitle').innerHTML = `
-          <span class="lang-en">${dict.hero_title_en}</span>
-          <span class="lang-bn">${dict.hero_title_bn}</span>
-        `;
-        document.getElementById('heroTagline').innerHTML = `
-          <span class="lang-en">${dict.hero_tagline_en}</span>
-          <span class="lang-bn">${dict.hero_tagline_bn}</span>
-        `;
-        document.getElementById('aboutTeaser').innerHTML = `
-          <span class="lang-en">${dict.about_en}</span>
-          <span class="lang-bn">${dict.about_bn || dict.about_en}</span>
-        `;
-      }
-      
-      if(document.getElementById('cPhone')) {
-        document.getElementById('cPhone').textContent = dict.contact_phone;
-        document.getElementById('cEmail').textContent = dict.contact_email;
-        document.getElementById('cLoc').textContent = dict.contact_loc;
-        document.getElementById('cWeb').textContent = dict.contact_web;
-      }
-      
-      if(dict.highlight_color) document.documentElement.style.setProperty('--highlight', dict.highlight_color);
-    }
-
-    const { data: socs } = await supabase.from('social_links').select('*').eq('is_active', true);
-    if(socs) {
-      const renderSoc = (section) => socs.filter(s => s.section === section || s.section === 'both').map(s => 
-        `<a href="${s.url}" target="_blank" class="social-icon">${s.icon_svg}</a>`
-      ).join('');
-      if(document.getElementById('heroSocials')) document.getElementById('heroSocials').innerHTML = renderSoc('hero');
-      if(document.getElementById('footerSocials')) document.getElementById('footerSocials').innerHTML = renderSoc('footer');
-    }
-  }
-
-  // ==========================================
-  // 4. PAGE SPECIFIC LOADERS
-  // ==========================================
-  let allProjects = [];
-  async function loadPageData() {
-    if(path.includes('index') || path === '/') {
-      const { data: stats } = await supabase.from('stats').select('*');
-      if(stats && document.getElementById('statsGrid')) {
-        const icons = [
-          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>',
-          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
-          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>'
-        ];
-        document.getElementById('statsGrid').innerHTML = stats.map((s, i) => `
-          <div class="stat-item">
-            <div class="stat-icon">${icons[i % 3]}</div>
-            <div class="stat-number">${s.value}${s.suffix}</div>
-            <div class="stat-label">
-              <span class="lang-en">${s.label_en}</span>
-              <span class="lang-bn">${s.label_bn || s.label_en}</span>
-            </div>
-          </div>
-        `).join('');
-      }
-
-      const { data: projs } = await supabase.from('projects').select('*').eq('is_featured', true);
-      allProjects = projs || [];
-      renderFeaturedProjects(6);
-
-      const { data: blogs } = await supabase.from('blog_posts').select('*').order('created_at', {ascending:false}).limit(3);
-      if(blogs && document.getElementById('latestBlogs')) {
-        document.getElementById('latestBlogs').innerHTML = blogs.map((b, i) => `
-          <a href="blog-detail.html?id=${b.id}" class="card" style="${i===0 ? 'grid-column: 1 / -1; flex-direction:row; gap:24px; align-items:center;' : ''}">
-            <img src="${b.image_url}" style="${i===0 ? 'width:50%; height:300px; margin-bottom:0;' : ''}">
-            <div>
-               <h3 class="lang-en">${b.title_en}</h3>
-               <h3 class="lang-bn">${b.title_bn || b.title_en}</h3>
-               <p style="margin-top:12px; font-size:13px; color:var(--accent); font-weight:600;">${b.read_time}</p>
-            </div>
-          </a>
-        `).join('');
-      }
-    }
-
-    if(path.includes('portfolio.html') && document.getElementById('portfolioGrid')) {
-      const { data: projs } = await supabase.from('projects').select('*');
-      document.getElementById('portfolioGrid').innerHTML = projs.map(p => `
-        <div class="portfolio-card" onclick="this.classList.toggle('active')">
-          <img src="${p.image_url}" alt="${p.title}">
-          <div class="portfolio-info">
-            <h3>${p.title}</h3>
-            <p style="color:var(--accent); font-size:13px; font-weight:600; text-transform:uppercase; letter-spacing:1px;">${p.category_en}</p>
-            <div class="portfolio-desc">${p.desc_en}</div>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    if(path.includes('services.html') && document.getElementById('servicesList')) {
-      const { data: servs } = await supabase.from('services').select('*');
-      document.getElementById('servicesList').innerHTML = servs.map(s => `
-        <div class="card text-center">
-           <div style="width:70px; height:70px; margin:0 auto 20px; background:rgba(212,175,55,0.1); border-radius:20px; display:flex; justify-content:center; align-items:center; color:var(--accent); font-size:28px;">${s.icon_svg || '★'}</div>
-           <h3 class="lang-en">${s.title_en}</h3>
-           <h3 class="lang-bn">${s.title_bn || s.title_en}</h3>
-           <p class="lang-en" style="margin-top:10px;">${s.desc_en}</p>
-           <p class="lang-bn" style="margin-top:10px;">${s.desc_bn || s.desc_en}</p>
-        </div>
-      `).join('');
-
-      const { data: faqs } = await supabase.from('faqs').select('*');
-      document.getElementById('faqList').innerHTML = faqs.map(f => `
-        <div class="faq-item">
-          <div class="faq-question" onclick="this.parentElement.classList.toggle('active')">
-            <span class="lang-en">${f.question_en}</span>
-            <span class="lang-bn">${f.question_bn || f.question_en}</span>
-            <span>+</span>
-          </div>
-          <div class="faq-answer">
-            <span class="lang-en">${f.answer_en}</span>
-            <span class="lang-bn">${f.answer_bn || f.answer_en}</span>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    if(path.includes('blogs.html') && document.getElementById('allBlogsList')) {
-      const { data: blogs } = await supabase.from('blog_posts').select('*').order('created_at', {ascending:false});
-      document.getElementById('allBlogsList').innerHTML = blogs.map(b => `
-        <a href="blog-detail.html?id=${b.id}" class="card">
-          <img src="${b.image_url}">
-          <h3 class="lang-en">${b.title_en}</h3>
-          <h3 class="lang-bn">${b.title_bn || b.title_en}</h3>
-          <p style="margin-top:12px; font-size:13px; color:var(--accent); font-weight:600;">${b.read_time}</p>
-        </a>
-      `).join('');
-    }
-  }
-
-  window.renderFeaturedProjects = function(limit) {
-    const grid = document.getElementById('featuredProjects');
-    if(!grid) return;
-    const toRender = allProjects.slice(0, limit);
-    grid.innerHTML = toRender.map(p => `
-      <div class="card">
-        <img src="${p.image_url}" alt="${p.title}">
-        <h3>${p.title}</h3>
-        <p style="color:var(--accent); font-size:12px; font-weight:600; text-transform:uppercase; margin-bottom:8px;">${p.category_en}</p>
-      </div>
-    `).join('');
-    
-    const loadMoreBtn = document.getElementById('loadMoreBtn');
-    if(loadMoreBtn) {
-      if(limit >= allProjects.length) loadMoreBtn.style.display = 'none';
-      else loadMoreBtn.style.display = 'inline-flex';
-    }
-  };
-
-  // ==========================================
-  // 5. CHATBOT
-  // ==========================================
-  async function initChatbot() {
-    const widget = document.getElementById('chatWidget');
-    const btn = document.getElementById('floatingChatBtn');
-    const body = document.getElementById('chatBody');
-    const input = document.getElementById('chatInput');
-    const sendBtn = document.getElementById('chatSendBtn');
-    if(!widget || !btn) return;
-
-    btn.addEventListener('click', () => { widget.classList.toggle('active'); });
-
-    const { data: qas } = await supabase.from('chatbot_qa').select('*');
-    body.innerHTML = `<div class="chat-msg bot"><span class="lang-en">Hi, I am Rubayed's Assistant. How can I help you?</span><span class="lang-bn">হ্যালো, আমি রুবায়েদের অ্যাসিস্ট্যান্ট। আপনাকে কিভাবে সাহায্য করতে পারি?</span></div>`;
-    
-    if(qas && qas.length > 0) {
-      const quickReplies = document.createElement('div');
-      quickReplies.style.cssText = 'display:flex; flex-direction:column; gap:8px; margin-top:12px;';
-      qas.forEach(qa => {
-        const qBtn = document.createElement('button');
-        qBtn.innerHTML = `<span class="lang-en">${qa.question_en}</span><span class="lang-bn">${qa.question_bn || qa.question_en}</span>`;
-        qBtn.style.cssText = 'background:rgba(255,255,255,0.05); border:1px solid var(--border); color:#fff; padding:10px; border-radius:8px; text-align:left; font-size:13px; cursor:pointer; transition:0.2s;';
-        qBtn.onclick = () => {
-          body.innerHTML += `<div class="chat-msg user"><span class="lang-en">${qa.question_en}</span><span class="lang-bn">${qa.question_bn || qa.question_en}</span></div>`;
-          setTimeout(() => {
-            body.innerHTML += `<div class="chat-msg bot"><span class="lang-en">${qa.answer_en}</span><span class="lang-bn">${qa.answer_bn || qa.answer_en}</span></div>`;
-            body.scrollTop = body.scrollHeight;
-          }, 500);
-          body.scrollTop = body.scrollHeight;
-        };
-        quickReplies.appendChild(qBtn);
-      });
-      body.appendChild(quickReplies);
-    }
-
-    sendBtn.addEventListener('click', () => {
-      if(!input.value.trim()) return;
-      body.innerHTML += `<div class="chat-msg user">${input.value}</div>`;
-      input.value = '';
-      setTimeout(() => {
-        body.innerHTML += `<div class="chat-msg bot">Please use the quick buttons or contact directly.</div>`;
-        body.scrollTop = body.scrollHeight;
-      }, 500);
-    });
-  }
-
-  // ==========================================
-  // 6. INIT
-  // ==========================================
-  document.addEventListener('DOMContentLoaded', () => {
-    loadGlobal();
-    loadPageData();
-    initChatbot();
-
-    if (document.getElementById('progressBar')) {
-      window.addEventListener('scroll', () => {
-        const scrollTop = window.scrollY;
-        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-        const progress = (scrollTop / docHeight) * 100;
-        document.getElementById('progressBar').style.background = `conic-gradient(var(--accent) ${progress}%, #333 ${progress}%)`;
-        const upBtn = document.getElementById('scrollUpBtn');
-        if (scrollTop > 300) upBtn.style.display = 'flex'; else upBtn.style.display = 'none';
-      });
-    }
-  });
-
-  // Expose setLanguage globally so inline onclick works
-  window.setLanguage = setLanguage;
+const $=id=>document.getElementById(id);
+const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const safeUrl=v=>{try{const u=new URL(v,location.href);return ['http:','https:','mailto:','tel:'].includes(u.protocol)?u.href:'#'}catch{return '#'}};
+const active=a=>a!==false;
+const txt=(key,fallback)=>esc(data.copy?.[key]||fallback);
+function rich(v){let s=esc(v);s=s.replace(/\[B\]([\s\S]*?)\[\/B\]/gi,'<strong>$1</strong>').replace(/\[I\]([\s\S]*?)\[\/I\]/gi,'<em>$1</em>').replace(/\[U\]([\s\S]*?)\[\/U\]/gi,'<u>$1</u>').replace(/\[H\]([\s\S]*?)\[\/H\]/gi,'<mark style="color:'+esc(data.highlight?.textColor||'#17110d')+';background:'+esc(data.highlight?.background||'#d4af37')+'">$1</mark>');
+return s.replace(/\n/g,'<br>');}
+function nav(){const labels=data.copy||{};const items=[[labels.navHome||'Home','index.html','fa-house'],[labels.navAbout||'About','about.html','fa-user'],[labels.navPortfolio||'Portfolio','portfolio.html','fa-briefcase'],[labels.navServices||'Services','services.html','fa-layer-group'],[labels.navBlogs||'Blogs','blogs.html','fa-pen-to-square'],[labels.navContact||'Contact','contact.html','fa-envelope'],['Hire Me','contact.html','fa-paper-plane']];
+return '<header class="site-header"><div class="container header-inner"><a class="brand" href="index.html"><img src="'+esc(data.brand?.logo||'images/profile.png')+'" alt=""><span>'+esc(data.brand?.name||'Rubayed Hasan')+'</span></a><button class="menu-toggle" id="menuToggle" type="button" aria-label="Open navigation menu" aria-controls="mainNav" aria-expanded="false"><i class="fa-solid fa-bars-staggered" aria-hidden="true"></i></button><nav id="mainNav" aria-label="Main navigation">'+items.map(([n,u,ic],i)=>'<a '+(i===6?'class="nav-hire"':path===u?'class="active" aria-current="page"':'')+' href="'+u+'"><i class="fa-solid '+ic+'" aria-hidden="true"></i><span>'+esc(n)+'</span></a>').join('')+'</nav></div></header>'}
+function socials(list){return (list||[]).filter(x=>x.enabled).map(x=>{const contact=data.contact||{};let href=x.url||'';if(!href&&x.icon==='mail'&&contact.email)href='mailto:'+contact.email;if(!href&&x.icon==='whatsapp'&&contact.phone){const number=String(contact.phone).replace(/[^0-9]/g,'');if(number.length>=8)href='https://wa.me/'+number}const safe=href?safeUrl(href):'';return safe?'<a class="social-link" href="'+esc(safe)+'" target="_blank" rel="noopener noreferrer" aria-label="'+esc(x.name)+'" title="'+esc(x.name)+'">'+icon(x.icon,x.name)+'</a>':'<span class="social-link social-placeholder" title="Add '+esc(x.name)+' link in Admin Panel" aria-label="'+esc(x.name)+' link not configured">'+icon(x.icon,x.name)+'</span>'}).join('')}
+function icon(key,label){const map={whatsapp:'fa-brands fa-whatsapp',facebook:'fa-brands fa-facebook-f',mail:'fa-solid fa-envelope',linkedin:'fa-brands fa-linkedin-in',instagram:'fa-brands fa-instagram',behance:'fa-brands fa-behance',dribbble:'fa-brands fa-dribbble',github:'fa-brands fa-github',youtube:'fa-brands fa-youtube',x:'fa-brands fa-x-twitter',telegram:'fa-brands fa-telegram'};return map[key]?'<i class="'+map[key]+'" aria-hidden="true"></i>':'<i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>'}
+function footer(){const f=data.footer||{},labels=data.copy||{};return '<footer class="site-footer"><div class="container footer-main footer-centered"><a class="brand" href="index.html"><img src="'+esc(data.brand?.logo||'images/profile.png')+'" alt=""><span>'+esc(data.brand?.name||'Rubayed Hasan')+'</span></a><p>'+esc(f.about||'')+'</p><nav class="footer-nav">'+[[labels.navHome||'Home','index.html'],[labels.navAbout||'About','about.html'],[labels.navPortfolio||'Portfolio','portfolio.html'],[labels.navServices||'Services','services.html'],[labels.navBlogs||'Blogs','blogs.html'],[labels.navContact||'Contact','contact.html']].map(([n,u])=>'<a href="'+u+'">'+n+'</a>').join('')+'</nav><div class="social-row footer-social">'+socials(data.socialFooter)+'</div><div class="copyright"><p><a href="index.html">© '+esc(data.brand?.copyrightYear||new Date().getFullYear())+' '+esc(data.brand?.name||'Rubayed Hasan')+'</a>. All Rights Reserved.</p>'+(f.palestine!==false?'<span class="palestine">🇵🇸 #StandWithPalestine</span>':'')+'</div></div></footer>'}
+function stats(){return '<div class="stats-panel">'+(data.stats||[]).slice(0,3).map((x,i)=>'<div class="portrait-stat-badge"><span class="stat-badge-icon"><i class="fa-solid '+(['fa-briefcase','fa-users','fa-clock'][i])+'" aria-hidden="true"></i></span><span class="stat-badge-copy"><strong>'+esc(x.value)+'</strong><small>'+esc(x.label)+'</small></span></div>').join('')+'</div>'}
+function projectCards(list){return '<div class="project-grid">'+(list||[]).filter(x=>x.enabled!==false).map(p=>'<details class="project-card"><summary><img src="'+esc(p.image||'images/profile.png')+'" alt="'+esc(p.title)+'"><span class="project-meta"><b>'+esc(p.title)+'</b><small>'+esc(p.category||'')+'</small></span></summary><div class="project-detail"><p>'+esc(p.description||'')+'</p>'+(p.url?'<a href="'+esc(safeUrl(p.url))+'" target="_blank" rel="noopener">View project ↗</a>':'')+'</div></details>').join('')+'</div>'}
+function serviceCards(){const serviceGlyph=s=>{const t=(s.title||'').toLowerCase();const pairs=[['brand','fa-pen-nib'],['logo','fa-bezier-curve'],['social','fa-hashtag'],['print','fa-print'],['marketing','fa-bullhorn'],['ui','fa-window-maximize'],['web','fa-desktop'],['packag','fa-box-open'],['presentation','fa-person-chalkboard'],['arabic','fa-language'],['calligraphy','fa-feather-pointed']];const found=pairs.find(([k])=>t.includes(k));return found?found[1]:'fa-wand-magic-sparkles'};return '<div class="service-grid">'+(data.services||[]).filter(s=>s.enabled!==false).map(s=>'<article class="surface service-card"><span class="service-icon"><i class="fa-solid '+serviceGlyph(s)+'" aria-hidden="true"></i></span><h3>'+esc(s.title)+'</h3><p>'+esc(s.description)+'</p><span class="service-arrow"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></span></article>').join('')+'</div>'}
+function blogCard(b,featured=false){return '<a class="blog-card '+(featured?'blog-featured':'')+'" href="blog-detail.html?id='+encodeURIComponent(b.id||'')+'"><img src="'+esc(b.image||'images/profile.png')+'" alt="'+esc(b.title)+'"><div><small>'+esc(b.category||'Insights')+' · '+esc(b.readTime||'')+'</small><h3>'+esc(b.title)+'</h3><p>'+esc(b.excerpt||'')+'</p></div></a>'}
+function faq(){return '<div class="faq-list">'+(data.faqs||[]).filter(x=>x.enabled!==false).map(f=>'<details class="faq-item"><summary>'+esc(f.question)+' <span>＋</span></summary><p>'+esc(f.answer)+'</p></details>').join('')+'</div>'}
+function home(){const h=data.hero||{},a=data.about||{},bi=data.blogIntro||{},blogs=(data.blogs||[]).filter(x=>x.published!==false).slice().reverse(),c=data.contact||{};const short=(h.shortDescription&&h.shortDescription!=='Graphic Designer')?h.shortDescription:'I create meaningful brand identities, social media visuals and custom logos that help businesses stand out.';const waContact=(c.whatsapp||'')||((data.socialFooter||[]).find(x=>x.icon==='whatsapp'&&x.enabled)?.url||'');const waNumber=String(waContact).replace(/.*wa\.me\//,'').replace(/[^0-9]/g,'');const cleanLocation=String(c.location||'').replace(/,?\s*Bangladesh\s*/ig,'').replace(/,\s*,/g,',').replace(/^,|,$/g,'').trim();const contactItems=[['fa-phone','Phone',c.phone,c.phone?'tel:'+String(c.phone).replace(/[^+0-9]/g,''):''],['fa-envelope','Email',c.email,c.email?'mailto:'+c.email:''],['fa-whatsapp','WhatsApp',waContact,waNumber?'https://wa.me/'+waNumber:waContact],['fa-location-dot','Location',cleanLocation,'']];const contactSection='<section class="container home-contact-section"><div class="section-heading"><h2>Get in Touch</h2><p>Have a project in mind? Let’s talk.</p></div><div class="home-contact-strip">'+contactItems.filter(x=>x[2]&&(x[1]!=='Location'||cleanLocation)).map(x=>'<a class="home-contact-item" '+(x[3]?'href="'+esc(safeUrl(x[3]))+'"':'')+'><span class="home-contact-icon"><i class="'+(x[0]==='fa-whatsapp'?'fa-brands fa-whatsapp':'fa-solid '+x[0])+'" aria-hidden="true"></i></span><span><small>'+x[1]+'</small><b>'+esc(x[2])+'</b></span></a>').join('')+'</div></section>';return '<section class="container hero hero-reference hero-profile-first"><div class="hero-visual"><div class="portrait-stats-wrap"><div class="portrait-frame"><img src="'+esc(data.brand?.profileImage||'images/profile.png')+'" alt="'+esc(data.brand?.name||'Rubayed Hasan')+'"></div><div class="portrait-stats">'+(data.stats||[]).slice(0,3).map(x=>'<div><strong>'+esc(x.value)+'</strong><span>'+esc(x.label)+'</span></div>').join('')+'</div></div></div><div class="hero-copy"><h1><span class="hero-hi">'+esc(h.title||'Hi, I am')+'</span><br><span class="gradient-name">'+esc(h.name||'Rubayed Hasan')+'</span></h1><p class="hero-tagline">'+esc(h.tagline||'Graphic Designer')+'</p><p class="lead hero-compact-lead">'+esc(short)+'</p><div class="button-row hero-actions"><a class="btn btn-primary" href="portfolio.html"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i> '+esc(h.worksLabel||'Explore Portfolio')+'</a><a class="btn btn-secondary" href="contact.html"><i class="fa-regular fa-paper-plane" aria-hidden="true"></i> '+esc(h.contactLabel||'Get in Touch')+'</a></div><div class="social-row hero-social">'+socials(data.socialTop)+'</div></div></section><section class="container section"><div class="section-heading"><h2>'+esc(a.title||'About Me')+'</h2></div><p class="section-copy">'+esc(a.teaser||a.body||'')+'</p><a class="text-link" href="about.html">'+txt('aboutLink','More About Me')+' ↗</a></section><section class="section section-tint"><div class="container"><div class="section-heading"><h2>'+txt('homeServices','Services')+'</h2></div>'+serviceCards()+'</div></section><section class="container section"><div class="section-heading"><h2>'+txt('featuredTitle','Featured Projects')+'</h2></div><div id="featuredProjects"></div><div class="center" id="featuredActions"><button class="btn btn-secondary" id="loadMoreProjects">'+txt('loadMore','Load More')+'</button><br><br><a class="text-link" href="portfolio.html">'+txt('seeMoreProjects','See More Projects')+' ↗</a></div></section><section class="section section-tint"><div class="container"><div class="section-heading"><h2>'+esc(bi.title||'Latest Insights')+'</h2><p>'+esc(bi.description||'')+'</p></div><div class="blog-grid">'+blogs.slice(0,3).map((b,i)=>blogCard(b,i===0)).join('')+'</div><div class="center"><a class="btn btn-secondary" href="blogs.html">'+txt('viewAllBlogs','View All Blogs')+' →</a></div></div></section>'+contactCta()+contactSection}
+function contactCta(){return '<section class="container section"><div class="contact-cta"><p class="eyebrow">HAVE A PROJECT IN MIND?</p><h2>'+txt('contactCtaTitle','Let’s Build Something Great')+'</h2><p>'+txt('contactCtaDescription','Have a project in mind? Drop a message. I usually reply within a few hours.')+'</p><a class="btn btn-primary" href="contact.html">'+txt('contactButton','Start a Conversation')+' ↗</a></div></section>'}
+function about(){const a=data.about||{};return '<section class="container page-hero about-hero"><div class="portrait-frame portrait-alt"><img src="'+esc(data.brand?.profileImage||'images/profile.png')+'" alt=""></div><p class="eyebrow">THE PERSON BEHIND THE WORK</p><h1>'+esc(a.title||'About Me')+'</h1><p class="lead">'+esc(a.teaser||'')+'</p><div class="button-row"><a class="btn btn-primary" href="contact.html">Contact for Your Design</a><a class="btn btn-secondary" href="portfolio.html">Featured Case Studies</a></div><div class="about-body">'+rich(a.body||'')+'</div></section><section class="section section-tint"><div class="container"><div class="section-heading"><h2>Services</h2></div>'+serviceCards()+'</div></section><section class="container section"><div class="section-heading"><h2>'+txt('workflowTitle','Design Workflow')+'</h2></div><div class="workflow">'+(data.workflow||[]).map((x,i)=>'<article><b>0'+(i+1)+'</b><h3>'+esc(x.title)+'</h3><p>'+esc(x.description)+'</p></article>').join('')+'</div></section><section class="section section-tint"><div class="container"><div class="section-heading"><h2>'+txt('toolkitTitle','Toolkit')+'</h2></div><div class="tool-grid">'+(data.tools||[]).map(x=>'<div class="tool surface">'+(x.logo?'<img src="'+esc(x.logo)+'" alt="">':'<span>✦</span>')+'<b>'+esc(x.name)+'</b></div>').join('')+'</div></div></section>'}
+function portfolio(){return '<section class="container page-hero"><p class="eyebrow">A SELECTION OF MY WORK</p><h1>Portfolio</h1><p class="lead">Selected projects, crafted with purpose.</p>'+stats()+projectCards(data.projects||[])+'</section>'}
+function services(){return '<section class="container page-hero"><p class="eyebrow">HOW I CAN HELP</p><h1>Services</h1><p class="lead">Creative solutions built around your goals.</p>'+serviceCards()+'</section><section class="section section-tint"><div class="container"><div class="section-heading"><h2>'+txt('faqTitle','Frequently Asked Questions')+'</h2></div>'+faq()+'</div></section>'}
+function blogs(){const list=(data.blogs||[]).filter(x=>x.published!==false).slice().reverse();const cats=[...new Set(list.map(x=>x.category||'Insights'))];return '<section class="container page-hero"><p class="eyebrow">NOTES FROM THE STUDIO</p><h1>Blogs</h1><p class="lead">'+esc(data.blogIntro?.description||'Latest thoughts, ideas and lessons.')+'</p><div class="category-row"><button class="chip active" data-category="all">All ('+list.length+')</button>'+cats.map(c=>'<button class="chip" data-category="'+esc(c)+'">'+esc(c)+' ('+list.filter(x=>(x.category||'Insights')===c).length+')</button>').join('')+'</div><div class="blog-grid" id="allBlogCards">'+list.map((b,i)=>blogCard(b,i===0)).join('')+'</div></section>'}
+function blogDetail(){const id=new URLSearchParams(location.search).get('id');const b=(data.blogs||[]).find(x=>String(x.id)===String(id));if(!b)return '<section class="container section"><h1>Blog not found</h1><a href="blogs.html">Back to Blogs</a></section>';const words=(b.content||'').trim().split(/\s+/).length;const mins=Math.max(1,Math.ceil(words/200));return '<article class="container article"><a class="text-link" href="blogs.html">← All Blogs</a><p class="eyebrow">'+esc(b.category||'Insights')+' · '+(esc(b.readTime)||mins+' min read')+'</p><h1>'+esc(b.title)+'</h1><p class="lead">'+esc(b.excerpt||'')+'</p><img class="article-cover" src="'+esc(b.image||'images/profile.png')+'" alt=""><div class="article-tools"><span>'+mins+' min read</span><button id="shareBlog">Share ↗</button><button id="copyBlog">Copy Link</button></div><div class="article-content">'+rich(b.content||'')+'</div></article><div class="reading-progress" id="readingProgress"><button id="scrollDirection" aria-label="Scroll">↓</button></div>'}
+function contact(){const c=data.contact||{};return '<section class="container page-hero"><p class="eyebrow">LET’S TALK</p><h1>'+esc(c.title||'Let’s Build Something Great')+'</h1><p class="lead">'+esc(c.description||'Have a project in mind? Drop a message. I usually reply within a few hours.')+'</p><div class="contact-grid"><div class="surface contact-details"><h2>Contact Information</h2><p><b>Phone</b><br>'+esc(c.phone||'')+'</p><p><b>Email</b><br>'+esc(c.email||'')+'</p><p><b>Location</b><br>'+esc(c.location||'')+'</p><p><b>Website</b><br>'+esc(c.website||'')+'</p>'+(c.mapUrl?'<iframe title="Map location" src="'+esc(safeUrl(c.mapUrl))+'" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>':'')+'</div><form class="surface contact-form" id="contactForm"><h2>Send a Message</h2><label>Your Name<input name="name" required minlength="2" maxlength="120"></label><label>Your Email<input name="email" type="email" required maxlength="254"></label><label>Subject<input name="subject" maxlength="200"></label><label>Your Message<textarea name="message" required minlength="5" maxlength="10000" rows="6"></textarea></label><button class="btn btn-primary" type="submit">Send Message ↗</button><p id="formStatus" role="status"></p></form></div></section>'}
+function chatWidget(){const c=data.chatbot||{},profile=esc(data.brand?.profileImage||'images/profile.png'),name=esc(data.brand?.name||'Rubayed Hasan'),wa=(data.socialTop||[]).find(x=>x.icon==='whatsapp'&&x.enabled&&x.url);return '<section class="chat-panel" id="chatPanel" role="dialog" aria-label="Virtual assistant" aria-modal="false" hidden><div class="chat-panel-head"><img class="chat-head-avatar" src="'+profile+'" alt=""><div class="chat-head-copy"><b>Virtual Assistant</b><small>of '+name+' <span class="chat-online-dot"></span> Online</small></div><button id="closeChat" type="button" aria-label="Close chat"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button></div><div class="chat-messages" id="chatMessages"><div class="chat-message chat-bot"><img class="chat-avatar" src="'+profile+'" alt=""><div class="chat-bubble">'+esc(c.welcome||'Hello! I can help you explore services, projects and contact information. What would you like to know?')+'</div></div><div class="chat-questions">'+(c.questions||[]).filter(q=>q.enabled!==false).slice(0,3).map((q,i)=>'<button type="button" data-question="'+i+'">'+esc(q.question)+' <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></button>').join('')+'</div></div><form class="chat-compose" id="chatForm"><input id="chatInput" name="message" type="text" maxlength="600" autocomplete="off" placeholder="Type your message..." aria-label="Write your message" required><button type="submit" aria-label="Send message"><i class="fa-solid fa-paper-plane"></i></button></form>'+(wa?'<div class="chat-panel-foot"><a href="'+esc(safeUrl(wa.url))+'" target="_blank" rel="noopener noreferrer">Prefer WhatsApp? Continue here <i class="fa-solid fa-arrow-up-right-from-square"></i></a></div>':'')+'</section><div class="chat-launcher-wrap" id="chatLauncherWrap"><div class="chat-teaser" id="chatTeaser" aria-live="polite"><span class="teaser-sheen"></span><span id="chatTeaserText">How can I help you today?</span></div><button class="chat-launcher" id="chatLauncher" type="button" aria-label="Open virtual assistant" aria-controls="chatPanel" aria-expanded="false"><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i></button></div>'}
+function init(preserveMenu=false){const menuWasOpen=preserveMenu||$('mainNav')?.classList.contains('open')||false;const root=$('app');if(!root)return;const pages={'index.html':home,'about.html':about,'portfolio.html':portfolio,'services.html':services,'blogs.html':blogs,'blog-detail.html':blogDetail,'contact.html':contact};root.innerHTML=nav()+(pages[path]||home)()+footer()+chatWidget();if(menuWasOpen&&window.matchMedia('(max-width: 800px)').matches){$('mainNav')?.classList.add('open');$('menuToggle')?.setAttribute('aria-expanded','true');if($('menuToggle'))$('menuToggle').innerHTML='<i class="fa-solid fa-xmark" aria-hidden="true"></i>'}if(path==='index.html'||path===''){const featured=(data.projects||[]).filter(x=>x.featured&&x.enabled!==false);const target=$('featuredProjects');if(target)target.innerHTML=projectCards(featured.slice(0,6));if(featured.length<=6&&$('loadMoreProjects'))$('loadMoreProjects').hidden=true;$('loadMoreProjects')?.addEventListener('click',()=>{target.innerHTML=projectCards(featured.slice(0,10));$('loadMoreProjects').hidden=true})}const menuButton=$('menuToggle'),mainNav=$('mainNav');const closeMenu=()=>{if(!mainNav||!menuButton)return;mainNav.classList.remove('open');menuButton.setAttribute('aria-expanded','false');menuButton.setAttribute('aria-label','Open navigation menu');menuButton.innerHTML='<i class="fa-solid fa-bars-staggered" aria-hidden="true"></i>'};const toggleMenu=e=>{e?.preventDefault();e?.stopPropagation();if(!mainNav||!menuButton)return;const open=!mainNav.classList.contains('open');mainNav.classList.toggle('open',open);menuButton.setAttribute('aria-expanded',String(open));menuButton.setAttribute('aria-label',open?'Close navigation menu':'Open navigation menu');menuButton.innerHTML=open?'<i class="fa-solid fa-xmark" aria-hidden="true"></i>':'<i class="fa-solid fa-bars-staggered" aria-hidden="true"></i>'};if(menuButton)menuButton.onclick=toggleMenu;if(mainNav)mainNav.onclick=e=>{if(e.target.closest('a'))closeMenu()};document.onkeydown=e=>{if(e.key==='Escape')closeMenu()};document.onclick=e=>{if(mainNav?.classList.contains('open')&&!e.target.closest('.header-inner'))closeMenu()};const launcher=$('chatLauncher'),panel=$('chatPanel'),closeChat=$('closeChat'),teaser=$('chatTeaser'),teaserText=$('chatTeaserText');if(launcher&&panel){launcher.onclick=()=>{panel.hidden=!panel.hidden;launcher.setAttribute('aria-expanded',String(!panel.hidden));if(!panel.hidden&&teaser)teaser.classList.remove('teaser-visible')}}if(closeChat&&panel){closeChat.onclick=()=>{panel.hidden=true;launcher?.setAttribute('aria-expanded','false')}}if(teaser&&teaserText&&launcher&&!window.__assistantTeaserTimer){const tips=['How can I help you today?','Do you need any help?','Looking for a design solution?'];let tipIndex=0;const showTip=()=>{if(panel?.hidden!==false){teaserText.textContent=tips[tipIndex%tips.length];teaser.classList.add('teaser-visible');setTimeout(()=>teaser.classList.remove('teaser-visible'),5200);tipIndex++}};setTimeout(showTip,2600);window.__assistantTeaserTimer=setInterval(showTip,12500)}function addChatMessage(text,kind){const box=$('chatMessages');if(!box)return;const row=document.createElement('div');row.className='chat-message '+(kind==='user'?'chat-message-user':'chat-message-bot');const avatar=document.createElement('img');avatar.className='chat-avatar';avatar.alt=kind==='user'?'You':'Assistant';avatar.src=kind==='user'?'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 48 48%22%3E%3Crect width=%2248%22 height=%2248%22 rx=%2224%22 fill=%22%231769e8%22/%3E%3Ccircle cx=%2224%22 cy=%2217%22 r=%228%22 fill=%22white%22/%3E%3Cpath d=%22M9 42c1-9 7-14 15-14s14 5 15 14%22 fill=%22white%22/%3E%3C/svg%3E':(data.brand?.profileImage||'images/profile.png');row.append(avatar);const bubble=document.createElement('div');bubble.className='chat-bubble';bubble.textContent=text;row.append(bubble);box.append(row);box.querySelector('.chat-questions')?.remove();box.scrollTop=box.scrollHeight}function answerFromWebsite(question){const q=question.toLowerCase();const c=data.contact||{},a=data.about||{},h=data.hero||{};const services=(data.services||[]).filter(x=>x.enabled!==false);const projects=(data.projects||[]).filter(x=>x.enabled!==false);const faqs=(data.faqs||[]).filter(x=>x.enabled!==false);const blogs=(data.blogs||[]).filter(x=>x.published!==false);if(/service|সার্ভিস|কী কী কাজ|কি কি কাজ|সেবা/.test(q))return 'আমি যেসব সেবা দিই: '+services.map(x=>x.title).join(', ')+'. কোন সেবাটি সম্পর্কে বিস্তারিত জানতে চান?';if(/price|cost|দাম|মূল্য|চার্জ|কত টাকা/.test(q))return 'প্রজেক্টের ধরন, কাজের পরিমাণ ও সময়সীমা অনুযায়ী মূল্য নির্ধারণ করা হয়। নির্দিষ্ট কোটেশনের জন্য Contact পেজে আপনার কাজের বিবরণ পাঠান।';if(/project|portfolio|কাজ দেখ|প্রজেক্ট|নমুনা/.test(q))return 'Portfolio-তে '+projects.length+'টি প্রজেক্টের তথ্য রয়েছে। এখানে কয়েকটি: '+projects.slice(0,5).map(x=>x.title).join('; ')+'. আরও দেখতে Portfolio পেজে যান।';if(/experience|অভিজ্ঞতা|কত বছর/.test(q))return h.description||'ডিজাইন ও ভিজ্যুয়াল কমিউনিকেশনে আমার অভিজ্ঞতা রয়েছে। About পেজে বিস্তারিত পাবেন।';if(/contact|যোগাযোগ|ফোন|ইমেইল|email|whatsapp/.test(q))return 'যোগাযোগের জন্য Contact পেজ ব্যবহার করুন। '+(c.email?'ইমেইল: '+c.email+'. ':'')+(c.phone?'ফোন: '+c.phone+'. ':'')+(c.location?'অবস্থান: '+c.location+'.':'');if(/about|পরিচয়|কে আপনি|রুবায়েদ|rubayed/.test(q))return a.teaser||a.body||'আমি '+(data.brand?.name||'Rubayed Hasan')+'। '+(h.tagline||'Graphic Designer')+'.';if(/faq|revision|রিভিশন|ফাইল ফরম্যাট/.test(q)){const match=faqs.find(x=>(x.question+' '+x.answer).toLowerCase().split(/\\s+/).some(w=>w.length>3&&q.includes(w)));return match?match.answer:faqs.slice(0,3).map(x=>x.question+' '+x.answer).join(' ')}if(/blog|লেখা|আর্টিকেল/.test(q))return 'ওয়েবসাইটে প্রকাশিত লেখা: '+blogs.slice(0,5).map(x=>x.title).join('; ')+'. Blogs পেজে পড়তে পারবেন।';const match=[...faqs,...(data.chatbot?.questions||[])].find(x=>x.enabled!==false&&(q.includes(x.question.toLowerCase())||x.question.toLowerCase().split(/\\s+/).some(w=>w.length>4&&q.includes(w))));if(match)return match.answer;return 'আপনার প্রশ্নটি বুঝতে পারিনি। Services, Portfolio, অভিজ্ঞতা, মূল্য বা যোগাযোগ সম্পর্কে জানতে চাইলে লিখুন। নির্দিষ্ট পরামর্শের জন্য Contact পেজে বার্তা পাঠাতে পারেন।'}const chatForm=$('chatForm');if(chatForm)chatForm.addEventListener('submit',e=>{e.preventDefault();const input=$('chatInput'),message=input?.value.trim();if(!message)return;addChatMessage(message,'user');input.value='';const box=$('chatMessages'),typing=document.createElement('div');typing.className='chat-message chat-bot chat-typing';const avatar=document.createElement('img');avatar.className='chat-avatar';avatar.src=data.brand?.profileImage||'images/profile.png';avatar.alt='Assistant';const dots=document.createElement('div');dots.className='chat-bubble typing-dots';dots.innerHTML='<i></i><i></i><i></i>';typing.append(avatar,dots);box.append(typing);box.scrollTop=box.scrollHeight;setTimeout(()=>{typing.remove();addChatMessage(answerFromWebsite(message),'bot')},1250)});document.querySelectorAll('[data-question]').forEach(btn=>btn.addEventListener('click',()=>{const q=data.chatbot.questions[Number(btn.dataset.question)];if(!q)return;addChatMessage(q.question,'user');const box=$('chatMessages'),typing=document.createElement('div');typing.className='chat-message chat-bot chat-typing';const avatar=document.createElement('img');avatar.className='chat-avatar';avatar.src=data.brand?.profileImage||'images/profile.png';avatar.alt='Assistant';const dots=document.createElement('div');dots.className='chat-bubble typing-dots';dots.innerHTML='<i></i><i></i><i></i>';typing.append(avatar,dots);box.append(typing);box.scrollTop=box.scrollHeight;setTimeout(()=>{typing.remove();addChatMessage(q.answer,'bot')},1150)}));
+$('shareBlog')?.addEventListener('click',async()=>{const url=location.href;if(navigator.share)await navigator.share({url,title:document.title});else await navigator.clipboard.writeText(url)});
+$('copyBlog')?.addEventListener('click',async()=>{await navigator.clipboard.writeText(location.href);$('copyBlog').textContent='Copied ✓'});
+$('scrollDirection')?.addEventListener('click',()=>window.scrollBy({top:window.scrollY>100? -window.innerHeight:window.innerHeight,behavior:'smooth'}));
+if(path==='blogs.html')document.querySelectorAll('[data-category]').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('[data-category]').forEach(x=>x.classList.remove('active'));btn.classList.add('active');document.querySelectorAll('#allBlogCards .blog-card').forEach(card=>{const category=card.querySelector('small')?.textContent.split(' · ')[0];card.hidden=btn.dataset.category!=='all'&&category!==btn.dataset.category})}));
+$('contactForm')?.addEventListener('submit',async e=>{e.preventDefault();const form=e.currentTarget,status=$('formStatus'),button=form.querySelector('button');button.disabled=true;status.textContent='Sending…';const payload=Object.fromEntries(new FormData(form));const {error}=db?await db.from('contact_messages').insert(payload):{error:new Error('Connection unavailable')};button.disabled=false;if(error){status.textContent='Message পাঠানো যায়নি। পরে আবার চেষ্টা করুন।';console.error(error)}else{status.textContent='ধন্যবাদ! আপনার বার্তা পাঠানো হয়েছে।';form.reset()}});
+if($('readingProgress')){const update=()=>{const max=document.documentElement.scrollHeight-innerHeight,p=max>0?scrollY/max*100:0;$('readingProgress').style.setProperty('--progress',p+'%');$('scrollDirection').textContent=scrollY>120?'↑':'↓'};window.onscroll=update;update()}
+}
+async function start(){data=applyDemo({});init();try{if(!db)return;const {data:row,error}=await db.from('portfolio_content').select('content').eq('id',1).single();if(error)throw error;const menuWasOpen=$('mainNav')?.classList.contains('open')||false;data=applyDemo(row.content||{});init(menuWasOpen)}catch(e){console.warn('CMS content unavailable; demo content remains visible',e)}}
+document.addEventListener('DOMContentLoaded',start);
 })();
